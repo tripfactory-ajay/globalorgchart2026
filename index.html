@@ -38,8 +38,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .children{padding-left:28px;border-left:2px solid var(--line);margin-left:14px;overflow:hidden;transition:max-height .32s ease,opacity .25s ease;opacity:1}
 .children.closed{max-height:0!important;opacity:0;pointer-events:none}
 
+/* ── DEPARTMENT COLOUR PALETTE ── */
+:root{
+  --d-sales:    #1d6fce; --d-sales-l:    #e8f1fd; --d-sales-b:    #b8d4f8;
+  --d-ops:      #0f7b5e; --d-ops-l:      #e6f5f1; --d-ops-b:      #a7ddd0;
+  --d-tech:     #7c3aed; --d-tech-l:     #f3effd; --d-tech-b:     #cdb8f8;
+  --d-fin:      #b45309; --d-fin-l:      #fef3e2; --d-fin-b:      #f5c98a;
+  --d-prod:     #0f5fa8; --d-prod-l:     #e6f0fa; --d-prod-b:     #9dc3ee;
+  --d-hr:       #be185d; --d-hr-l:       #fce7f3; --d-hr-b:       #f4a8d0;
+  --d-contract: #6b7280; --d-contract-l: #f4f5f7; --d-contract-b: #d1d5db;
+}
+
 /* CARDS */
-.card{background:var(--white);border:1px solid var(--b1);border-radius:var(--r);padding:9px 30px 10px 12px;min-width:160px;max-width:220px;box-shadow:var(--sh0);position:relative;transition:box-shadow .14s,transform .12s;border-left-width:3px;border-left-color:var(--accent,var(--b2))}
+.card{background:var(--white);border:1px solid var(--b1);border-radius:var(--r);padding:9px 30px 10px 12px;min-width:160px;max-width:220px;box-shadow:var(--sh0);position:relative;transition:box-shadow .14s,transform .12s;border-left-width:4px;border-left-color:var(--accent,var(--b2))}
 .card.click{cursor:pointer}
 .card.click:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
 .card.c-ceo{--accent:#111318;min-width:190px}
@@ -52,6 +63,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .card.c-ceo .card-name{font-size:14px;font-weight:700}
 .card.c-fo .card-name,.card.c-cs .card-name{font-weight:700}
 .card.c-mg .card-name{font-size:12px}
+
+/* ── Dept-coloured card variants ── */
+.card.dept-sales   {--accent:var(--d-sales);   border-color:var(--d-sales-b);   background:var(--d-sales-l)}
+.card.dept-ops     {--accent:var(--d-ops);     border-color:var(--d-ops-b);     background:var(--d-ops-l)}
+.card.dept-tech    {--accent:var(--d-tech);    border-color:var(--d-tech-b);    background:var(--d-tech-l)}
+.card.dept-finance {--accent:var(--d-fin);     border-color:var(--d-fin-b);     background:var(--d-fin-l)}
+.card.dept-product {--accent:var(--d-prod);    border-color:var(--d-prod-b);    background:var(--d-prod-l)}
+.card.dept-hr      {--accent:var(--d-hr);      border-color:var(--d-hr-b);      background:var(--d-hr-l)}
+.card.dept-contract{--accent:var(--d-contract);border-color:var(--d-contract-b);background:var(--d-contract-l)}
+
+.card.dept-sales   .card-name{color:var(--d-sales)}
+.card.dept-ops     .card-name{color:var(--d-ops)}
+.card.dept-tech    .card-name{color:var(--d-tech)}
+.card.dept-finance .card-name{color:var(--d-fin)}
+.card.dept-product .card-name{color:var(--d-prod)}
+.card.dept-hr      .card-name{color:var(--d-hr)}
+
+/* colour the children connector line per dept */
+.dept-block-sales    > .children{border-left-color:var(--d-sales-b)}
+.dept-block-ops      > .children{border-left-color:var(--d-ops-b)}
+.dept-block-tech     > .children{border-left-color:var(--d-tech-b)}
+.dept-block-finance  > .children{border-left-color:var(--d-fin-b)}
+.dept-block-product  > .children{border-left-color:var(--d-prod-b)}
+.dept-block-hr       > .children{border-left-color:var(--d-hr-b)}
+
 .card-av{width:28px;height:28px;border-radius:50%;background:#f1f2f4;border:1px solid var(--b1);color:var(--t2);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:6px;letter-spacing:-.2px}
 .card.c-ceo .card-av{width:34px;height:34px;font-size:11px}
 .card.c-mg  .card-av{width:24px;height:24px;font-size:8px;margin-bottom:5px}
@@ -64,7 +100,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .tip{position:absolute;bottom:calc(100% + 8px);left:0;background:var(--t1);color:#fff;font-size:11px;padding:5px 9px;border-radius:5px;white-space:nowrap;pointer-events:none;opacity:0;z-index:500;box-shadow:var(--sh1);transition:opacity .12s}
 .card:hover .tip{opacity:1}
 .tip::after{content:'';position:absolute;top:100%;left:14px;border:4px solid transparent;border-top-color:var(--t1)}
-.ds{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t4);margin:12px 0 6px;padding-left:2px}
+
+/* ── DEPARTMENT SEPARATOR LABELS ── */
+.ds{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  margin:16px 0 8px;padding:5px 10px 5px 12px;
+  border-radius:4px;display:inline-flex;align-items:center;gap:7px;
+  border-left-width:4px;border-left-style:solid;
+}
+.ds::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* dept-specific separator colours */
+.ds-sales   {color:var(--d-sales);  background:var(--d-sales-l); border-left-color:var(--d-sales);  }
+.ds-sales::before  {background:var(--d-sales)}
+.ds-ops     {color:var(--d-ops);    background:var(--d-ops-l);   border-left-color:var(--d-ops);    }
+.ds-ops::before    {background:var(--d-ops)}
+.ds-tech    {color:var(--d-tech);   background:var(--d-tech-l);  border-left-color:var(--d-tech);   }
+.ds-tech::before   {background:var(--d-tech)}
+.ds-finance {color:var(--d-fin);    background:var(--d-fin-l);   border-left-color:var(--d-fin);    }
+.ds-finance::before{background:var(--d-fin)}
+.ds-product {color:var(--d-prod);   background:var(--d-prod-l);  border-left-color:var(--d-prod);   }
+.ds-product::before{background:var(--d-prod)}
+.ds-hr      {color:var(--d-hr);     background:var(--d-hr-l);    border-left-color:var(--d-hr);     }
+.ds-hr::before     {background:var(--d-hr)}
+.ds-neutral {color:var(--t2);       background:var(--bg);        border-left-color:var(--b2);       }
+.ds-neutral::before{background:var(--b2)}
 
 /* OFFICES */
 .reg{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin:20px 0 8px;padding-left:8px;border-left:2px solid var(--t1)}
@@ -126,7 +185,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 <div class="children" id="c-vinay">
 
   <!-- ══ FOUNDERS ══ -->
-  <div class="ds">Founders &amp; Co-Founders</div>
+  <div class="ds ds-neutral">Founders &amp; Co-Founders</div>
   <div class="card-row">
 
     <div class="card c-fo click" onclick="tog(this,'raj')">
@@ -176,9 +235,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
   <!-- RAJ subtree -->
   <div class="children" id="c-raj">
-    <div class="ds">London HQ — C-Suite</div>
+    <div class="ds ds-neutral">London HQ — C-Suite</div>
     <div class="card-row">
-      <div class="card c-cs click" onclick="tog(this,'alia')">
+      <div class="card c-cs dept-hr click" onclick="tog(this,'alia')"">
         <div class="tip">Chief People Officer — London HQ</div>
         <div class="tog" id="t-alia">−</div>
         <div class="card-av">AT</div>
@@ -199,8 +258,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <div class="card-role">UK &amp; European HQ</div>
       </div>
     </div>
-    <div class="children" id="c-alia">
-      <div class="ds">HR &amp; People — Managers</div>
+    <div class="dept-block-hr children" id="c-alia">
+      <div class="ds ds-hr">HR &amp; People — Managers</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Lead Talent Acquisition · Bengaluru · 3 reports</div><div class="card-av">RV</div><div class="card-name">Roshan V V</div><div class="card-role">Lead — Talent Acquisition</div><div class="card-tag">3 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Asst Manager HR Operations · 4 reports</div><div class="card-av">KP</div><div class="card-name">Krishna Prasad B P</div><div class="card-role">Asst Mgr — HR Ops</div><div class="card-tag">4 REPORTS</div></div>
@@ -212,9 +271,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
   <!-- AMIT subtree -->
   <div class="children" id="c-amit">
-    <div class="ds">Technology — VP &amp; Directors</div>
+    <div class="ds ds-tech">Technology — VP &amp; Directors</div>
     <div class="card-row">
-      <div class="card c-vp click" onclick="tog(this,'vcto')">
+      <div class="card c-vp dept-tech click" onclick="tog(this,'vcto')"">
         <div class="tip">VP Engineering / CTO — leads all engineering teams</div>
         <div class="tog" id="t-vcto">−</div>
         <div class="card-av">VG</div>
@@ -227,8 +286,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="card c-vp"><div class="tip">SVP DevOps &amp; Infrastructure · Bengaluru</div><div class="card-av">SD</div><div class="card-name">Shrinivas Devarkonda</div><div class="card-role">SVP — DevOps &amp; Infrastructure</div><div class="card-tag">INFRA</div></div>
       <div class="card c-vp"><div class="tip">Senior Product Exec — reports to Asad Siddiqui</div><div class="card-av">AS</div><div class="card-name">Asad Siddiqui</div><div class="card-role">Senior Manager — Product</div><div class="card-tag">PRODUCT</div></div>
     </div>
-    <div class="children" id="c-vcto">
-      <div class="ds">Engineering Managers</div>
+    <div class="dept-block-tech children" id="c-vcto">
+      <div class="ds ds-tech">Engineering Managers</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Sr Engineering Manager · 13 reports</div><div class="card-av">SR</div><div class="card-name">Sirajuddin Reniman</div><div class="card-role">Sr Engineering Manager</div><div class="card-tag">13 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">VP Engineering · Delhi · 23 reports</div><div class="card-av">RG</div><div class="card-name">Ram Krishna Garg</div><div class="card-role">VP Engineering (Delhi)</div><div class="card-tag">23 REPORTS</div></div>
@@ -253,10 +312,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
 
   <!-- ══ DIRECTORS & VP LAYER ══ -->
-  <div class="ds">Directors &amp; VP Layer</div>
+  <div class="ds ds-neutral">Directors &amp; VP Layer</div>
   <div class="card-row">
 
-    <div class="card c-cs click" onclick="tog(this,'lalitha')">
+    <div class="card c-cs click" onclick="tog(this,'lalitha')"">
       <div class="tip">Director India Operations · 698 staff · 40 direct reports</div>
       <div class="tog" id="t-lalitha">−</div>
       <div class="card-av">LP</div>
@@ -265,7 +324,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       <div class="card-tag">INDIA HQ · 698 STAFF</div>
     </div>
 
-    <div class="card c-cs click" onclick="tog(this,'ashish')">
+    <div class="card c-cs dept-product click" onclick="tog(this,'ashish')"">
       <div class="tip">VP Product &amp; Growth · Gurgaon</div>
       <div class="tog" id="t-ashish">−</div>
       <div class="card-av">AY</div>
@@ -298,9 +357,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="children" id="c-lalitha">
 
     <!-- ── SALES ── -->
-    <div class="ds">Sales — VP &amp; Field Heads</div>
+    <div class="ds ds-sales">Sales — VP &amp; Field Heads</div>
     <div class="card-row">
-      <div class="card c-vp click" onclick="tog(this,'gauri')">
+      <div class="card c-vp dept-sales click" onclick="tog(this,'gauri')">
         <div class="tip">VP Sales — B2C, B2B, Groups, Field, Middle East</div>
         <div class="tog" id="t-gauri">−</div>
         <div class="card-av">GG</div>
@@ -310,8 +369,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="children" id="c-gauri">
-      <div class="ds">Sales — Senior Managers &amp; Regional Heads</div>
+    <div class="dept-block-sales children" id="c-gauri">
+      <div class="ds ds-sales">Sales — Senior Managers &amp; Regional Heads</div>
       <div class="card-row">
         <div class="card c-mg click" onclick="tog(this,'asif')">
           <div class="tip">VP Sales · Delhi · 6 direct reports</div>
@@ -343,7 +402,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
       <!-- Asif subtree -->
       <div class="children" id="c-asif">
-        <div class="ds">Field Sales North</div>
+        <div class="ds ds-sales">Field Sales — North</div>
         <div class="card-row">
           <div class="card c-mg"><div class="card-av">GS</div><div class="card-name">Giriraj Singh</div><div class="card-role">BDM — Delhi</div></div>
           <div class="card c-mg"><div class="card-av">SG</div><div class="card-name">Satyendra Goswami</div><div class="card-role">BDM — Delhi</div></div>
@@ -354,7 +413,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
       <!-- Nagaraju subtree -->
       <div class="children" id="c-nagaraju">
-        <div class="ds">B2B Field Sales South</div>
+        <div class="ds ds-sales">B2B Field Sales — South</div>
         <div class="card-row">
           <div class="card c-mg"><div class="card-av">AP</div><div class="card-name">Athul P S</div><div class="card-role">BDM — Kerala</div></div>
           <div class="card c-tm"><div class="card-count">14</div><div class="card-name">South Field Team</div><div class="card-role">BDEs · Bengaluru, Chennai, Kochi, Hyderabad, Vizag</div></div>
@@ -363,7 +422,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
       <!-- Vikas subtree -->
       <div class="children" id="c-vikas">
-        <div class="ds">North Sales Team (under Vikas)</div>
+        <div class="ds ds-sales">North Sales — Gurgaon</div>
         <div class="card-row">
           <div class="card c-mg"><div class="tip">Asst Manager · 18 direct reports · Gurgaon</div><div class="card-av">VG</div><div class="card-name">Vivek Gurjar</div><div class="card-role">Asst Manager — Sales (Gurgaon)</div><div class="card-tag">18 REPORTS</div></div>
           <div class="card c-mg"><div class="tip">Sales &amp; Operations Manager Oceania</div><div class="card-av">BG</div><div class="card-name">Bharat Bhushan Gulati</div><div class="card-role">Sales &amp; Ops Manager — Oceania</div></div>
@@ -371,7 +430,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         </div>
       </div>
 
-      <div class="ds">Sales — Team Leads &amp; Managers (under Lalitha)</div>
+      <div class="ds ds-sales">Sales — Team Leads &amp; Managers</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Sr Manager B2C · 37 direct reports</div><div class="card-av">MV</div><div class="card-name">Martina Vasan</div><div class="card-role">Sr Mgr — B2C Performance</div><div class="card-tag">37 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Sr Manager B2B · 2 direct reports</div><div class="card-av">NT</div><div class="card-name">Neda Sadaf Tajuddin</div><div class="card-role">Sr Mgr — B2B Performance</div><div class="card-tag">2 REPORTS</div></div>
@@ -390,16 +449,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div><!-- /c-gauri -->
 
     <!-- ── CONTRACTING & PRODUCT ── -->
-    <div class="ds">Contracting &amp; Product</div>
+    <div class="ds ds-product">Contracting &amp; Product</div>
     <div class="card-row">
       <div class="card c-vp"><div class="tip">Contracting &amp; Marketing Head UK &amp; Europe · Mumbai · 14 reports</div><div class="card-av">SK</div><div class="card-name">Saif Ansar Khan</div><div class="card-role">Head — Contracting &amp; Marketing UK &amp; Europe</div><div class="card-tag">14 REPORTS</div></div>
       <div class="card c-vp"><div class="tip">Head North Contracting · Gurgaon — reports to Vinay Gupta</div><div class="card-av">RG</div><div class="card-name">Rajeev Gautam</div><div class="card-role">Head — North Contracting</div></div>
     </div>
 
     <!-- ── OPERATIONS ── -->
-    <div class="ds">Operations — Department Heads</div>
+    <div class="ds ds-ops">Operations — Department Heads</div>
     <div class="card-row">
-      <div class="card c-vp click" onclick="tog(this,'ops')">
+      <div class="card c-vp dept-ops click" onclick="tog(this,'ops')"">
         <div class="tip">Flights · DMC · Visa · Care · Europe · Domestic</div>
         <div class="tog" id="t-ops">−</div>
         <div class="card-av">OPS</div>
@@ -409,8 +468,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
     </div>
 
-    <div class="children" id="c-ops">
-      <div class="ds">Flights — Siliguri Hub</div>
+    <div class="dept-block-ops children" id="c-ops">
+      <div class="ds ds-ops">Flights — Siliguri Hub</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Head Revenue &amp; Ops Flights · Siliguri · 34 reports</div><div class="card-av">PT</div><div class="card-name">Poonam Kumari Thapa</div><div class="card-role">Head — Revenue &amp; Ops (Flights)</div><div class="card-tag">34 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Team Leader Air Ticketing · Siliguri</div><div class="card-av">BR</div><div class="card-name">Bikash Roy</div><div class="card-role">Team Lead — Air Ticketing</div></div>
@@ -431,20 +490,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <div class="card c-mg"><div class="tip">Asst Manager Indonesia · 2 reports</div><div class="card-av">JH</div><div class="card-name">Jaychandra H S</div><div class="card-role">Asst Mgr — Indonesia</div></div>
       </div>
 
-      <div class="ds">Europe Operations — Mumbai Hub</div>
+      <div class="ds ds-ops">Europe Operations — Mumbai Hub</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">FIT Ops Head Europe · Mumbai · 7 reports</div><div class="card-av">PO</div><div class="card-name">Puja Vivekanand Onekar</div><div class="card-role">FIT Ops Head — Europe</div><div class="card-tag">7 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Tour Manager Europe · Mumbai · 18 reports</div><div class="card-av">AS</div><div class="card-name">Amir Shafi Shaikh</div><div class="card-role">Tour Manager — Europe</div><div class="card-tag">18 REPORTS</div></div>
       </div>
 
-      <div class="ds">Visa Operations</div>
+      <div class="ds ds-ops">Visa Operations</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Manager Visa Ops · Bengaluru · 9 reports</div><div class="card-av">RS</div><div class="card-name">Reginold Simon</div><div class="card-role">Manager — Visa Operations</div><div class="card-tag">9 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Regional Head Visa North &amp; West · Gurgaon · 4 reports</div><div class="card-av">SC</div><div class="card-name">Sanjeev Kumar Chhikara</div><div class="card-role">Regional Head — Visa N&amp;W</div><div class="card-tag">4 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Asst Manager Visa Ops · Bengaluru</div><div class="card-av">CK</div><div class="card-name">Chhaya Kumari</div><div class="card-role">Asst Manager — Visa Ops</div></div>
       </div>
 
-      <div class="ds">Customer Care &amp; Support</div>
+      <div class="ds ds-ops">Customer Care &amp; Support</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Dep. Manager Ops Care · 2 reports</div><div class="card-av">SH</div><div class="card-name">Shashank H M</div><div class="card-role">Dep. Manager — Care &amp; Ops</div><div class="card-tag">2 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Asst Manager Care · 23 reports</div><div class="card-av">KS</div><div class="card-name">Kaushik S</div><div class="card-role">Asst Manager — Care Ops</div><div class="card-tag">23 REPORTS</div></div>
@@ -456,9 +515,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
     </div><!-- /c-ops -->
 
     <!-- ── FINANCE ── -->
-    <div class="ds">Finance — Head &amp; Managers</div>
+    <div class="ds ds-finance">Finance — Head &amp; Managers</div>
     <div class="card-row">
-      <div class="card c-vp click" onclick="tog(this,'fin')">
+      <div class="card c-vp dept-finance click" onclick="tog(this,'fin')"">
         <div class="tip">Head Finance &amp; Accounts · Bengaluru</div>
         <div class="tog" id="t-fin">−</div>
         <div class="card-av">SP</div>
@@ -467,8 +526,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <div class="card-tag">FINANCE HEAD</div>
       </div>
     </div>
-    <div class="children" id="c-fin">
-      <div class="ds">Finance Managers</div>
+    <div class="dept-block-finance children" id="c-fin">
+      <div class="ds ds-finance">Finance Managers</div>
       <div class="card-row">
         <div class="card c-mg"><div class="tip">Asst Finance Manager F&amp;A · 3 reports</div><div class="card-av">SB</div><div class="card-name">Shashi Bansal</div><div class="card-role">Asst Finance Mgr — F&amp;A</div><div class="card-tag">3 REPORTS</div></div>
         <div class="card c-mg"><div class="tip">Asst Finance Manager · Delhi</div><div class="card-av">SoC</div><div class="card-name">Sonu Chauhan</div><div class="card-role">Asst Finance Mgr — Delhi</div></div>
@@ -487,7 +546,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <div class="card c-tm"><div class="card-count">39</div><div class="card-name">Finance</div><div class="card-role">F&amp;A · Treasury · FinOps · IATA · Payroll</div></div>
       </div>
       <div class="children" id="c-sumi">
-        <div class="ds">Treasury Team</div>
+        <div class="ds ds-finance">Treasury Team</div>
         <div class="card-row">
           <div class="card c-mg"><div class="tip">Deputy Manager Accounts · Treasury · 3 reports</div><div class="card-av">AM</div><div class="card-name">Ananda M</div><div class="card-role">Dep. Manager — Accounts</div><div class="card-tag">3 REPORTS</div></div>
           <div class="card c-mg"><div class="tip">Deputy Manager Accounts · Treasury · 2 reports</div><div class="card-av">KR</div><div class="card-name">Keerthi R</div><div class="card-role">Dep. Manager — Accounts</div><div class="card-tag">2 REPORTS</div></div>
@@ -498,8 +557,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div><!-- /c-lalitha -->
 
   <!-- ASHISH subtree -->
-  <div class="children" id="c-ashish">
-    <div class="ds">Product &amp; Growth — Team</div>
+  <div class="dept-block-product children" id="c-ashish">
+    <div class="ds ds-product">Product &amp; Growth — Team</div>
     <div class="card-row">
       <div class="card c-vp"><div class="tip">Sr Product Manager · Mumbai · 33 direct reports</div><div class="card-av">DM</div><div class="card-name">Disha Mooljee</div><div class="card-role">Sr Product Manager · Mumbai</div><div class="card-tag">33 REPORTS</div></div>
       <div class="card c-vp"><div class="tip">Contracting Manager · Gurgaon</div><div class="card-av">SP</div><div class="card-name">Shaurya Pratap Singh</div><div class="card-role">Contracting Manager</div><div class="card-tag">CONTRACTING</div></div>
