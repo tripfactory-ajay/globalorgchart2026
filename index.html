@@ -1,1 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TripFactory — Organisation Chart</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f5f7;--white:#fff;--b1:#e0e3ea;--b2:#c8cdd8;
+  --t1:#111318;--t2:#3d4251;--t3:#6b7280;--t4:#9ca3af;
+  --sh0:0 1px 3px rgba(0,0,0,.07);--sh1:0 2px 8px rgba(0,0,0,.09);
+  --sh2:0 5px 20px rgba(0,0,0,.13);--r:8px;--line:#d1d5db;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:13px;line-height:1.4;background:var(--bg);color:var(--t1);}
 
+/* HEADER */
+.hdr{background:var(--white);border-bottom:1px solid var(--b1);padding:0 32px;height:54px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:900;box-shadow:var(--sh0);}
+.logo-img{height:30px;object-fit:contain}
+.logo-txt{font-size:17px;font-weight:700;letter-spacing:-.4px}
+.hdr-sep{width:1px;height:22px;background:var(--b1)}
+.hdr-info h1{font-size:14px;font-weight:600}
+.hdr-info p{font-size:11px;color:var(--t3);margin-top:1px}
+.hdr-kpis{margin-left:auto;display:flex;gap:24px}
+.kpi{text-align:right}
+.kpi-n{font-size:15px;font-weight:700;line-height:1}
+.kpi-l{font-size:10px;color:var(--t3);margin-top:2px}
+
+/* PAGE */
+.page{padding:28px 24px 64px;max-width:1440px;margin:0 auto}
+.sh{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--t3);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.sh::after{content:'';flex:1;height:1px;background:var(--b1)}
+.divider{height:1px;background:var(--b1);margin:36px 0}
+
+/* ORG ACCORDION */
+.org{width:100%}
+.card-row{display:flex;flex-wrap:wrap;gap:8px;padding:4px 0}
+.children{padding-left:28px;border-left:2px solid var(--line);margin-left:14px;overflow:hidden;transition:max-height .32s ease,opacity .25s ease;opacity:1}
+.children.closed{max-height:0!important;opacity:0;pointer-events:none}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--b1);border-radius:var(--r);padding:9px 30px 10px 12px;min-width:160px;max-width:220px;box-shadow:var(--sh0);position:relative;transition:box-shadow .14s,transform .12s;border-left-width:3px;border-left-color:var(--accent,var(--b2))}
+.card.click{cursor:pointer}
+.card.click:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+.card.c-ceo{--accent:#111318;min-width:190px}
+.card.c-fo {--accent:#374151;min-width:158px}
+.card.c-cs {--accent:#4b5563;min-width:158px}
+.card.c-vp {--accent:#6b7280;min-width:150px}
+.card.c-mg {--accent:#9ca3af;min-width:142px}
+.card.c-tm {--accent:#d1d5db;background:#f9fafb;border-style:dashed;min-width:120px}
+.card.c-tm:hover{box-shadow:var(--sh0)!important;transform:none!important}
+.card.c-ceo .card-name{font-size:14px;font-weight:700}
+.card.c-fo .card-name,.card.c-cs .card-name{font-weight:700}
+.card.c-mg .card-name{font-size:12px}
+.card-av{width:28px;height:28px;border-radius:50%;background:#f1f2f4;border:1px solid var(--b1);color:var(--t2);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:6px;letter-spacing:-.2px}
+.card.c-ceo .card-av{width:34px;height:34px;font-size:11px}
+.card.c-mg  .card-av{width:24px;height:24px;font-size:8px;margin-bottom:5px}
+.card-name{font-size:13px;font-weight:600;color:var(--t1);line-height:1.2}
+.card-role{font-size:10px;color:var(--t3);margin-top:2px;line-height:1.3;white-space:normal;max-width:180px}
+.card-tag{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--t3);background:var(--bg);border:1px solid var(--b1);padding:1px 5px;border-radius:3px;margin-top:5px}
+.card-count{font-size:26px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:3px}
+.tog{position:absolute;top:8px;right:8px;font-size:9px;color:var(--t4);font-weight:700;background:var(--bg);border:1px solid var(--b1);border-radius:4px;padding:1px 5px;transition:background .12s,color .12s}
+.card.click:hover .tog{background:var(--t1);color:var(--white);border-color:var(--t1)}
+.tip{position:absolute;bottom:calc(100% + 8px);left:0;background:var(--t1);color:#fff;font-size:11px;padding:5px 9px;border-radius:5px;white-space:nowrap;pointer-events:none;opacity:0;z-index:500;box-shadow:var(--sh1);transition:opacity .12s}
+.card:hover .tip{opacity:1}
+.tip::after{content:'';position:absolute;top:100%;left:14px;border:4px solid transparent;border-top-color:var(--t1)}
+.ds{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t4);margin:12px 0 6px;padding-left:2px}
+
+/* OFFICES */
+.reg{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin:20px 0 8px;padding-left:8px;border-left:2px solid var(--t1)}
+.reg.dim{opacity:.38}
+.og{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.oc{background:var(--white);border:1px solid var(--b1);border-radius:var(--r);padding:12px 14px;display:flex;gap:10px;align-items:flex-start;box-shadow:var(--sh0);transition:box-shadow .14s}
+.oc:hover{box-shadow:var(--sh1)}
+.oc.dim{opacity:.35;background:#fafafa}
+.o-f{font-size:22px;line-height:1;flex-shrink:0;padding-top:2px}
+.o-n{font-size:13px;font-weight:700;color:var(--t1)}
+.o-s{font-size:10px;color:var(--t3);margin-top:1px}
+.o-contacts{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.o-person{display:flex;align-items:baseline;gap:5px}
+.o-person-name{font-size:11px;font-weight:600;color:var(--t2)}
+.o-person-role{font-size:10px;color:var(--t4)}
+.o-t{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.ot{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:1px 6px;border-radius:3px;border:1px solid var(--b1);color:var(--t3);background:var(--bg)}
+.ot.a{border-color:#bbf7d0;color:#166534;background:#f0fdf4}
+.ot.n{color:var(--t4)}
+.ot.s{border-color:var(--b2);color:var(--t2);font-weight:700}
+.ot.h{border-color:var(--t1);color:var(--t1);font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <img class="logo-img" src="orn-logo.png" alt="ORN"
+    onerror="this.style.display='none';document.getElementById('lt').style.display='block'">
+  <span id="lt" style="display:none" class="logo-txt">ORN Group</span>
+  <div class="hdr-sep"></div>
+  <div class="hdr-info">
+    <h1>Global Organisation Chart</h1>
+    <p>Founders · Management · All Department Heads · Worldwide Offices</p>
+  </div>
+  <div class="hdr-kpis">
+    <div class="kpi"><div class="kpi-n">698</div><div class="kpi-l">India Staff</div></div>
+    <div class="kpi"><div class="kpi-n">36</div><div class="kpi-l">Offices</div></div>
+    <div class="kpi"><div class="kpi-n">22</div><div class="kpi-l">Active</div></div>
+    <div class="kpi"><div class="kpi-n">5</div><div class="kpi-l">Continents</div></div>
+  </div>
+</header>
+
+<div class="page">
+<div class="sh">Leadership &amp; Organisation</div>
+<div class="org">
+
+<!-- ══ CEO ══ -->
+<div class="card-row">
+  <div class="card c-ceo click" onclick="tog(this,'vinay')">
+    <div class="tip">Founder &amp; CEO — ORN Group / TripFactory</div>
+    <div class="tog" id="t-vinay">−</div>
+    <div class="card-av">VG</div>
+    <div class="card-name">Vinay Gupta</div>
+    <div class="card-role">Founder &amp; Chief Executive Officer</div>
+    <div class="card-tag">FOUNDER · CEO</div>
+  </div>
+</div>
+
+<div class="children" id="c-vinay">
+
+  <!-- ══ FOUNDERS ══ -->
+  <div class="ds">Founders &amp; Co-Founders</div>
+  <div class="card-row">
+
+    <div class="card c-fo click" onclick="tog(this,'raj')">
+      <div class="tip">Chief Operating Officer — London HQ</div>
+      <div class="tog" id="t-raj">−</div>
+      <div class="card-av">RK</div>
+      <div class="card-name">Raj Kumar</div>
+      <div class="card-role">Chief Operating Officer</div>
+      <div class="card-tag">COO · LONDON</div>
+    </div>
+
+    <div class="card c-fo click" onclick="tog(this,'amit')">
+      <div class="tip">Co-Founder — Technology &amp; Product</div>
+      <div class="tog" id="t-amit">−</div>
+      <div class="card-av">AA</div>
+      <div class="card-name">Amit Aggarwal</div>
+      <div class="card-role">Co-Founder — Technology &amp; Product</div>
+      <div class="card-tag">FOUNDER</div>
+    </div>
+
+    <div class="card c-fo">
+      <div class="tip">Co-Founder</div>
+      <div class="card-av">AK</div>
+      <div class="card-name">Ankit Agarwal</div>
+      <div class="card-role">Co-Founder</div>
+      <div class="card-tag">FOUNDER</div>
+    </div>
+
+    <div class="card c-fo click" onclick="tog(this,'ankush')">
+      <div class="tip">Co-Founder — HR &amp; People</div>
+      <div class="tog" id="t-ankush">−</div>
+      <div class="card-av">AA</div>
+      <div class="card-name">Ankush Agarwal</div>
+      <div class="card-role">Co-Founder</div>
+      <div class="card-tag">FOUNDER</div>
+    </div>
+
+    <div class="card c-fo">
+      <div class="tip">Co-Founder</div>
+      <div class="card-av">VG</div>
+      <div class="card-name">Varun Gupta</div>
+      <div class="card-role">Co-Founder</div>
+      <div class="card-tag">FOUNDER</div>
+    </div>
+
+  </div><!-- /founders -->
+
+  <!-- RAJ subtree -->
+  <div class="children" id="c-raj">
+    <div class="ds">London HQ — C-Suite</div>
+    <div class="card-row">
+      <div class="card c-cs click" onclick="tog(this,'alia')">
+        <div class="tip">Chief People Officer — London HQ</div>
+        <div class="tog" id="t-alia">−</div>
+        <div class="card-av">AT</div>
+        <div class="card-name">Alia Taub</div>
+        <div class="card-role">Chief People Officer</div>
+        <div class="card-tag">CPO · LONDON</div>
+      </div>
+      <div class="card c-cs">
+        <div class="tip">Global Business Development — London HQ</div>
+        <div class="card-av">AK</div>
+        <div class="card-name">Ajay Kawa</div>
+        <div class="card-role">Global Business Development</div>
+        <div class="card-tag">BTO · LONDON</div>
+      </div>
+      <div class="card c-tm">
+        <div class="card-count">4</div>
+        <div class="card-name">London Office</div>
+        <div class="card-role">UK &amp; European HQ</div>
+      </div>
+    </div>
+    <div class="children" id="c-alia">
+      <div class="ds">HR &amp; People — Managers</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Lead Talent Acquisition · Bengaluru · 3 reports</div><div class="card-av">RV</div><div class="card-name">Roshan V V</div><div class="card-role">Lead — Talent Acquisition</div><div class="card-tag">3 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager HR Operations · 4 reports</div><div class="card-av">KP</div><div class="card-name">Krishna Prasad B P</div><div class="card-role">Asst Mgr — HR Ops</div><div class="card-tag">4 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Senior Manager Payroll · 1 report</div><div class="card-av">EM</div><div class="card-name">Eswara Rao Madugula</div><div class="card-role">Sr Manager — Payroll</div></div>
+        <div class="card c-tm"><div class="card-count">13</div><div class="card-name">HR &amp; Admin</div><div class="card-role">Recruitment · Ops · Payroll · L&amp;D</div></div>
+      </div>
+    </div>
+  </div><!-- /raj -->
+
+  <!-- AMIT subtree -->
+  <div class="children" id="c-amit">
+    <div class="ds">Technology — VP &amp; Directors</div>
+    <div class="card-row">
+      <div class="card c-vp click" onclick="tog(this,'vcto')">
+        <div class="tip">VP Engineering / CTO — leads all engineering teams</div>
+        <div class="tog" id="t-vcto">−</div>
+        <div class="card-av">VG</div>
+        <div class="card-name">Varun Gupta</div>
+        <div class="card-role">VP Engineering / CTO</div>
+        <div class="card-tag">TECHNOLOGY</div>
+      </div>
+      <div class="card c-vp"><div class="tip">Director of Product · Noida</div><div class="card-av">NM</div><div class="card-name">Nitin Kumar Madeshia</div><div class="card-role">Director of Product</div><div class="card-tag">PRODUCT</div></div>
+      <div class="card c-vp"><div class="tip">Director of Product · Noida</div><div class="card-av">MB</div><div class="card-name">Mohsin Ahmed Batla</div><div class="card-role">Director of Product</div><div class="card-tag">PRODUCT</div></div>
+      <div class="card c-vp"><div class="tip">SVP DevOps &amp; Infrastructure · Bengaluru</div><div class="card-av">SD</div><div class="card-name">Shrinivas Devarkonda</div><div class="card-role">SVP — DevOps &amp; Infrastructure</div><div class="card-tag">INFRA</div></div>
+      <div class="card c-vp"><div class="tip">Senior Product Exec — reports to Asad Siddiqui</div><div class="card-av">AS</div><div class="card-name">Asad Siddiqui</div><div class="card-role">Senior Manager — Product</div><div class="card-tag">PRODUCT</div></div>
+    </div>
+    <div class="children" id="c-vcto">
+      <div class="ds">Engineering Managers</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Sr Engineering Manager · 13 reports</div><div class="card-av">SR</div><div class="card-name">Sirajuddin Reniman</div><div class="card-role">Sr Engineering Manager</div><div class="card-tag">13 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">VP Engineering · Delhi · 23 reports</div><div class="card-av">RG</div><div class="card-name">Ram Krishna Garg</div><div class="card-role">VP Engineering (Delhi)</div><div class="card-tag">23 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Engineering Manager · 9 reports</div><div class="card-av">VS</div><div class="card-name">Vishal Sinha</div><div class="card-role">Engineering Manager</div><div class="card-tag">9 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Sr Engineering Manager · 6 reports</div><div class="card-av">SK</div><div class="card-name">Sachin Kushawaha</div><div class="card-role">Sr Engineering Manager</div><div class="card-tag">6 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Sr Engineering Manager · 4 reports</div><div class="card-av">SB</div><div class="card-name">Shubham Baranwal</div><div class="card-role">Sr Engineering Manager</div><div class="card-tag">4 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Technical Lead · Siliguri · 1 report</div><div class="card-av">DM</div><div class="card-name">Deepankar Mondal</div><div class="card-role">Technical Lead · Siliguri</div></div>
+        <div class="card c-mg"><div class="tip">Lead Software Engineer · 2 reports</div><div class="card-av">KG</div><div class="card-name">Kshitiz Gupta</div><div class="card-role">Lead Software Engineer</div></div>
+        <div class="card c-mg"><div class="tip">Sr Product Designer · 3 reports</div><div class="card-av">TA</div><div class="card-name">Thageer Ashraf S</div><div class="card-role">Sr Product Designer</div></div>
+        <div class="card c-mg"><div class="tip">AI Solution Architect · 1 report</div><div class="card-av">AB</div><div class="card-name">Arpan Biswas</div><div class="card-role">AI Solution Architect</div></div>
+        <div class="card c-tm"><div class="card-count">91</div><div class="card-name">Technology</div><div class="card-role">Engineers · QA · Design · AI · Interns</div></div>
+      </div>
+    </div>
+  </div><!-- /amit -->
+
+  <!-- ANKUSH subtree -->
+  <div class="children" id="c-ankush">
+    <div class="ds">HR — Siliguri Hub</div>
+    <div class="card-row">
+      <div class="card c-vp"><div class="tip">HR Team Lead · Siliguri · 13 reports incl. Poonam</div><div class="card-av">PR</div><div class="card-name">Puja Roy</div><div class="card-role">HR Team Lead · Siliguri</div><div class="card-tag">HR · SILIGURI</div></div>
+    </div>
+  </div>
+
+  <!-- ══ DIRECTORS & VP LAYER ══ -->
+  <div class="ds">Directors &amp; VP Layer</div>
+  <div class="card-row">
+
+    <div class="card c-cs click" onclick="tog(this,'lalitha')">
+      <div class="tip">Director India Operations · 698 staff · 40 direct reports</div>
+      <div class="tog" id="t-lalitha">−</div>
+      <div class="card-av">LP</div>
+      <div class="card-name">Lalitha P</div>
+      <div class="card-role">Director — India Operations</div>
+      <div class="card-tag">INDIA HQ · 698 STAFF</div>
+    </div>
+
+    <div class="card c-cs click" onclick="tog(this,'ashish')">
+      <div class="tip">VP Product &amp; Growth · Gurgaon</div>
+      <div class="tog" id="t-ashish">−</div>
+      <div class="card-av">AY</div>
+      <div class="card-name">Ashish Yadav</div>
+      <div class="card-role">VP — Product &amp; Growth</div>
+      <div class="card-tag">PRODUCT · GURGAON</div>
+    </div>
+
+    <!-- Sachidanand Keni — external senior (Air Ticketing) -->
+    <div class="card c-cs">
+      <div class="tip">Senior Air Ticketing Head — manages ticketing operations</div>
+      <div class="card-av">SC</div>
+      <div class="card-name">Sachidanand Keni</div>
+      <div class="card-role">Head — Air Ticketing Operations</div>
+      <div class="card-tag">AIR TICKETING</div>
+    </div>
+
+    <!-- Seema Tabbasum — external, KAM Middle East -->
+    <div class="card c-cs">
+      <div class="tip">Head KAM Sales · Middle East · 3 Key Account Managers</div>
+      <div class="card-av">ST</div>
+      <div class="card-name">Seema Tabbasum</div>
+      <div class="card-role">Head — KAM Sales</div>
+      <div class="card-tag">KAM · MIDDLE EAST</div>
+    </div>
+
+  </div>
+
+  <!-- LALITHA subtree -->
+  <div class="children" id="c-lalitha">
+
+    <!-- ── SALES ── -->
+    <div class="ds">Sales — VP &amp; Field Heads</div>
+    <div class="card-row">
+      <div class="card c-vp click" onclick="tog(this,'gauri')">
+        <div class="tip">VP Sales — B2C, B2B, Groups, Field, Middle East</div>
+        <div class="tog" id="t-gauri">−</div>
+        <div class="card-av">GG</div>
+        <div class="card-name">Gauri Shankar Gaud</div>
+        <div class="card-role">VP — Sales &amp; Field Sales</div>
+        <div class="card-tag">SALES VP</div>
+      </div>
+    </div>
+
+    <div class="children" id="c-gauri">
+      <div class="ds">Sales — Senior Managers &amp; Regional Heads</div>
+      <div class="card-row">
+        <div class="card c-mg click" onclick="tog(this,'asif')">
+          <div class="tip">VP Sales · Delhi · 6 direct reports</div>
+          <div class="tog" id="t-asif">−</div>
+          <div class="card-av">MA</div>
+          <div class="card-name">Mohd Asif</div>
+          <div class="card-role">VP — Sales (Delhi)</div>
+          <div class="card-tag">6 REPORTS</div>
+        </div>
+        <div class="card c-mg click" onclick="tog(this,'nagaraju')">
+          <div class="tip">Sales Head B2B South India · 14 direct reports</div>
+          <div class="tog" id="t-nagaraju">−</div>
+          <div class="card-av">NB</div>
+          <div class="card-name">Nagaraju B K</div>
+          <div class="card-role">Sales Head — B2B South India</div>
+          <div class="card-tag">14 REPORTS</div>
+        </div>
+        <div class="card c-mg click" onclick="tog(this,'vikas')">
+          <div class="tip">Sales Manager North · Gurgaon · 3 direct reports</div>
+          <div class="tog" id="t-vikas">−</div>
+          <div class="card-av">VK</div>
+          <div class="card-name">Vikas Sharma</div>
+          <div class="card-role">Sales Manager — North</div>
+          <div class="card-tag">3 REPORTS</div>
+        </div>
+        <div class="card c-mg"><div class="tip">Area Sales Manager · Haryana · 1 report</div><div class="card-av">RK</div><div class="card-name">Rajesh Kumar</div><div class="card-role">Area Sales Manager — Haryana</div></div>
+        <div class="card c-mg"><div class="tip">Area Sales Manager · Gujarat · 2 reports</div><div class="card-av">AJ</div><div class="card-name">Ajit Sheth</div><div class="card-role">Area Sales Manager — Gujarat</div></div>
+      </div>
+
+      <!-- Asif subtree -->
+      <div class="children" id="c-asif">
+        <div class="ds">Field Sales North</div>
+        <div class="card-row">
+          <div class="card c-mg"><div class="card-av">GS</div><div class="card-name">Giriraj Singh</div><div class="card-role">BDM — Delhi</div></div>
+          <div class="card c-mg"><div class="card-av">SG</div><div class="card-name">Satyendra Goswami</div><div class="card-role">BDM — Delhi</div></div>
+          <div class="card c-mg"><div class="card-av">DD</div><div class="card-name">Dharmanand Dixit</div><div class="card-role">Area Sales Mgr — Lucknow</div></div>
+          <div class="card c-tm"><div class="card-count">6</div><div class="card-name">North Field Team</div><div class="card-role">BDMs &amp; BDEs</div></div>
+        </div>
+      </div>
+
+      <!-- Nagaraju subtree -->
+      <div class="children" id="c-nagaraju">
+        <div class="ds">B2B Field Sales South</div>
+        <div class="card-row">
+          <div class="card c-mg"><div class="card-av">AP</div><div class="card-name">Athul P S</div><div class="card-role">BDM — Kerala</div></div>
+          <div class="card c-tm"><div class="card-count">14</div><div class="card-name">South Field Team</div><div class="card-role">BDEs · Bengaluru, Chennai, Kochi, Hyderabad, Vizag</div></div>
+        </div>
+      </div>
+
+      <!-- Vikas subtree -->
+      <div class="children" id="c-vikas">
+        <div class="ds">North Sales Team (under Vikas)</div>
+        <div class="card-row">
+          <div class="card c-mg"><div class="tip">Asst Manager · 18 direct reports · Gurgaon</div><div class="card-av">VG</div><div class="card-name">Vivek Gurjar</div><div class="card-role">Asst Manager — Sales (Gurgaon)</div><div class="card-tag">18 REPORTS</div></div>
+          <div class="card c-mg"><div class="tip">Sales &amp; Operations Manager Oceania</div><div class="card-av">BG</div><div class="card-name">Bharat Bhushan Gulati</div><div class="card-role">Sales &amp; Ops Manager — Oceania</div></div>
+          <div class="card c-mg"><div class="tip">Head Embassy Relationships · Gurgaon</div><div class="card-av">ML</div><div class="card-name">Mahesh Kumar Lakra</div><div class="card-role">Head — Embassy Relationships</div></div>
+        </div>
+      </div>
+
+      <div class="ds">Sales — Team Leads &amp; Managers (under Lalitha)</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Sr Manager B2C · 37 direct reports</div><div class="card-av">MV</div><div class="card-name">Martina Vasan</div><div class="card-role">Sr Mgr — B2C Performance</div><div class="card-tag">37 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Sr Manager B2B · 2 direct reports</div><div class="card-av">NT</div><div class="card-name">Neda Sadaf Tajuddin</div><div class="card-role">Sr Mgr — B2B Performance</div><div class="card-tag">2 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Sales · 16 reports · FCD &amp; B2B Support</div><div class="card-av">BJ</div><div class="card-name">Bhagya Jyothi B</div><div class="card-role">Asst Manager — Sales</div><div class="card-tag">16 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Sales · 44 direct reports</div><div class="card-av">DK</div><div class="card-name">Deepak Kumar Singh</div><div class="card-role">Asst Manager — Sales</div><div class="card-tag">44 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead Sales · 19 direct reports</div><div class="card-av">PR</div><div class="card-name">Periyaraj Ravichandran</div><div class="card-role">Team Lead — Sales</div><div class="card-tag">19 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">BDM Groups &amp; MICE · 18 reports</div><div class="card-av">PJ</div><div class="card-name">J Priscilla John</div><div class="card-role">BDM — Groups &amp; MICE</div><div class="card-tag">18 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager · 3 direct reports</div><div class="card-av">PG</div><div class="card-name">Pulkit Gupta</div><div class="card-role">Asst Manager — Sales (Gurgaon)</div><div class="card-tag">3 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead Sales · 32 direct reports · Siliguri</div><div class="card-av">SD</div><div class="card-name">Sanket De</div><div class="card-role">Team Lead — Sales (Siliguri)</div><div class="card-tag">32 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead · 7 direct reports · Siliguri</div><div class="card-av">AC</div><div class="card-name">Ankita Chakraborty</div><div class="card-role">Team Lead — Domestic (Siliguri)</div><div class="card-tag">7 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Middle East · 2 reports</div><div class="card-av">SF</div><div class="card-name">Saba Firdose</div><div class="card-role">Asst Mgr — Middle East</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead Mumbai B2B Field</div><div class="card-av">LS</div><div class="card-name">Lalit S Sawant</div><div class="card-role">Team Lead — Mumbai B2B</div></div>
+        <div class="card c-mg"><div class="tip">Process Manager Onboarding · 4 reports</div><div class="card-av">CG</div><div class="card-name">Chethan G K</div><div class="card-role">Process Manager — Onboarding</div></div>
+        <div class="card c-tm"><div class="card-count">291</div><div class="card-name">Sales</div><div class="card-role">B2C · B2B · Groups · Field · ME · Franchise</div></div>
+      </div>
+    </div><!-- /c-gauri -->
+
+    <!-- ── CONTRACTING & PRODUCT ── -->
+    <div class="ds">Contracting &amp; Product</div>
+    <div class="card-row">
+      <div class="card c-vp"><div class="tip">Contracting &amp; Marketing Head UK &amp; Europe · Mumbai · 14 reports</div><div class="card-av">SK</div><div class="card-name">Saif Ansar Khan</div><div class="card-role">Head — Contracting &amp; Marketing UK &amp; Europe</div><div class="card-tag">14 REPORTS</div></div>
+      <div class="card c-vp"><div class="tip">Head North Contracting · Gurgaon — reports to Vinay Gupta</div><div class="card-av">RG</div><div class="card-name">Rajeev Gautam</div><div class="card-role">Head — North Contracting</div></div>
+    </div>
+
+    <!-- ── OPERATIONS ── -->
+    <div class="ds">Operations — Department Heads</div>
+    <div class="card-row">
+      <div class="card c-vp click" onclick="tog(this,'ops')">
+        <div class="tip">Flights · DMC · Visa · Care · Europe · Domestic</div>
+        <div class="tog" id="t-ops">−</div>
+        <div class="card-av">OPS</div>
+        <div class="card-name">Operations</div>
+        <div class="card-role">Multi-department Operations</div>
+        <div class="card-tag">OPERATIONS</div>
+      </div>
+    </div>
+
+    <div class="children" id="c-ops">
+      <div class="ds">Flights — Siliguri Hub</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Head Revenue &amp; Ops Flights · Siliguri · 34 reports</div><div class="card-av">PT</div><div class="card-name">Poonam Kumari Thapa</div><div class="card-role">Head — Revenue &amp; Ops (Flights)</div><div class="card-tag">34 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Leader Air Ticketing · Siliguri</div><div class="card-av">BR</div><div class="card-name">Bikash Roy</div><div class="card-role">Team Lead — Air Ticketing</div></div>
+        <div class="card c-mg"><div class="tip">Team Leader Air Ticketing · Siliguri</div><div class="card-av">BC</div><div class="card-name">Bidesh Chowdhury</div><div class="card-role">Team Lead — Air Ticketing</div></div>
+        <div class="card c-mg"><div class="tip">Dep. Manager Flights Ops · Bengaluru · 3 reports</div><div class="card-av">TS</div><div class="card-name">Tousif Sait</div><div class="card-role">Dep. Manager — Flights Ops</div><div class="card-tag">3 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Flights · Bengaluru · 6 reports</div><div class="card-av">MN</div><div class="card-name">Mohammed Nabeel Faraz</div><div class="card-role">Asst Mgr — Flights (BLR)</div><div class="card-tag">6 REPORTS</div></div>
+        <div class="card c-tm"><div class="card-count">50+</div><div class="card-name">Air Ticketing</div><div class="card-role">Siliguri &amp; Bengaluru Ticketing Staff</div></div>
+      </div>
+
+      <div class="ds">DMC Operations — Dubai, Thailand &amp; Regional</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Manager DMC Dubai · 10 reports</div><div class="card-av">MA</div><div class="card-name">Mohammed Arif S</div><div class="card-role">Manager — DMC Dubai</div><div class="card-tag">10 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Manager DMC Thailand · 22 reports</div><div class="card-av">IA</div><div class="card-name">Ifraq Ahmed R N</div><div class="card-role">Manager — DMC Thailand</div><div class="card-tag">22 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Malaysia/Singapore · 9 reports</div><div class="card-av">SS</div><div class="card-name">Sham Sunder V</div><div class="card-role">Asst Mgr — Malaysia/Singapore</div><div class="card-tag">9 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead Vietnam Ops · 4 reports</div><div class="card-av">BD</div><div class="card-name">Bipul Daimari</div><div class="card-role">Team Lead — Vietnam Ops</div><div class="card-tag">4 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead Rest of World · 10 reports</div><div class="card-av">MM</div><div class="card-name">Magesh Mohanraj</div><div class="card-role">Team Lead — Rest of World</div><div class="card-tag">10 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Lead Domestic Ops · 8 reports</div><div class="card-av">MS</div><div class="card-name">Mohammed Suhail</div><div class="card-role">Team Lead — Domestic Ops</div><div class="card-tag">8 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Indonesia · 2 reports</div><div class="card-av">JH</div><div class="card-name">Jaychandra H S</div><div class="card-role">Asst Mgr — Indonesia</div></div>
+      </div>
+
+      <div class="ds">Europe Operations — Mumbai Hub</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">FIT Ops Head Europe · Mumbai · 7 reports</div><div class="card-av">PO</div><div class="card-name">Puja Vivekanand Onekar</div><div class="card-role">FIT Ops Head — Europe</div><div class="card-tag">7 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Tour Manager Europe · Mumbai · 18 reports</div><div class="card-av">AS</div><div class="card-name">Amir Shafi Shaikh</div><div class="card-role">Tour Manager — Europe</div><div class="card-tag">18 REPORTS</div></div>
+      </div>
+
+      <div class="ds">Visa Operations</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Manager Visa Ops · Bengaluru · 9 reports</div><div class="card-av">RS</div><div class="card-name">Reginold Simon</div><div class="card-role">Manager — Visa Operations</div><div class="card-tag">9 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Regional Head Visa North &amp; West · Gurgaon · 4 reports</div><div class="card-av">SC</div><div class="card-name">Sanjeev Kumar Chhikara</div><div class="card-role">Regional Head — Visa N&amp;W</div><div class="card-tag">4 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Visa Ops · Bengaluru</div><div class="card-av">CK</div><div class="card-name">Chhaya Kumari</div><div class="card-role">Asst Manager — Visa Ops</div></div>
+      </div>
+
+      <div class="ds">Customer Care &amp; Support</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Dep. Manager Ops Care · 2 reports</div><div class="card-av">SH</div><div class="card-name">Shashank H M</div><div class="card-role">Dep. Manager — Care &amp; Ops</div><div class="card-tag">2 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Manager Care · 23 reports</div><div class="card-av">KS</div><div class="card-name">Kaushik S</div><div class="card-role">Asst Manager — Care Ops</div><div class="card-tag">23 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Team Leader Escalations · 4 reports</div><div class="card-av">TR</div><div class="card-name">Thanush Reddy S B</div><div class="card-role">Team Leader — Escalations</div></div>
+        <div class="card c-mg"><div class="tip">Team Leader Care · 4 reports</div><div class="card-av">FS</div><div class="card-name">Faisal Syed Mukthar Shah</div><div class="card-role">Team Leader — Care</div></div>
+        <div class="card c-mg"><div class="tip">Deputy Manager Group Desk</div><div class="card-av">SA</div><div class="card-name">Shaik Abdul Masroor</div><div class="card-role">Dep. Manager — Group Desk</div></div>
+        <div class="card c-tm"><div class="card-count">214</div><div class="card-name">Operations</div><div class="card-role">Flights · Visa · DMC · Care · Europe · Domestic</div></div>
+      </div>
+    </div><!-- /c-ops -->
+
+    <!-- ── FINANCE ── -->
+    <div class="ds">Finance — Head &amp; Managers</div>
+    <div class="card-row">
+      <div class="card c-vp click" onclick="tog(this,'fin')">
+        <div class="tip">Head Finance &amp; Accounts · Bengaluru</div>
+        <div class="tog" id="t-fin">−</div>
+        <div class="card-av">SP</div>
+        <div class="card-name">Surya Prakash Sunku</div>
+        <div class="card-role">Head — Finance &amp; Accounts</div>
+        <div class="card-tag">FINANCE HEAD</div>
+      </div>
+    </div>
+    <div class="children" id="c-fin">
+      <div class="ds">Finance Managers</div>
+      <div class="card-row">
+        <div class="card c-mg"><div class="tip">Asst Finance Manager F&amp;A · 3 reports</div><div class="card-av">SB</div><div class="card-name">Shashi Bansal</div><div class="card-role">Asst Finance Mgr — F&amp;A</div><div class="card-tag">3 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Asst Finance Manager · Delhi</div><div class="card-av">SoC</div><div class="card-name">Sonu Chauhan</div><div class="card-role">Asst Finance Mgr — Delhi</div></div>
+        <div class="card c-mg click" onclick="tog(this,'sumi')">
+          <div class="tip">Treasury Manager · 7 total reports</div>
+          <div class="tog" id="t-sumi">−</div>
+          <div class="card-av">SuC</div>
+          <div class="card-name">Sumi Chanda</div>
+          <div class="card-role">Treasury Manager</div>
+          <div class="card-tag">TREASURY</div>
+        </div>
+        <div class="card c-mg"><div class="tip">Accounts Manager FinOps · 8 total reports</div><div class="card-av">RP</div><div class="card-name">Riddhi Ratilal Padiya</div><div class="card-role">Accounts Mgr — FinOps</div><div class="card-tag">8 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Accounts Manager FinOps · 9 total reports</div><div class="card-av">MG</div><div class="card-name">Mallana Gouda</div><div class="card-role">Accounts Mgr — FinOps</div><div class="card-tag">9 REPORTS</div></div>
+        <div class="card c-mg"><div class="tip">Accounts Manager F&amp;A · 2 reports</div><div class="card-av">AKB</div><div class="card-name">Ankush Kumar Bhadani</div><div class="card-role">Accounts Mgr — F&amp;A</div></div>
+        <div class="card c-mg"><div class="tip">IATA BSP Administrator · 3 reports</div><div class="card-av">AKR</div><div class="card-name">Abhilash K R</div><div class="card-role">Accounts Mgr — IATA BSP</div><div class="card-tag">3 REPORTS</div></div>
+        <div class="card c-tm"><div class="card-count">39</div><div class="card-name">Finance</div><div class="card-role">F&amp;A · Treasury · FinOps · IATA · Payroll</div></div>
+      </div>
+      <div class="children" id="c-sumi">
+        <div class="ds">Treasury Team</div>
+        <div class="card-row">
+          <div class="card c-mg"><div class="tip">Deputy Manager Accounts · Treasury · 3 reports</div><div class="card-av">AM</div><div class="card-name">Ananda M</div><div class="card-role">Dep. Manager — Accounts</div><div class="card-tag">3 REPORTS</div></div>
+          <div class="card c-mg"><div class="tip">Deputy Manager Accounts · Treasury · 2 reports</div><div class="card-av">KR</div><div class="card-name">Keerthi R</div><div class="card-role">Dep. Manager — Accounts</div><div class="card-tag">2 REPORTS</div></div>
+        </div>
+      </div>
+    </div><!-- /c-fin -->
+
+  </div><!-- /c-lalitha -->
+
+  <!-- ASHISH subtree -->
+  <div class="children" id="c-ashish">
+    <div class="ds">Product &amp; Growth — Team</div>
+    <div class="card-row">
+      <div class="card c-vp"><div class="tip">Sr Product Manager · Mumbai · 33 direct reports</div><div class="card-av">DM</div><div class="card-name">Disha Mooljee</div><div class="card-role">Sr Product Manager · Mumbai</div><div class="card-tag">33 REPORTS</div></div>
+      <div class="card c-vp"><div class="tip">Contracting Manager · Gurgaon</div><div class="card-av">SP</div><div class="card-name">Shaurya Pratap Singh</div><div class="card-role">Contracting Manager</div><div class="card-tag">CONTRACTING</div></div>
+      <div class="card c-vp"><div class="tip">Business Head B2B · Gurgaon</div><div class="card-av">AS</div><div class="card-name">Angad Shishodia</div><div class="card-role">Business Head — B2B</div></div>
+      <div class="card c-vp"><div class="tip">Bangalore Head B2B</div><div class="card-av">RI</div><div class="card-name">Richie</div><div class="card-role">Bangalore Head — B2B</div></div>
+      <div class="card c-vp"><div class="tip">Supply Relationship Manager · Gurgaon</div><div class="card-av">SG</div><div class="card-name">Shriya Gupta</div><div class="card-role">Supply Relationship Manager</div></div>
+      <div class="card c-vp"><div class="tip">Asst Manager Product · Bengaluru</div><div class="card-av">NR</div><div class="card-name">Naveen Rajesh</div><div class="card-role">Asst Manager — Product</div></div>
+      <div class="card c-tm"><div class="card-count">50</div><div class="card-name">Product</div><div class="card-role">Product Execs · Contracting · Supply</div></div>
+    </div>
+  </div>
+
+</div><!-- /c-vinay -->
+</div><!-- /org -->
+
+<!-- ══════════ OFFICES ══════════ -->
+<div class="divider"></div>
+<div class="sh">Worldwide Offices — People &amp; Positions</div>
+
+<div class="reg">🌍 Europe — Active</div>
+<div class="og">
+
+  <div class="oc" style="border-width:1.5px;border-color:var(--b2)">
+    <div class="o-f">🇬🇧</div>
+    <div>
+      <div class="o-n">London, United Kingdom</div>
+      <div class="o-s">Global HQ · Physical Office · B2C, B2B, Contracting</div>
+      <div class="o-contacts">
+        <div class="o-person"><span class="o-person-name">Raj Kumar</span><span class="o-person-role">— Chief Operating Officer</span></div>
+        <div class="o-person"><span class="o-person-name">Ajay Kawa</span><span class="o-person-role">— Global Business Development (BTO)</span></div>
+        <div class="o-person"><span class="o-person-name">Alia Taub</span><span class="o-person-role">— Chief People Officer</span></div>
+      </div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">4 staff</span><span class="ot h">Global HQ</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇩🇪</div>
+    <div>
+      <div class="o-n">Frankfurt, Germany</div>
+      <div class="o-s">German-speaking market · Physical Office</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Moaz Ghani</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇫🇷</div>
+    <div>
+      <div class="o-n">Paris, France</div>
+      <div class="o-s">French-speaking market · Physical Office</div>
+      <div class="o-contacts">
+        <div class="o-person"><span class="o-person-name">Paolina Zunino</span><span class="o-person-role">— Country Partner</span></div>
+        <div class="o-person"><span class="o-person-name">Renaud Lenne</span><span class="o-person-role">— Country Partner</span></div>
+      </div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">5 staff · 5 drivers</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇮🇹</div>
+    <div>
+      <div class="o-n">Italy</div>
+      <div class="o-s">Italian market sales partner</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Daniele</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">6 staff</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇹🇷</div>
+    <div>
+      <div class="o-n">Istanbul, Turkey</div>
+      <div class="o-s">Inbound DMC + outbound sales</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Baris Intepe</span><span class="o-person-role">— Country Partner / DMC Head</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">9 staff</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇨🇿</div>
+    <div>
+      <div class="o-n">Prague, Czech Republic</div>
+      <div class="o-s">Central European market · Virtual</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Marta Zizkova</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇵🇱</div>
+    <div>
+      <div class="o-n">Poland</div>
+      <div class="o-s">Polish market · Virtual</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Krzysztof Jamruszkiewicz</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇸🇰</div>
+    <div>
+      <div class="o-n">Slovakia (Nitra)</div>
+      <div class="o-s">Transport &amp; Fleet Operations</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Adonis</span><span class="o-person-role">— Fleet Operations Manager</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff · 8 drivers</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇬🇷</div>
+    <div>
+      <div class="o-n">Athens, Greece</div>
+      <div class="o-s">Inbound &amp; outbound DMC partner</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Argiris</span><span class="o-person-role">— Country Partner / DMC Head</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff</span></div>
+    </div>
+  </div>
+
+  <div class="oc">
+    <div class="o-f">🇧🇬</div>
+    <div>
+      <div class="o-n">Sofia, Bulgaria</div>
+      <div class="o-s">Market sales partner · Physical Office</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Adonis</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="reg dim">Europe — Non-Operational</div>
+<div class="og">
+  <div class="oc dim"><div class="o-f">🇪🇸</div><div><div class="o-n">Spain</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇨🇭</div><div><div class="o-n">Switzerland</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇮🇪</div><div><div class="o-n">Dublin, Ireland</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇦🇹</div><div><div class="o-n">Vienna, Austria</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇭🇷</div><div><div class="o-n">Croatia</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+</div>
+
+<div class="reg">🌏 Middle East</div>
+<div class="og">
+  <div class="oc">
+    <div class="o-f">🇦🇪</div>
+    <div>
+      <div class="o-n">Dubai, UAE</div>
+      <div class="o-s">B2C · Corporate · Luxury · Inbound/Outbound Hub</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Yassir Ahmed</span><span class="o-person-role">— Country Head / Office Manager</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">4 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇧🇭</div>
+    <div>
+      <div class="o-n">Manama, Bahrain</div>
+      <div class="o-s">Gulf market sales · Admin Office</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">KK Menon</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff</span></div>
+    </div>
+  </div>
+  <div class="oc dim"><div class="o-f">🇶🇦</div><div><div class="o-n">Doha, Qatar</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇴🇲</div><div><div class="o-n">Kuwait / Oman</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+</div>
+
+<div class="reg">🌏 South Asia</div>
+<div class="og">
+  <div class="oc" style="border-width:1.5px;border-color:var(--b2)">
+    <div class="o-f">🇮🇳</div>
+    <div>
+      <div class="o-n">India — Primary Execution Hub</div>
+      <div class="o-s">Bengaluru HQ · Siliguri · Mumbai · Gurgaon · Delhi · Noida</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Lalitha P</span><span class="o-person-role">— Director India Operations</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot h">698 staff</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="reg">🌏 Asia Pacific</div>
+<div class="og">
+  <div class="oc">
+    <div class="o-f">🇸🇬</div>
+    <div>
+      <div class="o-n">Singapore</div>
+      <div class="o-s">SEA hub · Premium outbound sales · Physical Office</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Maricar Manalo Chao</span><span class="o-person-role">— Regional Head, Southeast Asia</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">3 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇹🇭</div>
+    <div>
+      <div class="o-n">Bangkok, Thailand</div>
+      <div class="o-s">DMC partner · Inbound tourism · Physical Office</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Maricar Manalo Chao</span><span class="o-person-role">— Regional Head, Southeast Asia</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">7 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇮🇩</div>
+    <div>
+      <div class="o-n">Bali, Indonesia</div>
+      <div class="o-s">Bali DMC + outbound sales</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Sachin Kurte</span><span class="o-person-role">— Country Head / DMC Manager</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">8 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇵🇭</div>
+    <div>
+      <div class="o-n">Manila, Philippines</div>
+      <div class="o-s">Inbound / Outbound hub</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Maricar Manalo Chao</span><span class="o-person-role">— Regional Head, Southeast Asia</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">17 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇲🇾</div>
+    <div>
+      <div class="o-n">Kuala Lumpur, Malaysia</div>
+      <div class="o-s">Halal &amp; Muslim-friendly packages · Virtual</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Noor Adilah</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">1 staff</span></div>
+    </div>
+  </div>
+  <div class="oc dim"><div class="o-f">🇭🇰</div><div><div class="o-n">Hong Kong</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+</div>
+
+<div class="reg">🌎 Americas</div>
+<div class="og">
+  <div class="oc">
+    <div class="o-f">🇺🇸</div>
+    <div>
+      <div class="o-n">United States</div>
+      <div class="o-s">NY · Seattle · LA · Texas · Partner Network</div>
+      <div class="o-contacts">
+        <div class="o-person"><span class="o-person-name">Kirk Demeter</span><span class="o-person-role">— US Country Partner</span></div>
+        <div class="o-person"><span class="o-person-name">Kerryn Collins</span><span class="o-person-role">— US Country Partner</span></div>
+      </div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">64 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇵🇪</div>
+    <div>
+      <div class="o-n">Lima, Peru</div>
+      <div class="o-s">Peru market partner</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Daniel Rodrigue</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">30 staff</span></div>
+    </div>
+  </div>
+  <div class="oc">
+    <div class="o-f">🇦🇷</div>
+    <div>
+      <div class="o-n">Buenos Aires, Argentina</div>
+      <div class="o-s">Argentina market partner</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Maria Noelia Bonvin</span><span class="o-person-role">— Country Partner</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">6 staff</span></div>
+    </div>
+  </div>
+  <div class="oc dim"><div class="o-f">🇲🇽</div><div><div class="o-n">Mexico City</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇧🇷</div><div><div class="o-n">São Paulo, Brazil</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇨🇴</div><div><div class="o-n">Bogotá, Colombia</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇪🇨</div><div><div class="o-n">Quito, Ecuador</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+  <div class="oc dim"><div class="o-f">🇨🇱</div><div><div class="o-n">Santiago, Chile</div><div class="o-t"><span class="ot n">Non-Operational</span></div></div></div>
+</div>
+
+<div class="reg">🌏 Oceania</div>
+<div class="og">
+  <div class="oc">
+    <div class="o-f">🇦🇺</div>
+    <div>
+      <div class="o-n">Australia (Melbourne)</div>
+      <div class="o-s">Indian diaspora + mainstream outbound · Partner</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Sahil Nijhawan</span><span class="o-person-role">— Country Head, Australia &amp; NZ</span></div></div>
+      <div class="o-t"><span class="ot a">Active</span><span class="ot s">23 staff</span></div>
+    </div>
+  </div>
+  <div class="oc dim">
+    <div class="o-f">🇳🇿</div>
+    <div>
+      <div class="o-n">Auckland, New Zealand</div>
+      <div class="o-contacts"><div class="o-person"><span class="o-person-name">Sahil Nijhawan</span><span class="o-person-role">— Country Head, Australia &amp; NZ</span></div></div>
+      <div class="o-t"><span class="ot n">Non-Operational</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+function tog(card, id) {
+  event.stopPropagation();
+  const ch  = document.getElementById('c-' + id);
+  const btn = document.getElementById('t-' + id);
+  if (!ch) return;
+  const isOpen = ch.style.maxHeight !== '0px' && ch.style.maxHeight !== '';
+  if (isOpen) {
+    ch.style.maxHeight = ch.scrollHeight + 'px';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      ch.style.transition = 'max-height .3s ease,opacity .22s ease';
+      ch.style.maxHeight  = '0px';
+      ch.style.opacity    = '0';
+    }));
+    ch.classList.add('closed');
+    if (btn) btn.textContent = '+';
+  } else {
+    ch.classList.remove('closed');
+    ch.style.opacity = '0';
+    ch.style.transition = 'none';
+    ch.style.maxHeight = 'none';
+    const h = ch.scrollHeight;
+    ch.style.maxHeight = '0px';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      ch.style.transition = 'max-height .35s ease,opacity .25s ease';
+      ch.style.maxHeight  = h + 'px';
+      ch.style.opacity    = '1';
+    }));
+    if (btn) btn.textContent = '−';
+  }
+}
+window.addEventListener('load', () => {
+  document.querySelectorAll('.children').forEach(el => {
+    el.style.transition = 'max-height .3s ease,opacity .22s ease';
+    el.style.maxHeight  = el.scrollHeight + 'px';
+    el.style.opacity    = '1';
+  });
+});
+</script>
+</body>
+</html>
