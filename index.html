@@ -464,13 +464,241 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lo .comment-btn{margin-top:7px}
 .lo .comment-panel{background:#fffdf0}
 
+
+
+
+/* ══ PAYROLL SUMMARY TAB ══ */
+.ps-totals{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.ps-total-card{flex:1;min-width:160px;background:#fff;border:1px solid var(--b1);border-radius:10px;padding:14px 18px;box-shadow:var(--sh0)}
+.ps-total-n{font-size:18px;font-weight:800;color:var(--t1);line-height:1}
+.ps-total-l{font-size:10px;color:var(--t3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.ps-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:4px}
+.ps-card{flex:1;min-width:240px;background:#fff;border-radius:10px;padding:16px 18px;box-shadow:var(--sh0)}
+.ps-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.ps-region{font-size:13px;font-weight:800;color:var(--t1)}
+.ps-headcount{font-size:11px;color:var(--t3);text-align:right}
+.ps-big{font-size:22px;font-weight:800;color:var(--t1);display:block;line-height:1}
+.ps-inr{font-size:16px;font-weight:800;color:var(--t1);margin-top:2px}
+.ps-mo{font-size:10px;color:var(--t3);font-weight:400}
+.ps-inr-yr{font-size:10px;color:var(--t3);margin-top:1px}
+.ps-bar-wrap{background:var(--b1);border-radius:4px;height:6px;margin:8px 0 4px;overflow:hidden}
+.ps-bar{height:100%;border-radius:4px;transition:width .4s ease}
+.ps-pct{font-size:9px;color:var(--t4);margin-bottom:8px}
+.ps-curs{display:flex;flex-direction:column;gap:3px;margin-top:6px;border-top:1px solid var(--b1);padding-top:8px}
+.ps-cur-row{display:flex;align-items:center;gap:6px;font-size:10px}
+.ps-cur-tag{background:var(--bg);border:1px solid var(--b1);border-radius:3px;padding:1px 5px;font-size:9px;font-weight:700;color:var(--t2);min-width:36px;text-align:center}
+.ps-cur-val{font-weight:700;color:var(--t1);flex:1}
+.ps-cur-cnt{color:var(--t4)}
+.ps-top-wrap{overflow-x:auto;margin-top:4px}
+.ps-top-table{width:100%;border-collapse:collapse;font-size:12px}
+.ps-top-table th{background:var(--t1);color:#fff;padding:8px 12px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.ps-top-table td{padding:8px 12px;border-bottom:1px solid var(--b1)}
+.ps-top-table tr:hover td{background:var(--bg)}
+.ps-rank{font-weight:800;color:var(--t3);width:36px}
+.ps-tname{font-weight:600}
+.ps-tloc{color:var(--t3);font-size:11px}
+.ps-tsal{font-weight:700;color:var(--t1)}
+.ps-tinr{color:#0f7b5e;font-weight:700}
+
+/* ══ HEADCOUNT TAB ══ */
+.hc-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.hc-row{display:flex;align-items:center;gap:10px;font-size:11px}
+.hc-loc{width:110px;font-weight:600;color:var(--t1);flex-shrink:0;font-size:11px}
+.hc-bar-wrap{flex:1;background:var(--b1);border-radius:4px;height:16px;overflow:hidden}
+.hc-bar{height:100%;border-radius:4px;transition:width .4s ease;min-width:4px}
+.hc-count{width:36px;text-align:right;font-weight:800;color:var(--t1)}
+.hc-inr{width:120px;text-align:right;color:var(--t3);font-size:10px}
+.dt-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}
+.dt-table th{background:var(--bg);border-bottom:2px solid var(--b1);padding:6px 8px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+.dt-table td{padding:5px 8px;border-bottom:1px solid var(--b1)}
+.dt-bar-wrap{background:var(--b1);border-radius:3px;height:10px;overflow:hidden;width:100%;min-width:60px}
+.dt-bar{height:100%;border-radius:3px;background:var(--ds);transition:width .4s}
+.dt-cnt{font-weight:700;text-align:right;padding-right:8px}
+.dt-pct{color:var(--t3);text-align:right}
+
+/* ══ REPORTING CHAIN TAB ══ */
+.rc-search-wrap{position:relative;margin-bottom:20px}
+.rc-input{width:100%;padding:13px 18px;border:2px solid var(--b1);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color .14s;background:#fff;box-shadow:var(--sh0)}
+.rc-input:focus{border-color:var(--t1)}
+.rc-results{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid var(--b2);border-radius:8px;box-shadow:var(--sh2);z-index:500;max-height:280px;overflow-y:auto}
+.rc-result{padding:10px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--b1);font-size:13px;font-weight:600}
+.rc-result:hover{background:var(--bg)}
+.rc-result-role{font-size:11px;color:var(--t3);font-weight:400}
+.rc-nores{padding:12px 16px;color:var(--t3);font-size:13px}
+.rc-chain-out{margin-top:8px}
+.rc-chain-section{margin-bottom:16px}
+.rc-chain-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3);margin-bottom:8px;padding-left:4px;border-left:3px solid var(--b2)}
+.rc-chain-node{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rc-chain-arrow{width:16px;color:var(--t4);font-size:12px;flex-shrink:0}
+.rc-chain-card{background:#fff;border:1px solid var(--b1);border-radius:7px;padding:7px 12px;box-shadow:var(--sh0)}
+.rc-cn-name{font-size:12px;font-weight:700;color:var(--t1)}
+.rc-cn-role{font-size:10px;color:var(--t3)}
+.rc-ph-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ds);margin-bottom:8px;padding-left:4px;border-left:3px solid var(--ds)}
+.rc-ph-card{background:var(--ds-l);border:1.5px solid var(--ds-b);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.rc-ph-av{width:40px;height:40px;border-radius:50%;background:var(--ds);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rc-ph-name{font-size:15px;font-weight:800;color:var(--t1)}
+.rc-ph-role{font-size:12px;color:var(--t2);margin-top:2px}
+.rc-ph-meta{font-size:11px;color:var(--t3);margin-top:3px}
+.rc-ph-mgr{font-size:11px;color:var(--t2);margin-top:4px}
+.rc-dr-card{display:inline-flex;flex-direction:column;background:#fff;border:1px solid var(--b1);border-radius:8px;padding:10px 14px;margin:4px;cursor:pointer;transition:box-shadow .12s,transform .1s;min-width:140px}
+.rc-dr-card:hover{box-shadow:var(--sh1);transform:translateY(-1px)}
+.rc-dr-name{font-size:12px;font-weight:700;color:var(--t1)}
+.rc-dr-role{font-size:10px;color:var(--t3);margin-top:2px}
+.rc-dr-sub{font-size:9px;color:var(--ds);font-weight:600;margin-top:4px}
+.rc-hint{background:var(--bg);border:1px solid var(--b1);border-radius:8px;padding:12px 16px;font-size:11px;color:var(--t3);margin-top:24px}
+
+/* ══ BOARD & LEADERSHIP TAB ══ */
+.bl-grid{display:flex;flex-direction:column;gap:24px}
+.bl-section{}
+.bl-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:10px;padding-left:8px;border-left:3px solid var(--b2)}
+.bl-cards{display:flex;flex-wrap:wrap;gap:10px}
+.bl-card{background:#fff;border:1px solid var(--b1);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;min-width:200px;max-width:280px;box-shadow:var(--sh0);flex:1}
+.bl-board{border-color:#374151;background:#f9fafb}
+.bl-founder{border-color:#F5C842;background:linear-gradient(135deg,#FFFDF0,#FFF8D6)}
+.bl-av{width:38px;height:38px;border-radius:50%;background:var(--ds-l);color:var(--ds);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--ds-b)}
+.bl-name{font-size:13px;font-weight:700;color:var(--t1);line-height:1.2}
+.bl-role{font-size:11px;color:var(--t2);margin-top:3px}
+.bl-loc{font-size:10px;color:var(--t3);margin-top:4px}
+.bl-stats-row{display:flex;flex-wrap:wrap;gap:14px;background:var(--t1);border-radius:12px;padding:20px 24px;margin-top:8px}
+.bl-stat{flex:1;min-width:100px;text-align:center}
+.bl-stat-n{font-size:22px;font-weight:800;color:#fff;line-height:1}
+.bl-stat-l{font-size:9px;color:rgba(255,255,255,.5);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+
+/* ══ SHARED NEW TABS ══ */
+.ps-kpi-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.ps-kpi{background:var(--white);border:1px solid var(--b1);border-radius:var(--r);padding:14px 18px;flex:1;min-width:140px;box-shadow:var(--sh0)}
+.ps-kn{font-size:22px;font-weight:800;color:var(--t1);line-height:1}
+.ps-kl{font-size:10px;color:var(--t3);margin-top:3px;text-transform:uppercase;letter-spacing:.8px}
+.ps-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid var(--b1)}
+.ps-note{font-size:10px;color:var(--t4);font-style:italic;margin-top:20px}
+
+/* ══ PAYROLL TAB ══ */
+.ps-grid{max-width:1100px}
+.ps-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:8px}
+.ps-table th{background:var(--t1);color:#fff;padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.8px}
+.ps-table th.num{text-align:right}
+.ps-table td{padding:7px 12px;border-bottom:1px solid var(--b1)}
+.ps-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ps-table td.local-cur{font-size:10px;color:var(--t3)}
+.ps-table td.indent{padding-left:28px;color:var(--t2)}
+tr.pr-region td{background:#f4f5f7;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+tr.pr-loc:hover td{background:#f9fafb}
+tr.pr-total td{background:var(--t1);color:#fff;font-weight:700}
+tr.pr-total td.num{color:#4ade80}
+.bar-chart{display:flex;flex-direction:column;gap:10px;max-width:700px}
+.bar-row{display:flex;align-items:center;gap:12px}
+.bar-label{width:180px;font-size:11px;color:var(--t2);flex-shrink:0}
+.bar-track{flex:1;height:18px;background:var(--b1);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#1d6fce,#0f5fa8);border-radius:4px;transition:width .6s ease}
+.bar-val{width:160px;font-size:11px;font-weight:600;color:var(--t1);flex-shrink:0}
+.bar-pct{color:var(--t4);font-weight:400}
+
+/* ══ HEADCOUNT TAB ══ */
+.hc-grid{max-width:1100px}
+.hc-two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+.hc-chart{display:flex;flex-direction:column;gap:7px}
+.hc-row{display:flex;align-items:center;gap:10px}
+.hc-loc{width:160px;font-size:11px;color:var(--t2);flex-shrink:0}
+.hc-track{flex:1;height:16px;background:var(--b1);border-radius:3px;overflow:hidden}
+.hc-fill{height:100%;background:linear-gradient(90deg,#0f7b5e,#0f5fa8);border-radius:3px}
+.hc-num{width:36px;font-size:11px;font-weight:700;color:var(--t1);text-align:right}
+.hc-dept-chart{display:flex;flex-direction:column;gap:10px}
+.hc-dept-row{display:flex;align-items:center;gap:10px}
+.hc-dept-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.hc-dept-name{width:100px;font-size:11px;color:var(--t2);flex-shrink:0}
+.hc-dept-bar-wrap{flex:1;height:14px;background:var(--b1);border-radius:3px;overflow:hidden}
+.hc-dept-bar{height:100%;border-radius:3px;opacity:.8}
+.hc-dept-num{width:80px;font-size:11px;font-weight:700;color:var(--t1);text-align:right}
+.hc-dept-pct{color:var(--t4);font-weight:400}
+
+/* ══ CHAIN TAB ══ */
+.chain-wrap{max-width:800px}
+.chain-search-box{position:relative;margin-bottom:24px}
+.chain-search-box input{width:100%;padding:13px 18px;border:2px solid var(--b1);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color .15s;background:var(--white)}
+.chain-search-box input:focus{border-color:var(--t1)}
+.chain-suggestions{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--white);border:1px solid var(--b2);border-radius:8px;box-shadow:var(--sh2);z-index:500;max-height:280px;overflow-y:auto;display:none}
+.chain-sug-item{padding:10px 16px;cursor:pointer;font-size:12px;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:baseline}
+.chain-sug-item:hover{background:var(--bg)}
+.chain-sug-item strong{color:var(--t1)}
+.chain-sug-item span{color:var(--t3);font-size:11px}
+.chain-sug-dept{font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;background:var(--bg);color:var(--t4);margin-left:auto}
+.chain-empty{text-align:center;padding:60px 20px;color:var(--t3);font-size:13px;line-height:1.7;max-width:400px;margin:0 auto}
+.chain-card{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--b1);border-left:4px solid var(--b2);border-radius:var(--r);padding:9px 14px;margin:3px 0;box-shadow:var(--sh0);cursor:default;max-width:480px}
+.chain-card-main{border-left-color:var(--t1)!important;background:var(--bg);box-shadow:var(--sh1)}
+.chain-report-item .chain-card{cursor:pointer}
+.chain-report-item .chain-card:hover{box-shadow:var(--sh2);transform:translateY(-1px);transition:all .12s}
+.chain-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.chain-info{flex:1;min-width:0}
+.chain-name{font-size:12px;font-weight:700;color:var(--t1)}
+.chain-title{font-size:10px;color:var(--t3);margin-top:1px}
+.chain-dept{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.chain-loc{font-size:9px;color:var(--t4);margin-top:1px}
+.chain-arrow{font-size:18px;color:var(--b2);padding:2px 0;line-height:1}
+.chain-reports-label{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;padding:6px 0 2px}
+
+/* ══ BOARD TAB ══ */
+.board-wrap{max-width:1100px}
+.board-header{display:flex;align-items:center;justify-content:space-between;background:var(--t1);color:#fff;border-radius:12px;padding:20px 28px;margin-bottom:24px;gap:20px;flex-wrap:wrap}
+.board-logo-area{display:flex;align-items:center;gap:16px}
+.board-co-name{font-size:16px;font-weight:800;letter-spacing:-.3px}
+.board-co-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.board-kpis{display:flex;gap:24px;flex-wrap:wrap}
+.board-kpi{text-align:center}
+.board-kn{font-size:20px;font-weight:800;line-height:1;color:#4ade80}
+.board-kl{font-size:9px;color:rgba(255,255,255,.5);margin-top:2px;text-transform:uppercase;letter-spacing:.6px}
+.board-two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.board-two-col,.hc-two-col{grid-template-columns:1fr}}
+.board-section{background:var(--white);border:1px solid var(--b1);border-radius:10px;padding:20px;box-shadow:var(--sh0)}
+.board-people{display:flex;flex-direction:column;gap:8px}
+.board-person{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:7px;background:var(--bg);border:1px solid var(--b1)}
+.board-person.founder{background:#fffdf0;border-color:#f5c842}
+.board-person.board-member{background:#f1f2f4;border-color:#9ca3af}
+.board-av{width:30px;height:30px;border-radius:50%;background:#e0e3ea;color:var(--t2);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.board-pname{font-size:12px;font-weight:700;color:var(--t1)}
+.board-ptitle{font-size:10px;color:var(--t3);margin-top:1px}
+.board-presence{display:flex;flex-direction:column;gap:8px}
+.board-region{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:7px;background:var(--bg);border:1px solid var(--b1)}
+.board-region-flag{font-size:20px;flex-shrink:0;line-height:1;margin-top:2px}
+.board-region-name{font-size:12px;font-weight:700;color:var(--t1)}
+.board-region-stat{font-size:10px;color:var(--t3);margin-top:2px}
+.board-payroll-box{display:flex;flex-direction:column;gap:0;border:1px solid var(--b1);border-radius:8px;overflow:hidden}
+.board-pay-row{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;font-size:12px;border-bottom:1px solid var(--b1);background:var(--white)}
+.board-pay-row:last-child{border-bottom:none}
+.board-pay-row span{color:var(--t3)}
+.board-pay-row strong{color:var(--t1);font-weight:700}
+.board-footer{text-align:center;font-size:10px;color:var(--t4);margin-top:24px;padding-top:16px;border-top:1px solid var(--b1)}
+
+
+/* ══ GLOBAL STAFF TABLE ══ */
+.oft-controls{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-width:1100px}
+.oft-search{padding:10px 16px;border:1.5px solid var(--b1);border-radius:8px;font-size:13px;font-family:inherit;outline:none;width:100%;max-width:440px;transition:border-color .15s;background:var(--white)}
+.oft-search:focus{border-color:var(--t1)}
+.oft-filters{display:flex;flex-wrap:wrap;gap:6px}
+.oft-fc{padding:4px 12px;border-radius:20px;border:1.5px solid var(--b1);background:var(--white);font-size:11px;font-weight:600;cursor:pointer;color:var(--t3);transition:all .12s;font-family:inherit}
+.oft-fc:hover{border-color:var(--t1);color:var(--t1)}
+.oft-fc-on{background:var(--t1)!important;color:#fff!important;border-color:var(--t1)!important}
+.oft-count{font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.oft-table{width:100%;max-width:1100px;border-collapse:collapse;font-size:12px}
+.oft-table th{background:var(--t1);color:#fff;padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;white-space:nowrap;user-select:none;transition:background .12s}
+.oft-table th:hover{background:#2d3142}
+.sort-ic{opacity:.45;font-size:10px;margin-left:3px}
+.oft-table td{padding:8px 12px;border-bottom:1px solid var(--b1);vertical-align:middle}
+.oft-table tbody tr:hover td{background:#f9fafb}
+.oft-sep td{background:#f4f5f7;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--t2);padding:7px 12px;border-top:2px solid var(--b2)}
+.oft-nm{font-weight:700;color:var(--t1)}
+.oft-role{color:var(--t2)}
+.oft-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.oft-tf{background:#e8f1fd;color:#1d6fce;border:1px solid #b8d4f8}
+.oft-partner{background:#f3effd;color:#7c3aed;border:1px solid #cdb8f8}
+.oft-active{display:inline-block;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:600;background:#e6f5f1;color:#0f7b5e;border:1px solid #a7ddd0}
+
 </style>
 </head>
 <body>
 
 <header class="hdr">
-  <img class="logo-img" src="orn-logo.png" alt="ORN" onerror="this.style.display='none';document.getElementById('lt').style.display='block'">
-  <span id="lt" style="display:none" class="logo-txt">ORN Group</span>
+  <img class="logo-img" src="orn-logo.png" alt="ORN Group" style="height:32px;object-fit:contain">
   <div class="hdr-sep"></div>
   <div class="hdr-info"><h1>Global Organisation Chart</h1><p>Founders · Management · All Department Heads · Worldwide Offices</p></div>
   <div class="hdr-kpis">
@@ -483,7 +711,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 
 <nav class="tab-nav">
   <button class="tb on" onclick="sw('org',this)">Organisation Chart</button>
-  <button class="tb" onclick="sw('loc',this)">Global Locations</button>
+  <button class="tb" onclick="sw('loc',this)">Global Offices</button>
+  <button class="tb" onclick="sw('offices',this)">🌍 Global Staff</button>
+  <button class="tb" onclick="sw('headcount',this)">👥 Headcount</button>
+  <button class="tb" onclick="sw('chain',this)">🔍 Reporting Chain</button>
+  <button class="tb" onclick="sw('board',this)">🏛 Leadership</button>
 </nav>
 
 
@@ -544,33 +776,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   </div>
     </div>
     <div class="kids k-h" id="ki-alia">
-      <div class="dl dl-h">London — People Team</div>
-      <div class="gr">
-        <div class="node t-mg d-h"><div class="card"><div class="av">RJ</div><div class="cn">Rene Jones</div><div class="cr">People &amp; Culture · London</div><div class="ct">LONDON</div>
-    <div class="comment-dot" id="dot-cmt-rene-jones"></div>
-    <button class="comment-btn" id="cbtn-cmt-rene-jones" onclick="toggleComment('cmt-rene-jones',event)"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1 1h8v6H5.5L3 9V7H1V1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg> Note</button>
-    <div class="comment-panel" id="cpanel-cmt-rene-jones">
-      <textarea id="ctext-cmt-rene-jones" placeholder="Add a note..."></textarea>
-      <div class="comment-actions">
-        <button class="comment-save" onclick="saveComment('cmt-rene-jones')">Save</button>
-        <button class="comment-clear" onclick="clearComment('cmt-rene-jones')">Clear</button>
-        <span class="comment-timestamp" id="cts-cmt-rene-jones"></span>
-      </div>
-    </div>
-  </div></div>
-        <div class="node t-mg d-h"><div class="card"><div class="av">LS</div><div class="cn">Leela Smith</div><div class="cr">HR Business Partner · London</div><div class="ct">LONDON</div>
-    <div class="comment-dot" id="dot-cmt-leela-smith"></div>
-    <button class="comment-btn" id="cbtn-cmt-leela-smith" onclick="toggleComment('cmt-leela-smith',event)"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1 1h8v6H5.5L3 9V7H1V1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg> Note</button>
-    <div class="comment-panel" id="cpanel-cmt-leela-smith">
-      <textarea id="ctext-cmt-leela-smith" placeholder="Add a note..."></textarea>
-      <div class="comment-actions">
-        <button class="comment-save" onclick="saveComment('cmt-leela-smith')">Save</button>
-        <button class="comment-clear" onclick="clearComment('cmt-leela-smith')">Clear</button>
-        <span class="comment-timestamp" id="cts-cmt-leela-smith"></span>
-      </div>
-    </div>
-  </div></div>
-      </div>
       <div class="dl dl-h">India — HR Managers</div>
       <div class="gr">
         <div class="node t-mg"><div class="card"><div class="av">RV</div><div class="cn">Roshan V V</div><div class="cr">Lead — Talent Acquisition</div><div class="ct">3 REPORTS</div>
@@ -2630,7 +2835,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           Leela Smith — HR Business Partner
         </div>
         <div class="hub-addr">22–25 Portman Close, London W1H 6BS</div>
-        <div class="hub-tag">Europe · Americas · Oceania</div>
+        <div class="hub-tag">Europe · North America</div>
       </div>
 
       <!-- vertical line down from UK hub -->
@@ -2729,10 +2934,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
           </div>
         </div>
 
-        <!-- Americas + Oceania -->
+        <!-- USA only under UK -->
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:0 8px">
           <div style="width:3px;height:20px;background:#9eb3d8"></div>
-          <div class="reg-lbl">🌎 Americas &amp; Oceania</div>
+          <div class="reg-lbl">🌎 Americas</div>
           <div class="lo-grid" style="flex-direction:column;align-items:stretch;width:100%;max-width:220px">
             <div class="lo">
               <span class="lo-flag">🇺🇸</span><div class="lo-name">United States</div>
@@ -2742,35 +2947,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
               <span class="lo-tag act">Active</span>
             </div>
-            <div class="lo">
-              <span class="lo-flag">🇵🇪</span><div class="lo-name">Lima, Peru</div>
-              <div class="lo-contact">Daniel Rodrigue</div><div class="lo-role">Country Partner</div>
-              <div class="lo-staff">30 staff</div>
-              <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
-              <span class="lo-tag act">Active</span>
-            </div>
-            <div class="lo">
-              <span class="lo-flag">🇦🇷</span><div class="lo-name">Buenos Aires, Argentina</div>
-              <div class="lo-contact">Maria Noelia Bonvin</div><div class="lo-role">Country Partner</div>
-              <div class="lo-staff">6 staff</div>
-              <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
-              <span class="lo-tag act">Active</span>
-            </div>
-            <div class="lo dim"><span class="lo-flag">🇲🇽</span><div class="lo-name">Mexico City</div><span class="lo-tag nop">Non-Op</span></div>
-            <div class="lo dim"><span class="lo-flag">🇧🇷</span><div class="lo-name">São Paulo</div><span class="lo-tag nop">Non-Op</span></div>
-            <div class="lo dim"><span class="lo-flag">🇨🇴</span><div class="lo-name">Bogotá</div><span class="lo-tag nop">Non-Op</span></div>
-            <div class="lo dim"><span class="lo-flag">🇪🇨</span><div class="lo-name">Quito</div><span class="lo-tag nop">Non-Op</span></div>
-            <div class="lo dim"><span class="lo-flag">🇨🇱</span><div class="lo-name">Santiago</div><span class="lo-tag nop">Non-Op</span></div>
-            <div style="margin-top:8px" class="reg-lbl">🌏 Oceania</div>
-            <div class="lo">
-              <span class="lo-flag">🇦🇺</span><div class="lo-name">Australia (Melbourne)</div>
-              <div class="lo-contact">Sahil Nijhawan</div><div class="lo-role">Country Head — Australia &amp; NZ</div>
-              <div class="lo-addr">Level 1, 18–22 Thompson St, South Melbourne VIC 3205</div>
-              <div class="lo-staff">23 staff · TripFactory Partner</div>
-              <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
-              <span class="lo-tag act">Active</span>
-            </div>
-            <div class="lo dim"><span class="lo-flag">🇳🇿</span><div class="lo-name">Auckland, New Zealand</div><div class="lo-contact">Sahil Nijhawan</div><span class="lo-tag nop">Non-Operational</span></div>
           </div>
         </div>
 
@@ -2789,7 +2965,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
         <div class="hub-entity">Primary Execution Hub — 698 Staff</div>
         <div class="hub-contacts">Lalitha P — Director India Operations</div>
         <div class="hub-addr">4th &amp; 5th Floor, RMZ Latitude, Bellary Road, Hebbal, Bangalore 560092</div>
-        <div class="hub-tag">Ops · Tech · Finance · HR · Product · Sales</div>
+        <div class="hub-tag">Ops · Tech · Finance · HR · Product · Sales · Americas · Oceania</div>
       </div>
 
       <!-- vertical line down -->
@@ -2909,6 +3085,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
               <span class="lo-tag act">Active</span>
             </div>
             <div class="lo dim"><span class="lo-flag">🇭🇰</span><div class="lo-name">Hong Kong</div><span class="lo-tag nop">Non-Operational</span></div>
+          </div>
+        </div>
+
+        <!-- Americas & Oceania (under India) -->
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:0 8px">
+          <div style="width:3px;height:20px;background:#f5c98a"></div>
+          <div class="reg-lbl">🌎 Americas &amp; 🌏 Oceania</div>
+          <div class="lo-grid" style="flex-direction:column;align-items:stretch;width:100%;max-width:220px">
+            <div class="lo">
+              <span class="lo-flag">🇵🇪</span><div class="lo-name">Lima, Peru</div>
+              <div class="lo-contact">Daniel Rodrigue</div><div class="lo-role">Country Partner</div>
+              <div class="lo-staff">30 staff · TripFactory Partner</div>
+              <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
+              <span class="lo-tag act">Active</span>
+            </div>
+            <div class="lo">
+              <span class="lo-flag">🇦🇷</span><div class="lo-name">Buenos Aires, Argentina</div>
+              <div class="lo-contact">Maria Noelia Bonvin</div><div class="lo-role">Country Partner</div>
+              <div class="lo-staff">6 staff · TripFactory Partner</div>
+              <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
+              <span class="lo-tag act">Active</span>
+            </div>
+            <div class="lo dim"><span class="lo-flag">🇲🇽</span><div class="lo-name">Mexico City</div><span class="lo-tag nop">Non-Op</span></div>
+            <div class="lo dim"><span class="lo-flag">🇧🇷</span><div class="lo-name">São Paulo</div><span class="lo-tag nop">Non-Op</span></div>
+            <div class="lo dim"><span class="lo-flag">🇨🇴</span><div class="lo-name">Bogotá</div><span class="lo-tag nop">Non-Op</span></div>
+            <div class="lo dim"><span class="lo-flag">🇪🇨</span><div class="lo-name">Quito</div><span class="lo-tag nop">Non-Op</span></div>
+            <div class="lo dim"><span class="lo-flag">🇨🇱</span><div class="lo-name">Santiago</div><span class="lo-tag nop">Non-Op</span></div>
+            <div style="margin-top:8px" class="reg-lbl">🌏 Oceania</div>
+            <div class="lo">
+              <span class="lo-flag">🇦🇺</span><div class="lo-name">Australia (Melbourne)</div>
+              <div class="lo-contact">Sahil Nijhawan</div><div class="lo-role">Country Head — Australia &amp; NZ</div>
+              <div class="lo-addr">Level 1, 18–22 Thompson St, South Melbourne VIC 3205</div>
+              <div class="lo-staff">23 staff · TripFactory Partner</div>
+              <div class="lo-caps"><span class="lo-cap cap-in">Inbound</span><span class="lo-cap cap-out">Outbound</span></div>
+              <span class="lo-tag act">Active</span>
+            </div>
+            <div class="lo dim"><span class="lo-flag">🇳🇿</span><div class="lo-name">Auckland, New Zealand</div><div class="lo-contact">Sahil Nijhawan</div><span class="lo-tag nop">Non-Operational</span></div>
           </div>
         </div>
 
@@ -3069,6 +3282,560 @@ window.addEventListener('load', () => {
   initComments();
 });
 </script>
+
+<div class="tp" id="tp-headcount">
+<div class="page">
+<div class="sh">Headcount &amp; Distribution</div>
+
+<div class="hc-grid">
+  <div class="ps-kpi-row">
+    <div class="ps-kpi"><div class="ps-kn">698</div><div class="ps-kl">India Staff (Ops)</div></div>
+    <div class="ps-kpi"><div class="ps-kn">148</div><div class="ps-kl">International Staff</div></div>
+    <div class="ps-kpi"><div class="ps-kn">846</div><div class="ps-kl">Total on Payroll</div></div>
+    <div class="ps-kpi"><div class="ps-kn">36</div><div class="ps-kl">Global Offices</div></div>
+  </div>
+
+  <div class="hc-two-col">
+    <div>
+      <div class="ps-section-title">Staff by Office / Location</div>
+      <div class="hc-chart">
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇳 Bengaluru</div>
+      <div class="hc-track"><div class="hc-fill" style="width:100%"></div></div>
+      <div class="hc-num">506</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇳 Siliguri</div>
+      <div class="hc-track"><div class="hc-fill" style="width:24%"></div></div>
+      <div class="hc-num">120</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇳 Gurgaon</div>
+      <div class="hc-track"><div class="hc-fill" style="width:9%"></div></div>
+      <div class="hc-num">45</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇳 Mumbai</div>
+      <div class="hc-track"><div class="hc-fill" style="width:8%"></div></div>
+      <div class="hc-num">40</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇦🇺 Australia</div>
+      <div class="hc-track"><div class="hc-fill" style="width:4%"></div></div>
+      <div class="hc-num">22</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇵🇭 Philippines</div>
+      <div class="hc-track"><div class="hc-fill" style="width:3%"></div></div>
+      <div class="hc-num">17</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇸🇬 Singapore</div>
+      <div class="hc-track"><div class="hc-fill" style="width:3%"></div></div>
+      <div class="hc-num">16</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇳 Noida</div>
+      <div class="hc-track"><div class="hc-fill" style="width:2%"></div></div>
+      <div class="hc-num">12</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇳 Delhi</div>
+      <div class="hc-track"><div class="hc-fill" style="width:2%"></div></div>
+      <div class="hc-num">11</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇫🇷 France</div>
+      <div class="hc-track"><div class="hc-fill" style="width:2%"></div></div>
+      <div class="hc-num">10</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇹🇷 Turkey</div>
+      <div class="hc-track"><div class="hc-fill" style="width:2%"></div></div>
+      <div class="hc-num">9</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇮🇩 Indonesia</div>
+      <div class="hc-track"><div class="hc-fill" style="width:2%"></div></div>
+      <div class="hc-num">8</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🇹🇭 Thailand</div>
+      <div class="hc-track"><div class="hc-fill" style="width:1%"></div></div>
+      <div class="hc-num">7</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🌍 Jabalpur</div>
+      <div class="hc-track"><div class="hc-fill" style="width:1%"></div></div>
+      <div class="hc-num">3</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🌍 Bhopal</div>
+      <div class="hc-track"><div class="hc-fill" style="width:0%"></div></div>
+      <div class="hc-num">2</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🌍 Kolkata</div>
+      <div class="hc-track"><div class="hc-fill" style="width:0%"></div></div>
+      <div class="hc-num">2</div>
+    </div>
+    <div class="hc-row">
+      <div class="hc-loc">🌍 Hyderabad</div>
+      <div class="hc-track"><div class="hc-fill" style="width:0%"></div></div>
+      <div class="hc-num">2</div>
+    </div></div>
+    </div>
+    <div>
+      <div class="ps-section-title">India Staff by Department</div>
+      <div class="hc-dept-chart">
+    <div class="hc-dept-row">
+      <div class="hc-dept-dot" style="background:var(--ds)"></div>
+      <div class="hc-dept-name">Sales</div>
+      <div class="hc-dept-bar-wrap"><div class="hc-dept-bar" style="width:100%;background:var(--ds)"></div></div>
+      <div class="hc-dept-num">291 <span class="hc-dept-pct">(41.7%)</span></div>
+    </div>
+    <div class="hc-dept-row">
+      <div class="hc-dept-dot" style="background:var(--do)"></div>
+      <div class="hc-dept-name">Operations</div>
+      <div class="hc-dept-bar-wrap"><div class="hc-dept-bar" style="width:92.1%;background:var(--do)"></div></div>
+      <div class="hc-dept-num">214 <span class="hc-dept-pct">(30.7%)</span></div>
+    </div>
+    <div class="hc-dept-row">
+      <div class="hc-dept-dot" style="background:var(--dt)"></div>
+      <div class="hc-dept-name">Technology</div>
+      <div class="hc-dept-bar-wrap"><div class="hc-dept-bar" style="width:39.0%;background:var(--dt)"></div></div>
+      <div class="hc-dept-num">91 <span class="hc-dept-pct">(13.0%)</span></div>
+    </div>
+    <div class="hc-dept-row">
+      <div class="hc-dept-dot" style="background:var(--dp)"></div>
+      <div class="hc-dept-name">Product</div>
+      <div class="hc-dept-bar-wrap"><div class="hc-dept-bar" style="width:21.6%;background:var(--dp)"></div></div>
+      <div class="hc-dept-num">50 <span class="hc-dept-pct">(7.2%)</span></div>
+    </div>
+    <div class="hc-dept-row">
+      <div class="hc-dept-dot" style="background:var(--df)"></div>
+      <div class="hc-dept-name">Finance</div>
+      <div class="hc-dept-bar-wrap"><div class="hc-dept-bar" style="width:16.799999999999997%;background:var(--df)"></div></div>
+      <div class="hc-dept-num">39 <span class="hc-dept-pct">(5.6%)</span></div>
+    </div>
+    <div class="hc-dept-row">
+      <div class="hc-dept-dot" style="background:var(--dh)"></div>
+      <div class="hc-dept-name">HR & Admin</div>
+      <div class="hc-dept-bar-wrap"><div class="hc-dept-bar" style="width:5.699999999999999%;background:var(--dh)"></div></div>
+      <div class="hc-dept-num">13 <span class="hc-dept-pct">(1.9%)</span></div>
+    </div></div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<div class="tp" id="tp-chain">
+<div class="page">
+<div class="sh">Who Reports to Who — Reporting Chain Lookup</div>
+
+<div class="chain-wrap">
+  <div class="chain-search-box">
+    <input type="text" id="chain-input" placeholder="Type any name to find their reporting chain..." 
+           oninput="searchChain(this.value)" autocomplete="off">
+    <div id="chain-suggestions" class="chain-suggestions"></div>
+  </div>
+
+  <div id="chain-result" class="chain-result" style="display:none">
+    <div class="chain-up" id="chain-up"></div>
+    <div class="chain-person" id="chain-person"></div>
+    <div class="chain-down-label" id="chain-down-label"></div>
+    <div class="chain-down" id="chain-down"></div>
+  </div>
+
+  <div id="chain-empty" class="chain-empty">
+    <div style="font-size:32px;margin-bottom:12px">🔍</div>
+    <div>Search any staff member to see their full reporting chain — who they report to, and who reports to them.</div>
+  </div>
+</div>
+
+<script>
+const STAFF_CHAIN = [{"n": "Bhagya Jyothi B", "t": "Assistant Manager - Sales", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Kamini Sharma", "t": "Assistant Manager - Sales", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Neda Sadaf Tajuddin", "t": "Senior Manager- B2B Business Performance", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Ambuja Reddy", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Yashaswini A", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Sangita Roy", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Soheb Makandar", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Benaka K", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Manisha Anilkumar Badkar", "t": "Relationship Manager", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Prakash M", "t": "Assistant Manager - Sales", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Pulkit Gupta", "t": "Assistant Manager - Sales", "d": "Sales", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Martina Vasan", "t": "Senior Manager- B2C Business Performance", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Aliya Banu N", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Solomon Nikhil D", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Tejas C", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Ranjan Gowda R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Sangita Rai", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Kriti Rai", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Sanket De", "t": "Team Lead - Sales", "d": "Sales", "l": "Siliguri", "m": "Pulkit Gupta"}, {"n": "Ankur Dwivedi", "t": "Sr. Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Martina Vasan"}, {"n": "Periyaraj Ravichandran", "t": "Team Lead - Sales", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Sneha Pradhan", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Sahil Pradhan", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Nalendu Roy", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Ananya S Gowda", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Prabin Nowbagh", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Deepthi G C", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Arpitha V", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Harismitha B M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Brijesh Krishna M N", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Adrian J Milton", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Mohammed Daaniyal", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sanchaita Dutta Chowdhury", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Reena P", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Spoorthi P K", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Mohana M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Prakash B", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sanjana M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Subramaya M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sudipta Mondal", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Vishnu Priya J", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Shaistha N", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Vijrambha Gowda", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Rajini A R", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Raina Hussain", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Amra Jabeen", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Gudla Aryan Rajesh", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Janavi G", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Sanjana S", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Jyothi S Vara", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Janani SB", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Dhaiwik R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Saran S", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Sree Parvathi R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Nisarga C R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Spandana L", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Sphurti S Ankali", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Manasa M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Glen Somanna A", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Mamtha Patel Norat Ram", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Harshitha B", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Vijaya Lakshmi karanth", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Periyaraj Ravichandran"}, {"n": "Parthib Kumar Barman", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Ria Dhar", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Bishal Sarkar", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Simran Thapa", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Tomali Purkayastha", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Priyanki Roy", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Anjali Prasad", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Sandhya Kumari", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Swastika Rai", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Sangdup Tamang", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Diya Dechamma K B", "t": "FCD Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Komala H", "t": "FCD Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Subarna Shaw", "t": "Team Lead - Sales", "d": "Sales", "l": "Kolkata", "m": "Lalitha P"}, {"n": "Sania Jakki", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Nikita Ekka", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Rajdeep Sarkar", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Susmita Roy", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Surabhi Pradhan", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Ayush Rai", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Shristi Gurung", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Pradumna Rai", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Kaurag Bhattacharjee", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Shayani Dutta", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Nikita Tamang", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Anushri Tamang", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Megha Nandita Sah", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Shrestha Nandy", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Muskaan Khawas", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Nisith Chakraborty", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Asmita Sarkar", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Sanket De"}, {"n": "Manideep Koduri", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Neda Sadaf Tajuddin"}, {"n": "Kiran Kumar A C", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Neda Sadaf Tajuddin"}, {"n": "Mohith K V", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Thanushree A", "t": "FCD Executive", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Kartikay Yagyik", "t": "Quality Control - Manager", "d": "Sales", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Sumit Jha", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Bindu Shree R", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Aniket Gahinath Avhad", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Chandana D", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Rakshitha J", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Ruchitha N", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Srotha Biswal Biswal", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sandesh Shastry", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Vishwas S", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Deepthi C R", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Naveenya V", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Chirag V", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Kruthika T D", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sri Vidhya M S", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sharanya M V", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Shrinithin F X", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Vidya Ramananda Bhat", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Abhay kiran v", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sanjana K", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Sanjana Hariprasad", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Martina Vasan"}, {"n": "Radha Y", "t": "Destination  Expert", "d": "Sales", "l": "Bengaluru", "m": "Bhagya Jyothi B"}, {"n": "Fouziya Sultana", "t": "Assistant Manager", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Rashmi A", "t": "Assistant Manager", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Nishanth D Shekar", "t": "Assistant Manager", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Deepak Kumar Singh", "t": "Assistant Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Sonu Kumar B", "t": "Assistant Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Vivek Gurjar", "t": "Assistant Manager", "d": "Sales", "l": "Gurgaon", "m": "Vikas Sharma"}, {"n": "J Priscilla John", "t": "Business Development Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Mala Kondamma", "t": "Business Development Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Ankita Chakraborty", "t": "Team Lead", "d": "Sales", "l": "Siliguri", "m": "Pulkit Gupta"}, {"n": "Chethan G K", "t": "Process Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Babitha G", "t": "Quality Analyst", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Bharat Bhushan Gulati", "t": "Sales and Operations Manager - OCEANIA", "d": "Sales", "l": "Gurgaon", "m": "Vikas Sharma"}, {"n": "Himanshu Kumar", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Raju Sarkar", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Manoj kumar sankar", "t": "Process Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Ashutosh Shukla", "t": "Business Development Manager", "d": "Sales", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Reeba Rehan", "t": "Key Account Manager", "d": "Sales", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Angad Shishodia", "t": "Business Head", "d": "Sales", "l": "Gurgaon", "m": "Ashish Yadav"}, {"n": "Mohammed Sarosh", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Saba Firdose"}, {"n": "Ravinder Singh Lamba", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Lalit S Sabaji Sawant", "t": "Team Lead", "d": "Sales", "l": "Mumbai", "m": "Pulkit Gupta"}, {"n": "Siddharth Pagar", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Siddharth Ramakant Bhoir", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Rohan Apke", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Shantanu Abhay Sukhathankar", "t": "Business Development Manager", "d": "Sales", "l": "Mumbai", "m": "Lalit S Sabaji Sawant"}, {"n": "Satyendra jagdsih Shah", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Ganesh Sorte", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Jagdish prabhakar Kerkar", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Prasad Harishchandra Kawli", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Nirvan KAILASH Yelve", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Avinash Dattaram Ghatge", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Noopur Paresh Mehta", "t": "Sr. Destination Expert", "d": "Sales", "l": "Mumbai", "m": "Lalit S Sabaji Sawant"}, {"n": "Minal Siddhesh Siddhesh Bhagat", "t": "Sr. Destination Expert", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Bakhtiyar Maaz Ahmed", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Abhimanyu Yadav", "t": "B2B Support Executive", "d": "Sales", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Kuruva Rajendra", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Manoj kumar sankar"}, {"n": "Sohini Banerjee", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Tasi Dukpa", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Kushal H M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Rakshith C R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Shreyas G", "t": "Field Sales Executive", "d": "Sales", "l": "Bengaluru", "m": "Nagaraju B K"}, {"n": "Sushmita Pradhan", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Vinod More", "t": "Destination Expert", "d": "Sales", "l": "Bhopal", "m": "Deepak Kumar Singh"}, {"n": "Ankit Makwana", "t": "Sr. Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Deepak Kumar Singh"}, {"n": "Anu Beohar", "t": "Destination Expert", "d": "Sales", "l": "Jabalpur", "m": "Deepak Kumar Singh"}, {"n": "Joseph A", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Prema A", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Pratyush Anand", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Abdul Hameed A", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Madhu Sudhan S", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Roshni Suri", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Siji Sam", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Sarita Devi", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Devendla Babu", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Shimron Gershom", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Saba Firdose"}, {"n": "Ayan Razvi", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Sumila R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Uday Manikanta M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Lokesh C A", "t": "Field Sales Executive", "d": "Sales", "l": "Bengaluru", "m": "Nagaraju B K"}, {"n": "Arshdeep Kaur", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Kirti Tanwar", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Salman Khan", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Nikhil Kachhawa", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Deepak Kumar", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Nandhini J", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Lavanya N R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Anusha P", "t": "Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Kiran Kumar A C"}, {"n": "Gagan S G", "t": "Field Sales Executive", "d": "Sales", "l": "Bengaluru", "m": "Nagaraju B K"}, {"n": "Sagar S P", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Kruthik C", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Shivaraj S R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Ankit Bansal", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Lalit Kumar", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Vivek Mandal", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Tejaswini M", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Varsha R", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Shivakumar S Y", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Rupam Kumari", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Sayeda Afrin Banu", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Deepa K S", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Vaneet Rana", "t": "Assistant Manager", "d": "Sales", "l": "Gurgaon", "m": "Bharat Bhushan Gulati"}, {"n": "Manish Singh Chaudhary", "t": "Sr. Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Saleem Elahi", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Hyderali Meer", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Abdul Usman Ali", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Suhail Ahamed S", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Suma G", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Kanhaiya Singh", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Sagar Prasad", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Nikhil Chaturvedi", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Ganya Shree D C", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Mohd Shuaib", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Surabhi Barman", "t": "Sr. Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Bhoomika A V", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Naveen Kumar", "t": "Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Kiran Kumar A C"}, {"n": "Sandhya V", "t": "Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Anusha S", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Abinaya S", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Nuthan Kumari L", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Abhishek E Varghese", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "R Bhoomika", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Anu V", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Harini B", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Srinath H", "t": "Field Sales Executive", "d": "Sales", "l": "Bengaluru", "m": "Nagaraju B K"}, {"n": "Sailesh Pradhan", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Swathi C", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Rakhi Sharma", "t": "Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "P.Sosi Peter Wilson", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Amit Sharma", "t": "Destination Expert", "d": "Sales", "l": "Bengaluru", "m": "Deepak Kumar Singh"}, {"n": "Neha N", "t": "Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Kiran Kumar A C"}, {"n": "Ritika Gupta", "t": "Destination Expert", "d": "Sales", "l": "Siliguri", "m": "Ankita Chakraborty"}, {"n": "Shantanu Aggarwal", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Shikha Sharma", "t": "Destination Expert", "d": "Sales", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Shivam Ramugrah Pandey", "t": "Sr. Destination Expert", "d": "Sales", "l": "Mumbai", "m": "Lalit S Sabaji Sawant"}, {"n": "Raheela Abdul Aziz Kaware", "t": "Destination Expert", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Sujata Dambarsingh Budha", "t": "Destination Expert", "d": "Sales", "l": "Mumbai", "m": "Lalit S Sabaji Sawant"}, {"n": "Saba Firdose", "t": "Assistant Manager", "d": "Sales", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Jyotsna S", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Raaj Navgrahe", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Gauri Shankar Gaud"}, {"n": "Dipesh Kiran Kasar", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Shahanaz R", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Vijnesh Jayanandan Poojary", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Martin L Nerella", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Samudwith M S", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Augustine Alex P", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Deepthi G A", "t": "Team Lead", "d": "Sales", "l": "Bengaluru", "m": "J Priscilla John"}, {"n": "Gurpreet Singh", "t": "Business Development Manager", "d": "Sales", "l": "Delhi", "m": "Gauri Shankar Gaud"}, {"n": "Mohd Asif", "t": "VP - Sales", "d": "Sales", "l": "Delhi", "m": "Gauri Shankar Gaud"}, {"n": "Gauri Shankar Gaud", "t": "VP - Sales", "d": "Sales", "l": "Delhi", "m": "Vinay Gupta"}, {"n": "Pankaj Silswal", "t": "Business Development Executive", "d": "Sales", "l": "Bengaluru", "m": "Mohd Asif"}, {"n": "Giriraj Singh", "t": "Business Development Manager", "d": "Sales", "l": "Delhi", "m": "Mohd Asif"}, {"n": "Ishan Mukesh Sheode", "t": "Business Development Executive", "d": "Sales", "l": "Mumbai", "m": "Gauri Shankar Gaud"}, {"n": "Nagaraju B K", "t": "Sales Head - B2B (South India)", "d": "Sales", "l": "Bengaluru", "m": "Gauri Shankar Gaud"}, {"n": "Rohit S K", "t": "Business Development Executive", "d": "Sales", "l": "Kolkata", "m": "Mohd Asif"}, {"n": "Ashish Kumar", "t": "Business Development Executive", "d": "Sales", "l": "Bengaluru", "m": "Mohd Asif"}, {"n": "Dayananda C", "t": "Business Development Executive", "d": "Sales", "l": "Bengaluru", "m": "Nagaraju B K"}, {"n": "Dhilak S", "t": "Business Development Executive", "d": "Sales", "l": "Chennai", "m": "Nagaraju B K"}, {"n": "Sagarmal Sen", "t": "Business Development Manager", "d": "Sales", "l": "Jabalpur", "m": "Gauri Shankar Gaud"}, {"n": "Satyendra Goswami", "t": "Business Development Manager", "d": "Sales", "l": "Delhi", "m": "Mohd Asif"}, {"n": "Anuj Kumar Sareen", "t": "Business Development Manager", "d": "Sales", "l": "Jabalpur", "m": "Gauri Shankar Gaud"}, {"n": "Sagar B H M", "t": "Business Development Executive", "d": "Sales", "l": "Bengaluru", "m": "Nagaraju B K"}, {"n": "Ankitkumar Jha Kanhayamohan", "t": "Business Development Executive", "d": "Sales", "l": "Surat", "m": "Ajit KANIJKUMAR Sheth"}, {"n": "Vinod Kumar", "t": "Business Development Executive", "d": "Sales", "l": "Bhopal", "m": "Gauri Shankar Gaud"}, {"n": "Athul P S", "t": "Business Development Manager", "d": "Sales", "l": "kerala", "m": "Nagaraju B K"}, {"n": "Dharmanand Dixit", "t": "Area Sales Manager", "d": "Sales", "l": "lucknow", "m": "Mohd Asif"}, {"n": "Rajesh Kumar", "t": "Area Sales Manager", "d": "Sales", "l": "Haryana", "m": "Gauri Shankar Gaud"}, {"n": "Shipra Uttam Meshram", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Seema Tabbasum"}, {"n": "Thriveni .", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Seema Tabbasum"}, {"n": "Sowmya K P", "t": "Key Account Manager", "d": "Sales", "l": "Bengaluru", "m": "Seema Tabbasum"}, {"n": "Akbar Pasha", "t": "Key Account Manager", "d": "Sales", "l": "Hyderabad", "m": "Lalitha P"}, {"n": "Rakesh Magar V", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Chethan G K"}, {"n": "Pruthvi R S", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Chethan G K"}, {"n": "Punith Kumar V", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Chethan G K"}, {"n": "Moksh Sharma", "t": "Account Manager", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Ashwitha Y", "t": "B2B Support Executive", "d": "Sales", "l": "Bengaluru", "m": "Chethan G K"}, {"n": "Noel Joseph", "t": "Business Development Executive", "d": "Sales", "l": "Kochi", "m": "Nagaraju B K"}, {"n": "Mohammed Asif", "t": "Business Development Executive", "d": "Sales", "l": "Hyderabad", "m": "Nagaraju B K"}, {"n": "Akshay Banodhiya", "t": "Business Development Executive", "d": "Sales", "l": "Ahmedabad", "m": "Ajit KANIJKUMAR Sheth"}, {"n": "Yerra Venkat Sai Vamsi Vivek", "t": "Business Development Executive", "d": "Sales", "l": "Hyderabad", "m": "Nagaraju B K"}, {"n": "Ajit KANIJKUMAR Sheth", "t": "Area Sales Manager", "d": "Sales", "l": "Gujarat", "m": "Gauri Shankar Gaud"}, {"n": "Gaurav Kumar Sharma", "t": "Key Account Manager", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Divya Mathur", "t": "Key Account Manager", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Kollipara Dinesh", "t": "Business Development Executive", "d": "Sales", "l": "Vishakhapatnam", "m": "Nagaraju B K"}, {"n": "Manish Singh Rajput", "t": "Key Account Manager", "d": "Sales", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Aman Jha", "t": "Business Development Executive", "d": "Sales", "l": "Faridabad", "m": "Rajesh Kumar"}, {"n": "Prashant Kalendra Manchkar", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Jayesh P Rathod", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Rohan Sham Deshpande", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Shree Vasant Deshmukh", "t": "Tour Manager", "d": "Sales", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Gogul G K", "t": "Business Development Executive", "d": "Sales", "l": "Thrissur", "m": "Nagaraju B K"}, {"n": "Sourabh Nivas Kamble", "t": "Business Development Executive", "d": "Sales", "l": "Mumbai", "m": "Nagaraju B K"}, {"n": "Afaq Safeer Khan", "t": "Business Development Executive", "d": "Sales", "l": "Mumbai", "m": "Gauri Shankar Gaud"}, {"n": "Poornima Avinash Gunjalkar", "t": "Destination  Expert", "d": "Sales", "l": "Mumbai", "m": "Lalit S Sabaji Sawant"}, {"n": "Vaishali Yadav", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Harshit Danwar", "t": "Project Management Analyst - Operations", "d": "Operations", "l": "Gurgaon", "m": "Vivek Gurjar"}, {"n": "Bikash Roy", "t": "Team Leader - Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Poonam Kumari Thapa", "t": "Head – Revenue and Operations", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Santosh Roy", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Sadhana Thapa", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Bidesh Chowdhury", "t": "Team Leader - Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Nilkamal Sarkar", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Alip Sengupta", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Aniket Deb", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Bhumika Roy", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Ashis Biswas", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Ramkrishna Paul", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Jayant Kumar Sinha", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Charles Rai", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Pritam Samajdar", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Subhranil Basak", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Ankita Bhakta", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Roshan Sharma", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Pratikhcha Pradhan", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Ajit Rai", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Stuti Pradhan", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Priyanjana Das", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Shashank Gurung", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Puja Biswas", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Panushree Thapa", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Maria Goretti Sitling", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Pratigya Rai", "t": "Operation Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Sushmita Majumder", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Munin Basumatary", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Sham Sunder V", "t": "Assistant Manager - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Bipul Daimari", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Magesh Mohanraj", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Pathan Mohammed P Saleem", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Reginold Simon", "t": "Manager- Visa Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Ronak Raju Dhanwani", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Mohammed Arif S", "t": "Manager - DMC Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Shaik Abdul Masroor", "t": "Deputy Manager - Group Desk", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Akash Kumar", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Saranya M", "t": "SME - Payments", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Suresh V", "t": "SME - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Sharath Kumar A", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Faisal syed mukthar Shah", "t": "Team Leader - Care", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Bhaskar V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Chhaya Kumari", "t": "Manager- Visa Operations", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Asha S", "t": "Chat Support Executive", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Mohammed Nabeel Faraz", "t": "Assistant Manager - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "S Mamatha", "t": "Asst.Manager- Visa Operations", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Nithin D", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Vigneshwaran K", "t": "Senior Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Nabeel Faraz"}, {"n": "Mohammed Suhail", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Abhishek Haldia", "t": "Visa Executive", "d": "Operations", "l": "Gurgaon", "m": "Sanjeev Kumar Chhikara"}, {"n": "Kiran N", "t": "Team Leader - Operations", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Sindhu S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Bipul Daimari"}, {"n": "Tousif Sait", "t": "Deputy Manager - Flights Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Charitha Ravi", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Veda K", "t": "SME", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Shruthi N", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Ganesh Raju N", "t": "Sr Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Shashank H M", "t": "Deputy Manager - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Venkatesh Prasad N H", "t": "Team Leader - Care", "d": "Operations", "l": "Bengaluru", "m": "Shashank H M"}, {"n": "Jaychandra H S", "t": "Assistant Manager - Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Ifraq Ahmed R N", "t": "Manager - DMC Operations", "d": "Operations", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Riddhi Dhirendra Waghela", "t": "Team Leader – FIT Europe", "d": "Operations", "l": "Mumbai", "m": "Puja Vivekanand Onekar"}, {"n": "Mohammed Sameerulla Khan", "t": "Team Lead - Operations", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Sagar Padmakar Joshi", "t": "Tour Manager", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Pravir Pathak", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Sagar Mukherjee", "t": "Sr. Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Kavya S", "t": "Customer Support Executive - Payments", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Anusha S", "t": "Chat Support Executive", "d": "Operations", "l": "Bengaluru", "m": "Asha S"}, {"n": "Mousham Kumari", "t": "Customer Support Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Luni Sewa", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Debashmita Bhattacherjee", "t": "Operation Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Harshitha R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Kumar Babu G V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Balachandar H Benakatti", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Saif Ansar Khan"}, {"n": "Abhishek Mohanta", "t": "Operation Executive", "d": "Operations", "l": "Gurgaon", "m": "Saif Ansar Khan"}, {"n": "Ramyashree M", "t": "Operation Executive - Insurance", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Neha U", "t": "Customer Support Executive - Payments", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Aditi Singh", "t": "Customer Support Executive - Payments", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Aravind P", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Madhuri A", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Sai Charan M", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Smitha Shet", "t": "Customer Support Executive - Payments", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Rakshitha Ganesh", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Rahul Kumar", "t": "Customer Support Executive - Callcenter", "d": "Operations", "l": "Bengaluru", "m": "Faisal Syed Mukthar Shah"}, {"n": "Kaushik S", "t": "Assistant Manager - Operations", "d": "Operations", "l": "Bengaluru", "m": "Shashank H M"}, {"n": "Nithyananda S C", "t": "Sr Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Sk Asif Akram", "t": "Sr. Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Thanush Reddy S B", "t": "Team Leader - Esclations", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Ira Mukund Bhatt", "t": "Europe Customer Experience", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Bhimashankar Ravindra Kulkarni", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Saif Ansar Khan"}, {"n": "Lokesh C Savadatti", "t": "Operation Executive - Insurance", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Chiranjit Boro", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Parvesh Kumari", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Kunal Ekka", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Khusboo Moktan", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "James Clement", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Rohit Sharma", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Survi Verma", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Abhishek Teron", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Navya P", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Jaychandra H S"}, {"n": "Mohammed Arbaz Pasha", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Johnson K", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Sk Asif Akram"}, {"n": "Chandana V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Mohini V Handewale", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Prem Kumar E", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Suhas G", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Bipul Daimari"}, {"n": "Deepika V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Zeenath Begum", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Balachandar H Benakatti"}, {"n": "Akhila B", "t": "Chat Support Executive", "d": "Operations", "l": "Bengaluru", "m": "Faisal syed mukthar Shah"}, {"n": "Patricia Denzil", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Shipra Uttam Meshram"}, {"n": "Anushree S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Bhargavi B", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Bipul Daimari"}, {"n": "Mehar unnisa", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Aishwarya A", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Jaychandra H S"}, {"n": "Nisarga C S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Puja Vivekanand Onekar"}, {"n": "Gifty G", "t": "Customer Support Executive - Callcenter", "d": "Operations", "l": "Bengaluru", "m": "Faisal Syed Mukthar Shah"}, {"n": "Sadhana P", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Manjula S", "t": "Customer Support Executive - Payments", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Rashmika G", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Abhijeet Ranjan", "t": "Customer Support Executive - Esclations", "d": "Operations", "l": "Bengaluru", "m": "Thanush Reddy S B"}, {"n": "Shivangi Vishwakarma", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Sonia Yadav", "t": "Visa Executive", "d": "Operations", "l": "Gurgaon", "m": "Sanjeev Kumar Chhikara"}, {"n": "Shoaib Chand Ansari", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Amir Shafi Shaikh"}, {"n": "Annwesha Pal", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Khaleel Ur Rehman", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Ameena Iram", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Meghana M S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Sajiya Hussain", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Zehra Khatoon Khan", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Sonia Mothay", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Kalyani Prasad", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Sayankan Paul", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Deeksha N S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Harish R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Spandhana K V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Suraj C J", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Tousif Sait"}, {"n": "Vijaya kumar J", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Tousif Sait"}, {"n": "Vaisakh P V", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Nabeel Faraz"}, {"n": "Mohammed Sadath Khan", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Nabeel Faraz"}, {"n": "Saloni Tokas", "t": "Visa Executive", "d": "Operations", "l": "Gurgaon", "m": "Sanjeev Kumar Chhikara"}, {"n": "Aryan Bantawa Rai", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Chitto Broto Goswami", "t": "Operation Executive", "d": "Operations", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Rikesh Tamang", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Chiraag Chakraborthy", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Nupur Biswas", "t": "Air Ticketing Executive", "d": "Operations", "l": "Siliguri", "m": "Poonam Kumari Thapa"}, {"n": "Chandhan V K", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Rakshitha M S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Saloni U K", "t": "Customer Support Executive - Esclations", "d": "Operations", "l": "Bengaluru", "m": "Thanush Reddy S B"}, {"n": "Rakshitha V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Chandan P R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Naina Premchand Kamat", "t": "Visa Executive", "d": "Operations", "l": "Mumbai", "m": "Sonia Yadav"}, {"n": "Mohammed Masood Ahmed", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Nikita Kharbanda", "t": "Visa Executive", "d": "Operations", "l": "Gurgaon", "m": "Sanjeev Kumar Chhikara"}, {"n": "Taniya Nandi", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Varsha C A", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Pradeep M", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Navya G", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "V Laxman Kumar", "t": "Operation Executive", "d": "Operations", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Syed Mubarak", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Nabeel Faraz"}, {"n": "Tripti Bhardwaj", "t": "Operation Executive", "d": "Operations", "l": "Gurgaon", "m": "Nitin Kumar Madeshia"}, {"n": "Abhishek .", "t": "Sr Operation Executive", "d": "Operations", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Harish R", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Ganesh S S", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Mohammed Faizad", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Nabeel Faraz"}, {"n": "Shekhar Santosh Patil", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Puja Vivekanand Onekar"}, {"n": "Shravan Kumar Bind", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Sujanya N S", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Nagma M", "t": "Customer Support Executive - Callcenter", "d": "Operations", "l": "Bengaluru", "m": "Faisal Syed Mukthar Shah"}, {"n": "Harry Jenifer Z", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Suhail"}, {"n": "Sunil M S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Darshan S", "t": "Sr. Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Koushik s", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Navya A R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Prekha Vadhini T", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Puja Vivekanand Onekar"}, {"n": "Chaithra V", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Chandana R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Mahima A", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Nandini R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Deepika G", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Bharath Kumar D", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Magesh Mohanraj"}, {"n": "Sandesh L", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Sham Sunder V"}, {"n": "Madan S", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Arif S"}, {"n": "Leonard Vicky", "t": "Air Ticketing Executive", "d": "Operations", "l": "Bengaluru", "m": "Sachidanand Keni"}, {"n": "Rakshitha R", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Bipul Daimari"}, {"n": "Sanjay S", "t": "Customer Support Executive - Esclations", "d": "Operations", "l": "Bengaluru", "m": "Thanush Reddy S B"}, {"n": "Nirag K A", "t": "Customer Support Executive - Esclations", "d": "Operations", "l": "Bengaluru", "m": "Thanush Reddy S B"}, {"n": "Varshini N", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Mahammadhusain Saeed Bijale", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Mehul Sanjay Bhalerao", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Gnana Deepa Nadar", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Aaron Parmar", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Ananya C C", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Kavya D R", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Ramisha Antony Raj", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Hari Krishna S", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Chandrashekar M", "t": "Customer Support Executive - Delivery", "d": "Operations", "l": "Bengaluru", "m": "Sk Asif Akram"}, {"n": "Delita Agnelo Fernandes", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Kavya M", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Ifraq Ahmed R N"}, {"n": "Mohsina Begum", "t": "Customer Support Executive - Callcenter", "d": "Operations", "l": "Bengaluru", "m": "Faisal Syed Mukthar Shah"}, {"n": "Sanjeev Kumar Chhikara", "t": "Regional Head Visa (North & West)", "d": "Operations", "l": "Gurgaon", "m": "Lalitha P"}, {"n": "Amir Shafi Shaikh", "t": "Tour Manager", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Puja Vivekanand Onekar", "t": "FIT Operations Head - Europe", "d": "Operations", "l": "Mumbai", "m": "Saif Ansar Khan"}, {"n": "Anto R Abhishek", "t": "Customer Support  Executive", "d": "Operations", "l": "Bengaluru", "m": "Faisal syed mukthar Shah"}, {"n": "Raveesh Kumaresan Kumaresan Sumathi", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Reginold Simon"}, {"n": "Rutika Rajendra More", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Puja Vivekanand Onekar"}, {"n": "Siddhesh Shankar Kurlekar", "t": "Operation Executive", "d": "Operations", "l": "Mumbai", "m": "Puja Vivekanand Onekar"}, {"n": "Mahesh Kumar Lakra", "t": "Head of Embassy Relationship Officer", "d": "Operations", "l": "Gurgaon", "m": "Vikas Sharma"}, {"n": "Dheena Dhayalan G", "t": "Air Ticketing  Executive", "d": "Operations", "l": "Bengaluru", "m": "Tousif Sait"}, {"n": "Dinakaran M", "t": "Air Ticketing  Executive", "d": "Operations", "l": "Bengaluru", "m": "Mohammed Nabeel Faraz"}, {"n": "Sarjeet Khatri", "t": "Visa Executive", "d": "Operations", "l": "Bengaluru", "m": "Nikita Kharbanda"}, {"n": "Tannishtha Ajaykumar Patil", "t": "Operation Executive", "d": "Operations", "l": "Bengaluru", "m": "Kaushik S"}, {"n": "Veer Khandu Shinde", "t": "Operation   Executive", "d": "Operations", "l": "Bengaluru", "m": "Puja Vivekanand Onekar"}, {"n": "Richie", "t": "Bangalore Head- B2B", "d": "Product", "l": "Bengaluru", "m": "Ashish Yadav"}, {"n": "Shriya Gupta", "t": "Supply Relationship Manager", "d": "Product", "l": "Gurgaon", "m": "Ashish Yadav"}, {"n": "Ashish Yadav", "t": "VP - Product & Growth", "d": "Product", "l": "Gurgaon", "m": "Vinay Gupta"}, {"n": "Shaurya Pratap Singh", "t": "Contracting Manager", "d": "Product", "l": "Gurgaon", "m": "Ashish Yadav"}, {"n": "Naveen Rajesh", "t": "Assistant Manager - Product", "d": "Product", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Varsha Thapa", "t": "Product Executive", "d": "Product", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Nandana N", "t": "Senior Product Executive", "d": "Product", "l": "Bengaluru", "m": "Asad Siddiqui"}, {"n": "Saif Ansar Khan", "t": "Contracting & Marketing Head - UK & Europe", "d": "Product", "l": "Mumbai", "m": "Lalitha P"}, {"n": "Diana S K", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Rajeev Gautam", "t": "Head - North Contracting", "d": "Product", "l": "Gurgaon", "m": "Vinay Gupta"}, {"n": "Asha Aswathaiah", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Indramma .", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Disha Mooljee", "t": "Senior Product Manager", "d": "Product", "l": "Mumbai", "m": "Vinay Gupta"}, {"n": "Shreyas N", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Suraksha Shetty", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Manisha M Jain", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Ravitej S M", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Jawahar R", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Vasumitha G", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Yuvraj V B", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Girish V", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Praveen Kumar K", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Shaikh Humera", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Siddiq K R", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Vatsal Jalla", "t": "Senior Product Executive", "d": "Product", "l": "Bengaluru", "m": "Asad Siddiqui"}, {"n": "Lakshmi M Maraddi", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Chethana T N", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Nikitha S", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Nandhini S", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Joseph Raj A", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Sriramana S", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Sandhya Manandhar", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Sheetal V", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "M J Shakthi Pallavi", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Raghav RK", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Aishwarya T V", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Mallikarjuna T", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Nitin Kumar Madeshia", "t": "Director of Product", "d": "Product", "l": "Noida", "m": "Amit Aggarwal"}, {"n": "Mohsin Ahmed Batla", "t": "Director of Product", "d": "Product", "l": "Noida", "m": "Amit Aggarwal"}, {"n": "Bushra Shafi Sayyed", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Rahul Kumar Sharma", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Chandra Kothari", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Pallavi Jain", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Sougata Saha", "t": "Product Executive", "d": "Product", "l": "Siliguri", "m": "Disha Mooljee"}, {"n": "Raghu S T", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Ashna Sunilkumar Sadhwani", "t": "Product Executive", "d": "Product", "l": "Bengaluru", "m": "Disha Mooljee"}, {"n": "Vaishnavi Suraj Poul", "t": "Product Management Intern", "d": "Product", "l": "Bengaluru", "m": "Mohsin Ahmed Batla"}, {"n": "Kritik Purohit", "t": "Senior Operation Executive ", "d": "Product", "l": "Gurgaon", "m": "Ashish Yadav"}, {"n": "Siva sanmugavel NU", "t": "Product Management Intern", "d": "Product", "l": "Bengaluru", "m": "Mohsin Ahmed Batla"}, {"n": "Sneha Zimolson Paul", "t": "Product Management Intern", "d": "Product", "l": "Bengaluru", "m": "Mohsin Ahmed Batla"}, {"n": "Anik Saha", "t": "Software Engineer", "d": "Technology", "l": "Siliguri", "m": "Deepankar Mondal"}, {"n": "Sirajuddin Reniman", "t": "Senior Engineering Manager", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Dhruv Minotra", "t": "Senior Software Engineer", "d": "Technology", "l": "Delhi", "m": "Ram Krishna Garg"}, {"n": "Atul Bhaskar", "t": "Senior Software Engineer", "d": "Technology", "l": "Delhi", "m": "Ram Krishna Garg"}, {"n": "Abhishek Dhiman", "t": "Software Development Engineer - II", "d": "Technology", "l": "Delhi", "m": "Ram Krishna Garg"}, {"n": "Shahid Siraj", "t": "Senior Software Engineer", "d": "Technology", "l": "Pune", "m": "Ram Krishna Garg"}, {"n": "Amit Kumar", "t": "Software Development Engineer - II", "d": "Technology", "l": "Bihar", "m": "Ram Krishna Garg"}, {"n": "Naman Varshney", "t": "Principle Architect", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Mohit Anand", "t": "Software Engineer", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Abhishek Sharma", "t": "Senior Software Engineer", "d": "Technology", "l": "Uttar Pradesh", "m": "Ram Krishna Garg"}, {"n": "Ram Krishna Garg", "t": "VP - Engineering", "d": "Technology", "l": "Delhi", "m": "Varun Gupta"}, {"n": "Deepankar Mondal", "t": "Technical Lead", "d": "Technology", "l": "Siliguri", "m": "Varun Gupta"}, {"n": "Nagarajan Thangavel", "t": "Senior Software Engineer", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Thageer Ashraf S", "t": "Sr.Product Designer", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Shrinivas Ravindra Devarkonda", "t": "Senior Vice President - Devops and Infrastructure", "d": "Technology", "l": "Bengaluru", "m": "Amit Aggarwal"}, {"n": "Kshitiz Gupta", "t": "Lead Software Engineer", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Sarath R Nair", "t": "Software Engineer", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Rahul Kumar Ram", "t": "Software Engineer", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Deva Dharshini S", "t": "Sr.Product Designer", "d": "Technology", "l": "Bengaluru", "m": "Thageer Ashraf S"}, {"n": "Sheersh Atrishi", "t": "Software Engineer", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Anika Bansal", "t": "Software Engineer", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Vishal Kumar K A", "t": "Sr.Product Designer", "d": "Technology", "l": "Bengaluru", "m": "Thageer Ashraf S"}, {"n": "Hareesh Govindan", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Shubham Kumar Baranwal"}, {"n": "Suraj Patil", "t": "Software Test Engineer", "d": "Technology", "l": "Bengaluru", "m": "Shrinivas Ravindra Devarkonda"}, {"n": "Kumari Riya", "t": "Software Engineer", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Anusha S P", "t": "Senior Test Engineer", "d": "Technology", "l": "Bengaluru", "m": "Shrinivas Ravindra Devarkonda"}, {"n": "Maguluri Yaswanth Reddy", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Dinesh R", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Kshitiz Gupta"}, {"n": "Aravind Induri", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Kshitiz Gupta"}, {"n": "Vishal Sinha", "t": "Engineering Manager", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Alok Patel", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Sanskar Tyagi", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Mohit Viswkarma", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Prajwal B M", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Shubham Kumar Baranwal", "t": "Senior Engineering Manager", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Aashish Manohar Varlani", "t": "Senior Software Engineer", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Subhankar Sen", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Sachin Kushawaha", "t": "Senior Engineering Manager", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Ansh Lakhera", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Aashish Manohar Varlani"}, {"n": "Nikhil Niranjan Wakode", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Arpan Biswas"}, {"n": "Ved Sarang Kulkarni", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Aashish Manohar Varlani"}, {"n": "Pradip Dattatray Yadav", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sachin Kushawaha"}, {"n": "Cephas Gokula", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Surya Poojith Kanchu Stambham", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Shivamani G", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "Kunal Agarwal", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sachin Kushawaha"}, {"n": "Yuvin Raja", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Pranshu Chaurasia", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "Martin Vakada", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "Abhinav Karthik", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sachin Kushawaha"}, {"n": "Priyanshu Upadhyay", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Chinmay Sanjay Tavarej", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sachin Kushawaha"}, {"n": "Sumit Mahendra More", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Krishna Gupta", "t": "Tech- Intern", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Sonu Kumar Mahto", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Aashish Manohar Varlani"}, {"n": "Pawanraje Sukumar Ukarde", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Vishesh P Gowda", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "Shubham Raju Wagh", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "C Siva Kumar", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sachin Kushawaha"}, {"n": "Aman Santosh Jaiswal", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Ketan Bajpai", "t": "Tech- Intern", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Mridul Pandey", "t": "Tech- Intern", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "OM Shandilya", "t": "Tech- Intern", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Deepak kumar Ojha", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "Tumu Sujay Babu", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sachin Kushawaha"}, {"n": "Krishna Prasad S", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "KH SRUJAN GOWDA", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "ANANDHU BIJU", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Shubham Kumar Baranwal"}, {"n": "Krithik Raja M", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Shubham Kumar Baranwal"}, {"n": "Ravi S", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Vighnesh M S", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Rohan A R", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "ANKUR ANAND", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Bandi Karthik", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Sravan Peddakotla", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Vedansh Srivastava", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Ishan Gupta", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Tharun J S", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Vishal Sinha"}, {"n": "Sarthak Gupta Gupta", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Vishnu Vardhan P R", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Akshat Verma", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Kushagra Sharma", "t": "Tech- Intern", "d": "Technology", "l": "Noida", "m": "Ram Krishna Garg"}, {"n": "Priyanshu Sharma", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Arpan Biswas", "t": "AI Solution Architect", "d": "Technology", "l": "Bengaluru", "m": "Varun Gupta"}, {"n": "Devduth Surendran", "t": "Product Designer", "d": "Technology", "l": "Bengaluru", "m": "Thageer Ashraf S"}, {"n": "Rahul S V", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Ram Krishna Garg"}, {"n": "Umar Farooq", "t": "Tech- Intern", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Vishal Vishwakarma", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Sirajuddin Reniman"}, {"n": "Mani Maha Parvas", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Shubham Kumar Baranwal"}, {"n": "Harsha Vardhan Lakavath", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Arun Agnes", "t": "Software Development Engineer - I", "d": "Technology", "l": "Bengaluru", "m": "Naman Varshney"}, {"n": "Kishan Singh Shahi", "t": "Sr. Accountant", "d": "Finance", "l": "Siliguri", "m": "Mallana Gouda"}, {"n": "Kartik Karjee", "t": "Branch Manager", "d": "Finance", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Rajesh Adhikari", "t": "Accounts Executive", "d": "Finance", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Pritam Roy", "t": "Accountant", "d": "Finance", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Dipanti Kumari", "t": "Accountant", "d": "Finance", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Benai Prasad", "t": "Accountant", "d": "Finance", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Ananda M", "t": "Deputy Manager - Accounts", "d": "Finance", "l": "Bengaluru", "m": "Sumi Chanda"}, {"n": "Raghu N R", "t": "Senior Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Shashi Bansal"}, {"n": "Keerthi R", "t": "Deputy Manager - Accounts", "d": "Finance", "l": "Bengaluru", "m": "Sumi Chanda"}, {"n": "Shashi Bansal", "t": "Assistant Finance Manager", "d": "Finance", "l": "Bengaluru", "m": "Surya Prakash Sunku"}, {"n": "Vadde Raju", "t": "Account Payables", "d": "Finance", "l": "Bengaluru", "m": "Keerthi R"}, {"n": "Mallana Gouda", "t": "Accounts Manager", "d": "Finance", "l": "Bengaluru", "m": "Surya Prakash Sunku"}, {"n": "Sonu Chauhan", "t": "Assistant Finance Manager", "d": "Finance", "l": "Delhi", "m": "Surya Prakash Sunku"}, {"n": "Keerthan A S", "t": "Finance Executive", "d": "Finance", "l": "Bengaluru", "m": "Ananda M"}, {"n": "Akash Bhowmick", "t": "Accountant", "d": "Finance", "l": "Siliguri", "m": "Kishan Singh Shahi"}, {"n": "Abhilash K R", "t": "Account Manager - IATA BSP Administrator", "d": "Finance", "l": "Bengaluru", "m": "Riddhi Ratilal Padiya"}, {"n": "Jasvinder Singh", "t": "Accounts Executive - DMC", "d": "Finance", "l": "Gurgaon", "m": "Abhilash K R"}, {"n": "Venkatesh B", "t": "Accounts Manager", "d": "Finance", "l": "Bengaluru", "m": "Ankush Kumar Bhadani"}, {"n": "Srikanth S", "t": "Assistant Manager - Accounts", "d": "Finance", "l": "Bengaluru", "m": "Ankush Kumar Bhadani"}, {"n": "Ambika M S", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Abhilash K R"}, {"n": "Ubada Sukri", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Abhilash K R"}, {"n": "Manoj T K", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Abhilash K R"}, {"n": "Vadde Siva Shankar", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Ananda M"}, {"n": "Sumi Chanda", "t": "Treasury Manager", "d": "Finance", "l": "Bengaluru", "m": "Surya Prakash Sunku"}, {"n": "Karan S Bhosle", "t": "Finance - Intern", "d": "Finance", "l": "Bengaluru", "m": "Sonu Chauhan"}, {"n": "Kaverappa N D", "t": "Finance - Intern", "d": "Finance", "l": "Bengaluru", "m": "Riddhi Ratilal Padiya"}, {"n": "Abhilash Dinesh", "t": "Tax Executive", "d": "Finance", "l": "Bengaluru", "m": "Shashi Bansal"}, {"n": "Hemsagar H Badni", "t": "Finance - Intern", "d": "Finance", "l": "Bengaluru", "m": "Shashank R S"}, {"n": "Vicky Kumar Rana", "t": "Finance - Intern", "d": "Finance", "l": "Bengaluru", "m": "Shashank R S"}, {"n": "Karthikeyan S", "t": "Finance - Intern", "d": "Finance", "l": "Bengaluru", "m": "Shashank R S"}, {"n": "Arun Asokan", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Shashi Bansal"}, {"n": "Hemavathi P S", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Keerthi R"}, {"n": "Flavia Patrick", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Mallana Gouda"}, {"n": "Vaishnavi ,", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Abhilash K R"}, {"n": "Chandu Udarapu", "t": "Junior MIS Executive", "d": "Finance", "l": "Bengaluru", "m": "Riddhi Ratilal Padiya"}, {"n": "Ankush Kumar Bhadani", "t": "Accounts Manager", "d": "Finance", "l": "Bengaluru", "m": "Surya Prakash Sunku"}, {"n": "Agasthian V", "t": "Accounts Executive", "d": "Finance", "l": "Bengaluru", "m": "Ananda M"}, {"n": "Riddhi Ratilal Padiya", "t": "Accounts Manager", "d": "Finance", "l": "Bengaluru", "m": "Surya Prakash Sunku"}, {"n": "Abhishek Mahesh", "t": "Accounts Manager", "d": "Finance", "l": "Bengaluru", "m": "Surya Prakash Sunku"}, {"n": "Puja Roy", "t": "HR Executive", "d": "HR & Admin", "l": "Siliguri", "m": "Ankush Agarwal"}, {"n": "Agraharam Sriharsha Bhatt", "t": "HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Eswara Rao Madugula"}, {"n": "Roshan V V", "t": "Lead Talent Acquisition Specialist", "d": "HR & Admin", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Annock Wesly S", "t": "Talent Acquisition Specialist", "d": "HR & Admin", "l": "Bengaluru", "m": "Roshan V V"}, {"n": "Krishna Prasad B P", "t": "Asst Manager - HR Operations", "d": "HR & Admin", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Rakesh N", "t": "Sr HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Krishna Prasad B P"}, {"n": "Eswara Rao Madugula", "t": "Senior Manager - Payroll", "d": "HR & Admin", "l": "Bengaluru", "m": "Lalitha P"}, {"n": "Pushpa M", "t": "HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Krishna Prasad B P"}, {"n": "Sandhya Rani Gochhayat", "t": "HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Krishna Prasad B P"}, {"n": "Shveta Sood", "t": "HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Roshan V V"}, {"n": "Pritisha Parekh", "t": "HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Roshan V V"}, {"n": "Sadhana Subba", "t": "Talent Acquisition Specialist", "d": "HR & Admin", "l": "Siliguri", "m": "Puja Roy"}, {"n": "Spurthi M N", "t": "HR Executive", "d": "HR & Admin", "l": "Bengaluru", "m": "Krishna Prasad B P"}];
+const chainIndex = {};
+STAFF_CHAIN.forEach(s => { chainIndex[s.n] = s; });
+
+function getChainUp(name, chain=[]) {
+  const s = chainIndex[name];
+  if (!s || !s.m) return chain;
+  chain.unshift(s.m);
+  return getChainUp(s.m, chain);
+}
+
+function getDirectReports(name) {
+  return STAFF_CHAIN.filter(s => s.m === name);
+}
+
+const DEPT_COLOR = {
+  'Sales':'#1d6fce','Operations':'#0f7b5e','Technology':'#7c3aed',
+  'Finance':'#b45309','Product':'#0f5fa8','HR & Admin':'#be185d'
+};
+function deptColor(d) { return DEPT_COLOR[d] || '#6b7280'; }
+function initials(n) { return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+
+function personCard(name, highlight=false) {
+  const s = chainIndex[name] || {};
+  const color = deptColor(s.d);
+  const cls = highlight ? 'chain-card chain-card-main' : 'chain-card';
+  return `<div class="${cls}" style="border-left-color:${color}">
+    <div class="chain-av" style="background:${color}20;color:${color}">${initials(name)}</div>
+    <div class="chain-info">
+      <div class="chain-name">${name}</div>
+      <div class="chain-title">${s.t || ''}</div>
+      ${s.d ? `<div class="chain-dept" style="color:${color}">${s.d}</div>` : ''}
+      ${s.l ? `<div class="chain-loc">📍 ${s.l}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function showChain(name) {
+  const chainUp = getChainUp(name);
+  const reports = getDirectReports(name);
+  
+  document.getElementById('chain-result').style.display = 'block';
+  document.getElementById('chain-empty').style.display = 'none';
+  document.getElementById('chain-suggestions').style.display = 'none';
+
+  // Chain up
+  let upHtml = '';
+  chainUp.forEach((n, i) => {
+    upHtml += `<div style="padding-left:${i*20}px">${personCard(n)}</div>`;
+  });
+  if (chainUp.length) upHtml += `<div class="chain-arrow" style="padding-left:${chainUp.length*20}px">↓</div>`;
+  document.getElementById('chain-up').innerHTML = upHtml;
+
+  // Main person
+  const mainPad = chainUp.length * 20;
+  document.getElementById('chain-person').innerHTML = `<div style="padding-left:${mainPad}px">${personCard(name, true)}</div>`;
+
+  // Direct reports
+  if (reports.length) {
+    document.getElementById('chain-down-label').innerHTML = `<div class="chain-reports-label" style="padding-left:${(mainPad+20)}px">↓ ${reports.length} direct report${reports.length>1?'s':''}</div>`;
+    let downHtml = '';
+    reports.forEach(r => {
+      downHtml += `<div style="padding-left:${mainPad+20}px" class="chain-report-item" onclick="showChain('${r.n.replace(/'/g,"\\'")}')">${personCard(r.n)}</div>`;
+    });
+    document.getElementById('chain-down').innerHTML = downHtml;
+  } else {
+    document.getElementById('chain-down-label').innerHTML = '';
+    document.getElementById('chain-down').innerHTML = '';
+  }
+}
+
+function searchChain(val) {
+  const q = val.trim().toLowerCase();
+  const sug = document.getElementById('chain-suggestions');
+  if (q.length < 2) { sug.style.display='none'; return; }
+  const matches = STAFF_CHAIN.filter(s => s.n.toLowerCase().includes(q)).slice(0,8);
+  if (!matches.length) { sug.style.display='none'; return; }
+  sug.innerHTML = matches.map(s => 
+    `<div class="chain-sug-item" onclick="document.getElementById('chain-input').value='${s.n.replace(/'/g,"\\'")}';searchChain('');showChain('${s.n.replace(/'/g,"\\'")}')">`+
+    `<strong>${s.n}</strong> <span>${s.t||''}</span> <span class="chain-sug-dept">${s.d||''}</span></div>`
+  ).join('');
+  sug.style.display = 'block';
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.chain-search-box')) {
+    document.getElementById('chain-suggestions').style.display='none';
+  }
+});
+</script>
+</div></div>
+<div class="tp" id="tp-board">
+<div class="page">
+<div class="sh">Board &amp; Leadership — Executive Summary</div>
+
+<div class="board-wrap">
+
+  <!-- Header strip -->
+  <div class="board-header">
+    <div class="board-logo-area">
+      <img src="orn-logo.png" alt="ORN" style="height:36px;object-fit:contain" onerror="this.style.display='none'">
+      <div>
+        <div class="board-co-name">ORN Nexus Holding Pte. Ltd.</div>
+        <div class="board-co-sub">Global Travel & DMC Group · Singapore HQ</div>
+      </div>
+    </div>
+    <div class="board-kpis">
+      <div class="board-kpi"><div class="board-kn">846</div><div class="board-kl">Staff on Payroll</div></div>
+      <div class="board-kpi"><div class="board-kn">36</div><div class="board-kl">Global Offices</div></div>
+      <div class="board-kpi"><div class="board-kn">22</div><div class="board-kl">Active Markets</div></div>
+      <div class="board-kpi"><div class="board-kn">5</div><div class="board-kl">Continents</div></div>
+    </div>
+  </div>
+
+  <div class="board-two-col">
+
+    <!-- Left: Leadership -->
+    <div class="board-section">
+      <div class="board-section-title">Board &amp; Founders</div>
+      <div class="board-people">
+        <div class="board-person founder">
+          <div class="board-av" style="background:#92600A;color:#fff">VG</div>
+          <div><div class="board-pname">Vinay Gupta</div><div class="board-ptitle">Founder &amp; Group CEO</div></div>
+        </div>
+        <div class="board-person board-member">
+          <div class="board-av" style="background:#374151;color:#fff">UM</div>
+          <div><div class="board-pname">Unni Menon</div><div class="board-ptitle">Board Member</div></div>
+        </div>
+        <div class="board-person founder">
+          <div class="board-av" style="background:#92600A;color:#fff">AA</div>
+          <div><div class="board-pname">Amit Aggarwal</div><div class="board-ptitle">Co-Founder — Technology &amp; Product</div></div>
+        </div>
+        <div class="board-person founder">
+          <div class="board-av" style="background:#92600A;color:#fff">AK</div>
+          <div><div class="board-pname">Ankit Agarwal</div><div class="board-ptitle">Co-Founder</div></div>
+        </div>
+        <div class="board-person founder">
+          <div class="board-av" style="background:#92600A;color:#fff">AA</div>
+          <div><div class="board-pname">Ankush Agarwal</div><div class="board-ptitle">Co-Founder</div></div>
+        </div>
+        <div class="board-person founder">
+          <div class="board-av" style="background:#92600A;color:#fff">VG</div>
+          <div><div class="board-pname">Varun Gupta</div><div class="board-ptitle">Co-Founder &amp; CTO</div></div>
+        </div>
+      </div>
+
+      <div class="board-section-title" style="margin-top:20px">C-Suite &amp; Global Directors</div>
+      <div class="board-people">
+        <div class="board-person"><div class="board-av">RK</div><div><div class="board-pname">Raj Kumar</div><div class="board-ptitle">COO · London</div></div></div>
+        <div class="board-person"><div class="board-av">AT</div><div><div class="board-pname">Alia Taub</div><div class="board-ptitle">Chief People Officer · London</div></div></div>
+        <div class="board-person"><div class="board-av">AK</div><div><div class="board-pname">Ajay Kawa</div><div class="board-ptitle">Global BD (BTO) · London</div></div></div>
+        <div class="board-person"><div class="board-av">LP</div><div><div class="board-pname">Lalitha P</div><div class="board-ptitle">Director India Operations · 698 staff</div></div></div>
+        <div class="board-person"><div class="board-av">SP</div><div><div class="board-pname">Surya Prakash Sunku</div><div class="board-ptitle">Global Finance Controller</div></div></div>
+        <div class="board-person"><div class="board-av">AS</div><div><div class="board-pname">Asad Siddiqui</div><div class="board-ptitle">Chief Product Officer</div></div></div>
+      </div>
+    </div>
+
+    <!-- Right: Metrics -->
+    <div class="board-section">
+      <div class="board-section-title">Global Presence</div>
+      <div class="board-presence">
+        <div class="board-region"><div class="board-region-flag">🇮🇳</div><div class="board-region-info"><div class="board-region-name">India</div><div class="board-region-stat">752 staff · 5 cities · Primary execution hub</div></div></div>
+        <div class="board-region"><div class="board-region-flag">🇬🇧</div><div class="board-region-info"><div class="board-region-name">United Kingdom</div><div class="board-region-stat">4 staff · London HQ · European operations</div></div></div>
+        <div class="board-region"><div class="board-region-flag">🌍</div><div class="board-region-info"><div class="board-region-name">Europe</div><div class="board-region-stat">13 offices · Germany, France, Turkey, Italy, Greece, Bulgaria, Slovakia, Czech Republic, Poland</div></div></div>
+        <div class="board-region"><div class="board-region-flag">🌏</div><div class="board-region-info"><div class="board-region-name">Asia Pacific</div><div class="board-region-stat">48 staff · Singapore, Philippines, Thailand, Bali, KL</div></div></div>
+        <div class="board-region"><div class="board-region-flag">🌍</div><div class="board-region-info"><div class="board-region-name">Middle East</div><div class="board-region-stat">Dubai, Bahrain · 10 staff</div></div></div>
+        <div class="board-region"><div class="board-region-flag">🌎</div><div class="board-region-info"><div class="board-region-name">Americas</div><div class="board-region-stat">USA (64), Peru (30), Argentina (6) · 100 staff</div></div></div>
+        <div class="board-region"><div class="board-region-flag">🇦🇺</div><div class="board-region-info"><div class="board-region-name">Oceania</div><div class="board-region-stat">Australia · 22 staff · Melbourne HQ</div></div></div>
+      </div>
+
+      <div class="board-section-title" style="margin-top:20px">Payroll Overview</div>
+      <div class="board-payroll-box">
+        <div class="board-pay-row"><span>Monthly Payroll (INR equiv.)</span><strong>₹3.28 Cr/mo</strong></div>
+        <div class="board-pay-row"><span>Annual Payroll (INR equiv.)</span><strong>₹39.3 Cr/yr</strong></div>
+        <div class="board-pay-row"><span>Currencies</span><strong>16 currencies</strong></div>
+        <div class="board-pay-row"><span>India Staff Cost</span><strong>₹39.2L/mo (12%)</strong></div>
+        <div class="board-pay-row"><span>International Staff Cost</span><strong>₹2.89 Cr/mo (88%)</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-footer">Confidential — For Board Use Only · Data as of January 2026</div>
+</div>
+</div></div>
+
+
+
+<div class="tp" id="tp-offices">
+<div class="page">
+<div class="sh">Global Staff — International Offices</div>
+<div class="oft-controls">
+  <input class="oft-search" type="text" id="oft-q" placeholder="Search name, country, city or role..." oninput="oftFilter(this.value)">
+  <div class="oft-filters" id="oft-filter-btns"></div>
+</div>
+<div class="oft-count" id="oft-count"></div>
+<table class="oft-table">
+  <thead>
+    <tr>
+      <th style="width:36px"></th>
+      <th onclick="oftSort(1)">Country<span class="sort-ic">↕</span></th>
+      <th onclick="oftSort(2)">City<span class="sort-ic">↕</span></th>
+      <th onclick="oftSort(3)">Name<span class="sort-ic">↕</span></th>
+      <th onclick="oftSort(4)">Role / Title<span class="sort-ic">↕</span></th>
+      <th onclick="oftSort(5)">Type<span class="sort-ic">↕</span></th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="oft-tbody"></tbody>
+</table>
+<script>
+const OFT_DATA=[
+  // United Kingdom
+  ["🇬🇧","United Kingdom","London","Raj Kumar","Chief Operating Officer","TripFactory","Active"],
+  ["🇬🇧","United Kingdom","London","Alia Taub","Chief People Officer","TripFactory","Active"],
+  ["🇬🇧","United Kingdom","London","Ajay Kawa","Global Business Development (BTO)","TripFactory","Active"],
+  // Germany
+  ["🇩🇪","Germany","Frankfurt","Moaz Ghani","Country Partner","TripFactory Partner","Active"],
+  // France
+  ["🇫🇷","France","Paris","Paolina Zunino","Country Partner","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Renaud Lenne","Country Partner","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Abdou Said","Driver / Ground Support","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Beytullah Guler","Driver","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Baris Bakis","Driver","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Ismail Gunes","Driver","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Akca Irem","Scheduling / Planning Manager","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Gulsen Berkay","Driver","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Alain Biguet","Driver / Tech & Ground Support","TripFactory Partner","Active"],
+  ["🇫🇷","France","Paris","Abega Bodo Emmanuel Hyacinthe","Dispatch Manager","TripFactory Partner","Active"],
+  // Italy
+  ["🇮🇹","Italy","Cesenatico","Daniele","Country Partner","TripFactory Partner","Active"],
+  // Turkey
+  ["🇹🇷","Turkey","Istanbul","Baris Intepe","General Manager / DMC Head","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Feyzullah Ulusoy","Agencies & Business Development","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Furkan Mustafa Serbetci","Operations Manager","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Gizem Bilgisu","Operations Supervisor","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Kubra Avci","Accounting & Finance","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Claudia Zuazo Fernandez","Operations Supervisor","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Sahran Ahmed","Operations Supervisor","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Hüseyin Muhammet Oduncu","Operations Specialist","TripFactory Partner","Active"],
+  ["🇹🇷","Turkey","Istanbul","Tuğberk Ungan","Operations Manager","TripFactory Partner","Active"],
+  // Czech Republic
+  ["🇨🇿","Czech Republic","Prague","Marta Zizkova","Country Partner","TripFactory Partner","Active"],
+  // Poland
+  ["🇵🇱","Poland","Warsaw","Krzysztof Jamruszkiewicz","Country Partner","TripFactory Partner","Active"],
+  // Slovakia
+  ["🇸🇰","Slovakia","Nitra","Adonis","Fleet Operations Manager","TripFactory Partner","Active"],
+  // Greece
+  ["🇬🇷","Greece","Athens","Argiris","Country Partner / DMC Head","TripFactory Partner","Active"],
+  // Bulgaria
+  ["🇧🇬","Bulgaria","Sofia","Adonis","Country Partner","TripFactory Partner","Active"],
+  // UAE
+  ["🇦🇪","UAE","Dubai","Yassir Ahmed","Country Head / Office Manager","TripFactory","Active"],
+  ["🇦🇪","UAE","Dubai","Sachin Nene","SVP — GCC, Middle East & Africa","TripFactory","Active"],
+  ["🇦🇪","UAE","Dubai","Faizan Shafi Shaikh","Senior Executive","TripFactory","Active"],
+  ["🇦🇪","UAE","Dubai","Muhammed Thayyullathil","Asst Manager — Groups & Contracting","TripFactory","Active"],
+  // Kuwait
+  ["🇰🇼","Kuwait","Kuwait City","Blessy Abraham","Sales Support Executive","TripFactory","Active"],
+  // Singapore
+  ["🇸🇬","Singapore","Singapore","Maricar Manalo Chao","Regional Head — Southeast Asia","TripFactory","Active"],
+  ["🇸🇬","Singapore","Singapore","Abbas B","Singapore Manager — Operations","TripFactory","Active"],
+  ["🇸🇬","Singapore","Singapore","Logenthiran Sandrasegaran","Airport Coordinator","TripFactory","Active"],
+  ["🇸🇬","Singapore","Singapore","Thaamarai Bala Naidu","Tour Guide","TripFactory","Active"],
+  // Malaysia
+  ["🇲🇾","Malaysia","Kuala Lumpur","Noor Adilah Binti Abdullah","Area Sales Manager","TripFactory","Active"],
+  ["🇲🇾","Malaysia","Kuala Lumpur","Suman Mathevan","Regional Manager — Southeast Asia","TripFactory","Active"],
+  // Thailand
+  ["🇹🇭","Thailand","Bangkok","Thanaset Nithichotthanasiri","Sightseeing Coordinator","TripFactory","Active"],
+  ["🇹🇭","Thailand","Bangkok","Sakonwat Priwaan","Sightseeing Coordinator","TripFactory","Active"],
+  ["🇹🇭","Thailand","Bangkok","Kantpichcha Phaphim","Sightseeing Coordinator","TripFactory","Active"],
+  ["🇹🇭","Thailand","Bangkok","Chotirat Maungtawee","Service Point Activities","TripFactory","Active"],
+  ["🇹🇭","Thailand","Bangkok","Pakapong Visutising","Sightseeing Coordinator","TripFactory","Active"],
+  ["🇹🇭","Thailand","Bangkok","Nutthaphat Udomcharoenmas","Accountant","TripFactory","Active"],
+  ["🇹🇭","Thailand","Bangkok","Ornamphai Iampraditpan","Accounting","TripFactory","Active"],
+  // Indonesia
+  ["🇮🇩","Indonesia","Bali","Sachin Ramchandra Kurte","DMC Head — Bali","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Dean Veno Astarada","Trainer & Agent Support","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Ajimas Sya'ban Lintang Jauhar","Account Executive","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Jelot Wisang Irbavo","Graphic Designer","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Hendriastanto Rachmadani","Graphic Designer","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Meldy Dian Taeras","Operation Executive","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Ketut Ariantini","Operation Executive","TripFactory","Active"],
+  ["🇮🇩","Indonesia","Bali","Rois Tifaizeh","Operation Executive","TripFactory","Active"],
+  // Philippines
+  ["🇵🇭","Philippines","Manila","Maricar Manalo Chao","President / Country Head","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Rimer Espinosa Batayen","Training & L&D Manager","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Kristine Ann Cadiena Javier","B2B Sales Manager","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Anthony Lester Clave Lizardo","B2B Sales Manager","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Aisaiah Alan Cruz Cea","Service Delivery Manager","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Mark Anthony Fontanilla Villaflores","Finance & Admin Manager","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Anna Jhoanna Cayabyab Lara","Destination Revenue Manager","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Kyra Fernandez Joaquin","Treasury Admin Specialist","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Jasmin Valencia Apuro","HR & Admin Officer","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Sarah Mae Arante Panes","Travel Expert Officer","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Dolores Dumaat Duero","Sales Officer","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Kenneth Paul Vincent Ferrer Vallejo","Product / Content","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Erwin Guevara Asprer","Sales Officer","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Mary Grace Madrid Manzon","Travel Expert","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Marify Galia Abad","Group Officer","TripFactory","Active"],
+  ["🇵🇭","Philippines","Manila","Janelle Lleva Tolentino","Visa & Reservation Specialist","TripFactory","Active"],
+  // Australia
+  ["🇦🇺","Australia","Melbourne","Sahil Nijhawan","CEO / Country Head","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Dhruv Soni","Head of Finance & Operations","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Gemma Martin","Team Leader — Sales Support","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Shae Tyler","Asst Team Leader","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Harish Kumar","Operations Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","James Gottschalk","Distribution Manager","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Bikramjit Singh Oberoi","Fleet Manager","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Yukti Kumar","Head of Product — Oceania","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Nitesh Setia","Operations Manager","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Marguerite Du Plessis","QC & Group Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Amey Ghadigaonkar","Junior Accountant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Aung Ko Zin","Sales Support Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Christelle Martins","Operations Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Dora Bobadilla","Sales Support Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Muskan Muskan","Junior Travel Operations Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Nipunika Ranasinghe","Sales Support Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Palak Kapahi","Junior Travel Operations Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Virstef Ciefanny","Operations Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Weizhe Lin","Product Consultant","TripFactory Partner","Active"],
+  ["🇦🇺","Australia","Melbourne","Ying Liu","Product Consultant","TripFactory Partner","Active"],
+  // Americas
+  ["🇺🇸","United States","New York / Seattle / LA / Texas","Kirk Demeter","Country Partner","TripFactory Partner","Active"],
+  ["🇺🇸","United States","New York / Seattle / LA / Texas","Kerryn Collins","Country Partner","TripFactory Partner","Active"],
+  ["🇵🇪","Peru","Lima","Daniel Rodrigue","Country Partner","TripFactory Partner","Active"],
+  ["🇦🇷","Argentina","Buenos Aires","Maria Noelia Bonvin","CEO Latin America","TripFactory Partner","Active"],
+  ["🇦🇷","Argentina","Buenos Aires","Ana Paula Maibach","Consultant","TripFactory Partner","Active"],
+];
+
+let _oftQ='', _oftC='', _oftCol=1, _oftAsc=true;
+
+function oftRender(){
+  const q=_oftQ.toLowerCase();
+  let rows=OFT_DATA.filter(r=>{
+    const m=!q||[r[1],r[2],r[3],r[4],r[5]].some(v=>v.toLowerCase().includes(q));
+    const c=!_oftC||r[1]===_oftC;
+    return m&&c;
+  });
+  rows.sort((a,b)=>{
+    const av=a[_oftCol]||'', bv=b[_oftCol]||'';
+    return _oftAsc?av.localeCompare(bv):bv.localeCompare(av);
+  });
+  document.getElementById('oft-count').textContent=rows.length+' staff';
+  let prev='', html='';
+  rows.forEach(r=>{
+    if(r[1]!==prev){
+      html+='<tr class="oft-sep"><td colspan="7">'+r[0]+'  '+r[1]+'</td></tr>';
+      prev=r[1];
+    }
+    const tc=r[5]==='TripFactory'?'oft-tf':'oft-partner';
+    html+='<tr><td style="font-size:18px;text-align:center">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="oft-nm">'+r[3]+'</td><td class="oft-role">'+r[4]+'</td><td><span class="oft-tag '+tc+'">'+r[5]+'</span></td><td><span class="oft-active">'+r[6]+'</span></td></tr>';
+  });
+  document.getElementById('oft-tbody').innerHTML=html;
+}
+
+function oftFilter(v){_oftQ=v;oftRender();}
+function oftSort(c){if(_oftCol===c)_oftAsc=!_oftAsc;else{_oftCol=c;_oftAsc=true;}oftRender();}
+function oftSetCountry(c,btn){
+  _oftC=c;
+  document.querySelectorAll('.oft-fc').forEach(b=>b.classList.remove('oft-fc-on'));
+  btn.classList.add('oft-fc-on');
+  oftRender();
+}
+function oftBuildFilters(){
+  const countries=[...new Set(OFT_DATA.map(r=>r[1]))].sort();
+  const wrap=document.getElementById('oft-filter-btns');
+  wrap.innerHTML='';
+  const allBtn=document.createElement('button');
+  allBtn.className='oft-fc oft-fc-on';
+  allBtn.textContent='All';
+  allBtn.addEventListener('click',function(){oftSetCountry('',this);});
+  wrap.appendChild(allBtn);
+  countries.forEach(function(c){
+    const btn=document.createElement('button');
+    btn.className='oft-fc';
+    btn.textContent=c;
+    btn.addEventListener('click',function(){oftSetCountry(c,this);});
+    wrap.appendChild(btn);
+  });
+}
+window.addEventListener('load',function(){oftBuildFilters();oftRender();});
+</script>
+</div></div>
 
 </body>
 </html>
