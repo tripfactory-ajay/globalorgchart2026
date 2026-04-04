@@ -716,6 +716,7 @@ tr.pr-total td.num{color:#4ade80}
   <button class="tb" onclick="sw('headcount',this)">👥 Headcount</button>
   <button class="tb" onclick="sw('chain',this)">🔍 Reporting Chain</button>
   <button class="tb" onclick="sw('board',this)">🏛 Leadership</button>
+  <button class="tb" onclick="sw('directory',this)">📋 Staff Directory</button>
 </nav>
 
 
@@ -3836,6 +3837,920 @@ function oftBuildFilters(){
 window.addEventListener('load',function(){oftBuildFilters();oftRender();});
 </script>
 </div></div>
+
+
+<!-- ===== STAFF DIRECTORY TAB ===== -->
+<div class="tp" id="tp-directory">
+<div class="page">
+
+<style>
+/* ── STAFF DIRECTORY ── */
+.dir-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+.dir-search{flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--b1);border-radius:6px;font-size:12px;outline:none;transition:border-color .15s}
+.dir-search:focus{border-color:var(--t3)}
+.dir-select{padding:7px 10px;border:1px solid var(--b1);border-radius:6px;font-size:12px;background:var(--white);cursor:pointer;outline:none;color:var(--t1)}
+.dir-count{font-size:11px;color:var(--t3);white-space:nowrap;align-self:center}
+.dir-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--white);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh0)}
+.dir-table th{background:var(--t1);color:#fff;padding:9px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;white-space:nowrap;user-select:none;transition:background .12s}
+.dir-table th:hover{background:#2d3142}
+.dir-table th .sort-ic{margin-left:4px;opacity:.5;font-size:9px}
+.dir-table td{padding:9px 12px;border-bottom:1px solid var(--b1);vertical-align:middle}
+.dir-table tbody tr:hover td{background:#f9fafb}
+.dir-table tbody tr:last-child td{border-bottom:none}
+.dir-av{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--white);flex-shrink:0;letter-spacing:-.2px}
+.dir-name-cell{display:flex;align-items:center;gap:10px}
+.dir-nm{font-weight:600;color:var(--t1);font-size:12px}
+.dir-role{color:var(--t2);font-size:11px;margin-top:1px}
+.dir-dept-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.dir-dept-s{background:var(--ds-l);color:var(--ds);border:1px solid var(--ds-b)}
+.dir-dept-o{background:var(--do-l);color:var(--do);border:1px solid var(--do-b)}
+.dir-dept-t{background:var(--dt-l);color:var(--dt);border:1px solid var(--dt-b)}
+.dir-dept-f{background:var(--df-l);color:var(--df);border:1px solid var(--df-b)}
+.dir-dept-p{background:var(--dp-l);color:var(--dp);border:1px solid var(--dp-b)}
+.dir-dept-h{background:var(--dh-l);color:var(--dh);border:1px solid var(--dh-b)}
+.dir-dept-x{background:var(--bg);color:var(--t3);border:1px solid var(--b1)}
+.dir-loc{color:var(--t2);font-size:11px}
+.dir-mgr{color:var(--t2);font-size:11px}
+.dir-email-link{color:var(--ds);font-size:11px;text-decoration:none}
+.dir-email-link:hover{text-decoration:underline}
+.dir-email-dim{color:var(--t4);font-size:10px;font-style:italic}
+.dir-empty{text-align:center;padding:48px;color:var(--t3);font-size:12px}
+.dir-view-btns{display:flex;gap:6px}
+.dir-vb{padding:6px 12px;font-size:11px;font-weight:600;border:1px solid var(--b1);border-radius:5px;cursor:pointer;background:var(--white);color:var(--t2);transition:all .12s}
+.dir-vb.on{background:var(--t1);color:#fff;border-color:var(--t1)}
+/* Card view */
+.dir-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.dir-card{background:var(--white);border:1px solid var(--b1);border-radius:var(--r);padding:16px;box-shadow:var(--sh0);transition:box-shadow .14s,transform .12s}
+.dir-card:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+.dir-card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.dir-card-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.dir-card-name{font-weight:700;font-size:12px;color:var(--t1);line-height:1.3}
+.dir-card-title{font-size:10px;color:var(--t2);margin-top:2px;line-height:1.3}
+.dir-card-row{font-size:10px;color:var(--t3);margin-top:5px;display:flex;align-items:center;gap:5px}
+.dir-card-row svg{flex-shrink:0;opacity:.6}
+.dir-card-email{margin-top:8px;padding-top:8px;border-top:1px solid var(--b1)}
+.dir-card-email a{color:var(--ds);font-size:10px;text-decoration:none;word-break:break-all}
+.dir-card-email a:hover{text-decoration:underline}
+.dir-card-email-dim{color:var(--t4);font-size:10px;font-style:italic}
+</style>
+
+<div class="sh">Staff Directory — All Personnel</div>
+
+<div class="dir-toolbar">
+  <input type="text" class="dir-search" id="dir-search" placeholder="Search name, role, location..." oninput="dirRender()">
+  <select class="dir-select" id="dir-dept" onchange="dirRender()">
+    <option value="">All Departments</option>
+    <option value="Sales">Sales</option>
+    <option value="Operations">Operations</option>
+    <option value="Technology">Technology</option>
+    <option value="Product">Product</option>
+    <option value="Finance">Finance</option>
+    <option value="HR &amp; Admin">HR &amp; Admin</option>
+    <option value="Global">Global / Intl</option>
+  </select>
+  <select class="dir-select" id="dir-loc" onchange="dirRender()">
+    <option value="">All Locations</option>
+  </select>
+  <div class="dir-view-btns">
+    <button class="dir-vb on" id="dir-vb-table" onclick="dirSetView('table',this)">≡ Table</button>
+    <button class="dir-vb" id="dir-vb-cards" onclick="dirSetView('cards',this)">⊞ Cards</button>
+  </div>
+  <span class="dir-count" id="dir-count">— staff</span>
+</div>
+
+<div id="dir-table-wrap">
+  <table class="dir-table" id="dir-table">
+    <thead>
+      <tr>
+        <th onclick="dirSort(0)">Name <span class="sort-ic">↕</span></th>
+        <th onclick="dirSort(1)">Title / Role <span class="sort-ic">↕</span></th>
+        <th onclick="dirSort(2)">Department <span class="sort-ic">↕</span></th>
+        <th onclick="dirSort(3)">Location <span class="sort-ic">↕</span></th>
+        <th onclick="dirSort(4)">Reports To <span class="sort-ic">↕</span></th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="dir-tbody"></tbody>
+  </table>
+</div>
+<div id="dir-cards-wrap" style="display:none"><div class="dir-cards" id="dir-cards"></div></div>
+
+<script>
+/* ── Dept colour mapping ── */
+const DEPT_CLS = {
+  'Sales':'dir-dept-s','Operations':'dir-dept-o','Technology':'dir-dept-t',
+  'Product':'dir-dept-p','Finance':'dir-dept-f','HR & Admin':'dir-dept-h'
+};
+const DEPT_AV = {
+  'Sales':'#1d6fce','Operations':'#0f7b5e','Technology':'#7c3aed',
+  'Product':'#0f5fa8','Finance':'#b45309','HR & Admin':'#be185d'
+};
+
+/* ── Combine STAFF_CHAIN (India ops) + OFT_DATA (global) into one list ── */
+function buildDirData() {
+  const out = [];
+  // From STAFF_CHAIN (has dept + manager info)
+  if(typeof STAFF_CHAIN !== 'undefined') {
+    STAFF_CHAIN.forEach(s => {
+      out.push({ name: s.n, title: s.t, dept: s.d, loc: s.l, mgr: s.m||'', email: '' });
+    });
+  }
+  // From OFT_DATA (global staff, no dept/mgr info in that array)
+  const scNames = new Set(out.map(s=>s.name.trim().toLowerCase()));
+  if(typeof OFT_DATA !== 'undefined') {
+    OFT_DATA.forEach(r => {
+      const nm = r[3];
+      if(!scNames.has(nm.trim().toLowerCase())) {
+        out.push({ name: nm, title: r[4], dept: 'Global', loc: r[2]+', '+r[1], mgr: '', email: '' });
+      }
+    });
+  }
+  return out;
+}
+
+const DIR_DATA = buildDirData();
+
+/* ── Seed email lookup — tries to derive from known patterns ── */
+const DIR_EMAILS = {
+  "ANANDHU BIJU": "anandhu.biju@tripfactory.travel",
+  "ANKUR ANAND": "ankur.a@tripfactory.travel",
+  "Aashish Manohar Varlani": "aashish.v@tripfactory.com",
+  "Abbas B": "abbas.b@tripfactory.com",
+  "Abdou Said": "abdou13said@hotmail.com",
+  "Abdul Hameed A": "abdul.hameed@nexusdmc.travel",
+  "Abdul Usman Ali": "abdul.u@nexusdmc.travel",
+  "Abega Bodo Emmanuel Hyacinthe": "emmanuel.b@nexusdmc.com",
+  "Abhay kiran v": "abhay.kv@tripfactory.travel",
+  "Abhijeet Ranjan": "abhijeet.r@tripfactory.travel",
+  "Abhilash Dinesh": "abhilash.d@tripfactory.com",
+  "Abhilash K R": "abhilash.kr@tripfactory.com",
+  "Abhimanyu Yadav": "abhimanyuyadav821@gmail.com",
+  "Abhinav Karthik": "abhinav.karthik@tripfactory.travel",
+  "Abhishek .": "abhishek.1@tripfactory.com",
+  "Abhishek Dhiman": "abhishek.d@tripfactory.com",
+  "Abhishek E Varghese": "abhishek.ev@nexusdmc.travel",
+  "Abhishek Mahesh": "m.abhishek@tripfactory.com",
+  "Abhishek Mohanta": "abhishek.m@tripfactory.com",
+  "Abhishek Sharma": "abhishek.sharma@tripfactory.com",
+  "Abhishek Teron": "abhishekteron169@gmail.com",
+  "Abinaya S": "abinaya@tripfactory.travel",
+  "Aditi Singh": "aditi.s@tripfactory.travel",
+  "Adonis": "adonis@nexusdmc.com",
+  "Adrian J Milton": "adrian.mj@tripfactory.travel",
+  "Afaq Safeer Khan": "afaq.s@nexusdmc.travel",
+  "Agasthian V": "agasthian.v@tripfactory.com",
+  "Aisaiah Alan Cruz Cea": "aisaiah.cea@tripfactory.com",
+  "Aishwarya A": "aishwarya.a@nexusdmc.travel",
+  "Aishwarya T V": "aishwarya.tv@tripfactory.travel",
+  "Ajay Kawa": "ajay.kawa@tripfactory.com",
+  "Ajimas Sya'ban Lintang Jauhar": "ajimas.s@tripfactory.com",
+  "Ajit Rai": "ajit.goflysmart@gmail.com",
+  "Akash Bhowmick": "ab935952@gmail.com",
+  "Akash Kumar": "akash.kumar@tripfactory.com",
+  "Akbar Pasha": "akbar.p@nexusdmc.com",
+  "Akhila B": "akhila.b@tripfactory.travel",
+  "Akshat Verma": "akshat.v@tripfactory.travel",
+  "Akshay Banodhiya": "akshay.b@nexusdmc.travel",
+  "Alia Taub": "alia.taub@tripfactory.com",
+  "Alip Sengupta": "alip.gofly@gmail.com",
+  "Aliya Banu N": "banu.n@tripfactory.travel",
+  "Alok Patel": "alok.patel@tripfactory.travel",
+  "Aman Jha": "aman.jha@tripfactory.travel",
+  "Aman Santosh Jaiswal": "aman.sj@tripfactory.travel",
+  "Ambika M S": "ambika.ms@tripfactory.com",
+  "Ambuja Reddy": "ambuja@tripfactory.travel",
+  "Ameena Iram": "ameena.i@tripfactory.com",
+  "Amir Shafi Shaikh": "amir.s@tripfactory.com",
+  "Amit Aggarwal": "amit@tripfactory.com",
+  "Amit Kumar": "amitkumar@tripfactory.com",
+  "Amit Sharma": "amit.s@tripfactory.travel",
+  "Amra Jabeen": "amra.j@tripfactory.travel",
+  "Ana Paula Maibach": "ana.paula@tripfactory.com",
+  "Ananda M": "ananda@tripfactory.com",
+  "Ananya C C": "ananya.cc@tripfactory.travel",
+  "Ananya S Gowda": "ananya.s@nexusdmc.travel",
+  "Angad Shishodia": "angad.s@tripfactory.com",
+  "Anik Saha": "anik.saha@tripfactory.travel",
+  "Anika Bansal": "anika.b@tripfactory.com",
+  "Aniket Gahinath Avhad": "aniket.a@tripfactory.travel",
+  "Anjali Prasad": "anjali.p@tripfactory.travel",
+  "Ankit Bansal": "ankit.b@nexusdmc.travel",
+  "Ankit Makwana": "ankit.makwana@tripfactory.travel",
+  "Ankita Bhakta": "ankita.goflysmart@gmail.com",
+  "Ankita Chakraborty": "ankita.c@tripfactory.com",
+  "Ankitkumar Jha Kanhayamohan": "ankit.km@nexusdmc.travel",
+  "Ankur Dwivedi": "ankur.dwivedi@tripfactory.travel",
+  "Ankush Kumar Bhadani": "ankush.kb@tripfactory.com",
+  "Anna Jhoanna Cayabyab Lara": "anna@tripfactory.com",
+  "Annock Wesly S": "wesly@tripfactory.com",
+  "Annwesha Pal": "annwesha.p@tripfactory.com",
+  "Ansh Lakhera": "ansh.lakhera@tripfactory.travel",
+  "Anthony Lester Clave Lizardo": "lester.lizardo@tripfactory.com",
+  "Anto R Abhishek": "abhishek.anto@tripfactory.travel",
+  "Anu Beohar": "anu.beohar@nexusdmc.travel",
+  "Anu V": "anu.v@tripfactory.travel",
+  "Anuj Kumar Sareen": "anujsareen@tripfactory.com",
+  "Anusha P": "anusha.p@tripfactory.travel",
+  "Anusha S": "s.anusha@nexusdmc.travel",
+  "Anusha S P": "anusha.sp@tripfactory.com",
+  "Anushree S": "anushree.s@tripfactory.travel",
+  "Apurva Navin Bhansali": "apurva.b@tripfactory.com",
+  "Aravind Induri": "aravind.i@tripfactory.travel",
+  "Aravind P": "aravind.p@tripfactory.com",
+  "Arpan Biswas": "arpan.b@tripfactory.com",
+  "Arpitha V": "arpitha.v@tripfactory.travel",
+  "Arshdeep Kaur": "arsh.k@nexusdmc.travel",
+  "Arun Agnes": "arun.a@tripfactory.travel",
+  "Arun Asokan": "arun.a@tripfactory.com",
+  "Aryan Rai": "aryan.rai@tripfactory.travel",
+  "Asad Siddiqui": "asad@tripfactory.com",
+  "Asha Aswathaiah": "asha.a@tripfactory.com",
+  "Asha S": "asha@tripfactory.travel",
+  "Ashis Biswas": "ashisgofly48000@gmail.com",
+  "Ashish Kumar": "ashish.k@nexusdmc.travel",
+  "Ashish Yadav": "ashish@tripfactory.com",
+  "Ashna Sunilkumar Sadhwani": "ashna.sadhwani@tripfactory.travel",
+  "Ashutosh Shukla": "ashutosh.s@tripfactory.com",
+  "Ashwitha Y": "ashwitha.y@nexusdmc.travel",
+  "Athul P S": "athul.ps@nexusdmc.travel",
+  "Atul Bhaskar": "atul@tripfactory.com",
+  "Augustine Alex P": "alex.p@tripfactory.travel",
+  "Avinash Dattaram Ghatge": "avinash.dg@tripfactory.travel",
+  "Ayan Razvi": "ayan.r@nexusdmc.travel",
+  "Ayush Rai": "ayush.rai@tripfactory.travel",
+  "Babitha G": "babitha.g@tripfactory.com",
+  "Balachandar H Benakatti": "balachandar.h@tripfactory.com",
+  "Bandi Karthik": "karthik.b@tripfactory.travel",
+  "Baris Bakis": "bakisb445@gmail.com",
+  "Baris Intepe": "baris.i@nexusdmc.com",
+  "Benai Prasad": "binoyprasad12@gmail.com",
+  "Benaka K": "benaka.k@nexusdmc.travel",
+  "Beytullah Guler": "gulerbeytullah189@gmail.com",
+  "Bhagya Jyothi B": "bhagyajyothi.b@tripfactory.com",
+  "Bharat Bhushan Gulati": "bharat.g@tripfactory.com",
+  "Bharath Kumar D": "bharath.d@tripfactory.com",
+  "Bhargavi B": "bhargavi.b@tripfactory.travel",
+  "Bhaskar V": "bhaskar@tripfactory.com",
+  "Bhoomika A V": "bhoomika.av@nexusdmc.travel",
+  "Bhumika Roy": "bhumika83000@gmail.com",
+  "Bidesh Chowdhury": "tours@goflysmart.com",
+  "Bikash Roy": "vikeeyslg@gmail.com",
+  "Bindu Shree R": "bindu.sr@tripfactory.travel",
+  "Bipul Daimari": "bipul@tripfactory.com",
+  "Bishal Sarkar": "bishal.s@tripfactory.travel",
+  "Blessy Abraham": "blessy.a@tripfactory.com",
+  "Brijesh Krishna M N": "brijesh.mn@tripfactory.travel",
+  "C Siva Kumar": "siva.kumar@tripfactory.travel",
+  "Cephas Gokula": "cephas.gokula@tripfactory.travel",
+  "Chaithra V": "chaithra.v@tripfactory.travel",
+  "Chandan P R": "chandan.pr@tripfactory.com",
+  "Chandana D": "chandana.d@tripfactory.travel",
+  "Chandana R": "chandana.r@tripfactory.com",
+  "Chandana V": "chandana@tripfactory.travel",
+  "Chandhan V K": "chandhan.vk@tripfactory.travel",
+  "Chandra Kothari": "chandra.kothari@tripfactory.travel",
+  "Chandu Udarapu": "chandu.u@tripfactory.com",
+  "Charitha Ravi": "charitha@tripfactory.com",
+  "Charles Rai": "charlesgoflysmart@gmail.com",
+  "Chethana T N": "chethana.tn@tripfactory.travel",
+  "Chhaya Kumari": "chhaya@tripfactory.com",
+  "Chinmay Sanjay Tavarej": "chinmay.st@tripfactory.travel",
+  "Chiraag Chakraborthy": "chiraag.c@nexusdmc.travel",
+  "Chirag V": "chirag.v@tripfactory.travel",
+  "Chiranjit Boro": "chiranjit.b@tripfactory.com",
+  "Chitto Broto Goswami": "goswami.cb@tripfactory.travel",
+  "Claudia Zuazo Fernandez": "claudia.z@nexusdmc.com",
+  "Clinton P Thomas": "clinton@tripfactory.com",
+  "Darshan S": "s.darshan@tripfactory.travel",
+  "Dayananda C": "dayananda.c@nexusdmc.travel",
+  "Deeksha N S": "deeksha@tripfactory.travel",
+  "Deepa K S": "deepa.ks@nexusdmc.travel",
+  "Deepak Kumar": "deepakkumar@nexusdmc.travel",
+  "Deepak Kumar Singh": "deepak.kumar@tripfactory.com",
+  "Deepak kumar Ojha": "deepak.ko@tripfactory.travel",
+  "Deepankar Mondal": "deepankar.mondal@tripfactory.com",
+  "Deepika G": "deepika.g@tripfactory.com",
+  "Deepika V": "deepika.v@tripfactory.travel",
+  "Deepthi C R": "deepthi.cr@tripfactory.travel",
+  "Deepthi G A": "deepthi.ga@tripfactory.travel",
+  "Deepthi G C": "deepthi.gc@tripfactory.travel",
+  "Delita Agnelo Fernandes": "delita.f@tripfactory.com",
+  "Deva Dharshini S": "deva.ds@tripfactory.com",
+  "Devduth Surendran": "devduth.s@tripfactory.travel",
+  "Dhaiwik R": "dhaiwik.r@tripfactory.travel",
+  "Dharmanand Dixit": "dharmanand.d@nexusdmc.travel",
+  "Dheena Dhayalan G": "dheena.dhayalan@tripfactory.travel",
+  "Dhilak S": "dhilak.s@nexusdmc.travel",
+  "Dhruv Minotra": "dhruv@tripfactory.com",
+  "Diana S K": "diana.sk@tripfactory.travel",
+  "Dinakaran M": "dinakaran.m@tripfactory.com",
+  "Dinesh R": "dinesh.r@tripfactory.travel",
+  "Dipanti Kumari": "sksinnikumari8@gmail.com",
+  "Dipesh Kiran Kasar": "dipesh.kasar@tripfactory.travel",
+  "Disha Mooljee": "disha.mooljee@tripfactory.com",
+  "Divya Mathur": "divya.m@nexusdmc.travel",
+  "Diya Dechamma K B": "diya.kb@tripfactory.travel",
+  "Dolores Dumaat Duero": "dholly.duero@tripfactory.com",
+  "Eswara Rao Madugula": "eswar.m@tripfactory.com",
+  "Faisal syed mukthar Shah": "faisal.shah@tripfactory.travel",
+  "Feyzullah Ulusoy": "feyzullah.u@nexusdmc.com",
+  "Fouziya Sultana": "fouzia@tripfactory.com",
+  "Furkan Mustafa Serbetci": "furkan.s@nexusdmc.com",
+  "Gagan S G": "gagan.sg@nexusdmc.travel",
+  "Ganesh Raju N": "ganesh.raju@tripfactory.com",
+  "Ganesh Sorte": "ganesh.sorte@tripfactory.travel",
+  "Ganya Shree D C": "ganyashree.dc@nexusdmc.travel",
+  "Gaurav Kumar Sharma": "gaurav.ks@nexusdmc.travel",
+  "Gauri Shankar Gaud": "gauri@tripfactory.com",
+  "Gemma Martin": "abc127@gmail.com",
+  "Gifty G": "gifty.g@tripfactory.travel",
+  "Giriraj Singh": "giriraj@tripfactory.com",
+  "Girish V": "girish.v@nexusdmc.travel",
+  "Gizem Bilgisu": "gizem.b@nexusdmc.com",
+  "Glen Somanna A": "glen.sa@tripfactory.travel",
+  "Gnana Deepa Nadar": "deepa.n@tripfactory.com",
+  "Gogul G K": "gogul.gk@nexusdmc.travel",
+  "Guido Surace": "guido.surace@tripfactory.com",
+  "Gurpreet Singh": "gurpreet@tripfactory.com",
+  "Hafriz Azim": "hafriz.a@nexusdmc.com",
+  "Hareesh Govindan": "hareesh.g@tripfactory.travel",
+  "Hari Krishna S": "hari.krishna@tripfactory.travel",
+  "Harini B": "harini.b@nexusdmc.travel",
+  "Harish R": "harish.r@tripfactory.com",
+  "Harismitha B M": "harismitha.bm@nexusdmc.travel",
+  "Harry Jenifer Z": "harry.j@tripfactory.travel",
+  "Harsha Vardhan Lakavath": "harshavardhan.l@tripfactory.travel",
+  "Harshit Danwar": "harshit.d@tripfactory.com",
+  "Harshitha B": "harshitha.b@tripfactory.travel",
+  "Harshitha R": "harshitha.r@tripfactory.com",
+  "Hemavathi P S": "hemavathi@tripfactory.com",
+  "Hendriastanto Rachmadani": "hendri@tripfactory.com",
+  "Himanshu Kumar": "himanshu.k@nexusdmc.travel",
+  "Hyderali Meer": "hyderali.meer@nexusdmc.travel",
+  "Ifraq Ahmed R N": "ifraq.ahmed@tripfactory.com",
+  "Iliopoulos Ioannis (Yannis)": "yannis@nexusdmc.com",
+  "Ira Mukund Bhatt": "ira.b@tripfactory.com",
+  "Ishan Gupta": "ishan.g@tripfactory.travel",
+  "Ishan Mukesh Sheode": "ishan@nexusdmc.travel",
+  "Ismail Gunes": "igunes7272@gmail.com",
+  "J Priscilla John": "priscilla@tripfactory.com",
+  "James Clement": "jameclement91@gmail.com",
+  "Janani SB": "janani.sb@tripfactory.travel",
+  "Janavi G": "janavi.g@tripfactory.travel",
+  "Janelle Lleva Tolentino": "janelle.tolentino@tripfactory.com",
+  "Jasmin Valencia Apuro": "jasmin.apuro@tripfactory.com",
+  "Jasvinder Singh": "jasvinder@tripfactory.com",
+  "Jawahar R": "jawahar@tripfactory.com",
+  "Jayant Kumar Sinha": "jayant.gofly@gmail.com",
+  "Jelot Wisang Irbavo": "jelot.wisang@tripfactory.com",
+  "Jericho Bustamante": "jericho@tripfactory.com",
+  "Johnson K": "johnson.k@tripfactory.travel",
+  "Joseph A": "joseph@nexusdmc.travel",
+  "Joseph Raj A": "joseph.raj@nexusdmc.travel",
+  "Jyothi S Vara": "jyothi.sv@tripfactory.travel",
+  "Jyotsna S": "jyotsna.s@tripfactory.com",
+  "KH SRUJAN GOWDA": "srujan.g@tripfactory.travel",
+  "Kalyani Prasad": "kalyani.goflysmart@gmail.com",
+  "Kamini Sharma": "kamini.sharma@tripfactory.com",
+  "Kanhaiya Singh": "kanhaiya.s@nexusdmc.travel",
+  "Kantpichcha Phaphim": "kantpichcha.p@tripfactory.travel",
+  "Karan S Bhosle": "karan.s@tripfactory.com",
+  "Karthikeyan S": "karthikeyan@tripfactory.com",
+  "Kartik Karjee": "kartikkarjee358@gmail.com",
+  "Kartikay Yagyik": "kartikay.yagyik@tripfactory.com",
+  "Kaushik S": "kaushik@tripfactory.com",
+  "Kaverappa N D": "kaverappa@tripfactory.com",
+  "Kavya D R": "kavya.dr@tripfactory.travel",
+  "Kavya M": "kavya.k@tripfactory.travel",
+  "Kavya S": "kavya@tripfactory.travel",
+  "Keerthi R": "keerthi@tripfactory.com",
+  "Kenneth Paul Vincent Ferrer Vallejo": "kenneth.vallejo@tripfactory.com",
+  "Ketan Bajpai": "ketan.bajpai@tripfactory.travel",
+  "Ketut Ariantini": "ketut.a@nexusdmc.travel",
+  "Khaleel Ur Rehman": "khaleel.r@tripfactory.travel",
+  "Khusboo Moktan": "khusboo.goflysmart@gmail.com",
+  "Kiran Kumar A C": "kiran.ac@nexusdmc.com",
+  "Kiran N": "kiran.n@tripfactory.com",
+  "Kirti Tanwar": "kirti.t@nexusdmc.travel",
+  "Kishan Singh Shahi": "kishan@tripfactory.com",
+  "Kollipara Dinesh": "dinesh.k@tripfactory.travel",
+  "Komala H": "komala.h@tripfactory.travel",
+  "Koushik s": "koushik.s@tripfactory.travel",
+  "Krishna Gupta": "krishna.gupta@tripfactory.travel",
+  "Krishna Prasad B P": "krishna.bp@tripfactory.com",
+  "Krishna Prasad S": "krishna.prasad@tripfactory.travel",
+  "Kristine Ann Cadiena Javier": "kristine.javier@tripfactory.com",
+  "Krithik Raja M": "krithik.rm@tripfactory.travel",
+  "Kriti Rai": "kriti.rai@tripfactory.travel",
+  "Kruthik C": "kruthik.c@tripfactory.travel",
+  "Kruthika T D": "kruthika.td@tripfactory.travel",
+  "Kshitiz Gupta": "kshitiz.g@tripfactory.com",
+  "Kubra Avci": "kubra.a@nexusdmc.com",
+  "Kumari Riya": "k.riya@tripfactory.com",
+  "Kunal Agarwal": "kunal.agarwal@tripfactory.travel",
+  "Kunal Ekka": "kunal.goflysmart@gmail.com",
+  "Kuruva Rajendra": "rajendra.k@nexusdmc.travel",
+  "Kushagra Sharma": "kushagra.sharma@tripfactory.travel",
+  "Kushal H M": "kushal.hm@nexusdmc.travel",
+  "Kyra Fernandez Joaquin": "kyra.joaquin@tripfactory.com",
+  "Lakshmi M Maraddi": "lakshmi.m@nexusdmc.travel",
+  "Lalit Kumar": "lalit.k@nexusdmc.travel",
+  "Lavanya N R": "lavanya.nr@nexusdmc.travel",
+  "Leonard Vicky": "vicky.l@tripfactory.com",
+  "Logenthiran Sandrasegaran": "logenthiran@tripfactory.com",
+  "Lokesh C A": "lokesh.ca@nexusdmc.travel",
+  "Lokesh C Savadatti": "lokesh.cs@tripfactory.travel",
+  "Luni Sewa": "luni.goflysmart@gmail.com",
+  "M J Shakthi Pallavi": "shakthi.p@tripfactory.travel",
+  "Madan S": "madan.s@tripfactory.com",
+  "Madhu Sudhan S": "madhusudhan.s@tripfactory.com",
+  "Magesh Mohanraj": "magesh@tripfactory.com",
+  "Maguluri Yaswanth Reddy": "yaswanth.r@tripfactory.travel",
+  "Mahesh Kumar Lakra": "mahesh.kl@tripfactory.com",
+  "Mahima A": "mahima.a@tripfactory.com",
+  "Mala Kondamma": "mala.k@tripfactory.com",
+  "Mallikarjuna T": "mallikarjuna.t@tripfactory.travel",
+  "Mamtha Patel Norat Ram": "mamtha.p@tripfactory.travel",
+  "Manasa M": "manasa.m@tripfactory.travel",
+  "Mani Maha Parvas": "saichandra@tripfactory.travel",
+  "Manideep Koduri": "manideep.k@tripfactory.travel",
+  "Manish Singh Chaudhary": "manish.sc@nexusdmc.travel",
+  "Manish Singh Rajput": "manish.r@nexusdmc.travel",
+  "Manisha M Jain": "manisha.jain@tripfactory.travel",
+  "Manjula S": "manjula.s@nexusdmc.travel",
+  "Manoj T K": "manoj.tk@tripfactory.com",
+  "Marguerite Du Plessis": "abc128@gmail.com",
+  "Maria Constanza Gutierrez": "constanza@ornbus.com",
+  "Maria Goretti Sitling": "maria.goflysmart@gmail.com",
+  "Maria Noelia Bonvin": "noelia@tripfactory.com",
+  "Maricar Manalo Chao": "maricar@ornbus.com",
+  "Marify Galia Abad": "marify.abad@tripfactory.com",
+  "Mark Anthony Fontanilla Villaflores": "mark.v@tripfactory.com",
+  "Martin Vakada": "martin.vakada@tripfactory.travel",
+  "Martina Vasan": "martina.v@tripfactory.com",
+  "Mary Grace Madrid Manzon": "marygrace.manzon@tripfactory.com",
+  "Meghana M S": "meghana.ms@tripfactory.com",
+  "Moaz Ghani": "moaz.g@tripfactory.com",
+  "Mohammed Arbaz Pasha": "arbaz.p@tripfactory.travel",
+  "Mohammed Arif S": "mohammed.arif@tripfactory.com",
+  "Mohammed Asif": "asif.m@tripfactory.travel",
+  "Mohammed Daaniyal": "daaniyal.m@tripfactory.travel",
+  "Mohammed Faizad": "faizad.m@tripfactory.com",
+  "Mohammed Masood Ahmed": "ahmed.m@tripfactory.travel",
+  "Mohammed Nabeel Faraz": "nabeel@tripfactory.com",
+  "Mohammed Sadath Khan": "sadath.k@tripfactory.com",
+  "Mohammed Sameerulla Khan": "sameer@tripfactory.com",
+  "Mohammed Sarosh": "sarosh@tripfactory.com",
+  "Mohammed Suhail": "suhail@tripfactory.com",
+  "Mohana M": "m.mohana@tripfactory.travel",
+  "Mohd Asif": "asif@tripfactory.com",
+  "Mohini V Handewale": "mohini.h@tripfactory.com",
+  "Mohit Anand": "mohit.anand@tripfactory.com",
+  "Mohit Viswkarma": "mohit.viswkarma@tripfactory.travel",
+  "Mohith K V": "mohith.kv@nexusdmc.travel",
+  "Mohsin Ahmed Batla": "mohsin.ab@tripfactory.com",
+  "Mohsina Begum": "mohsina.b@tripfactory.travel",
+  "Moksh Sharma": "moksh.s@nexusdmc.travel",
+  "Mousham Kumari": "mousham.goflysmart@gmail.com",
+  "Mridul Pandey": "mridul.pandey@tripfactory.travel",
+  "Muhammed Thayyullathil": "muhammed.thayyullathil@tripfactory.com",
+  "Munin Basumatary": "muninb725@gmail.com",
+  "Nagarajan Thangavel": "nagarajan.t@tripfactory.com",
+  "Nagaraju B K": "nagaraju.bk@tripfactory.com",
+  "Nagma M": "nagma.fathima@nexusdmc.travel",
+  "Nalendu Roy": "nalendu@tripfactory.travel",
+  "Naman Varshney": "naman.v@tripfactory.com",
+  "Nandana N": "nandana@tripfactory.travel",
+  "Nandhini J": "nandhini.j@nexusdmc.travel",
+  "Nandhini S": "s.nandhini@tripfactory.travel",
+  "Nandini R": "nandini.r@tripfactory.com",
+  "Naveen Kumar": "naveen.k@tripfactory.travel",
+  "Naveen Rajesh": "naveen.r@tripfactory.com",
+  "Navya A R": "navya.a@tripfactory.travel",
+  "Navya G": "navya.g@tripfactory.travel",
+  "Navya P": "navya.p@nexusdmc.travel",
+  "Neda Sadaf Tajuddin": "neda@tripfactory.com",
+  "Neha N": "neha.n@tripfactory.travel",
+  "Neha U": "neha.u@tripfactory.travel",
+  "Nikhil Chaturvedi": "nikhil.c@tripfactory.travel",
+  "Nikita Kharbanda": "nikita.k@tripfactory.com",
+  "Nikitha S": "nikitha.s@tripfactory.travel",
+  "Nilkamal Sarkar": "nilkamal.gofly@gmail.com",
+  "Nirag K A": "nirag@tripfactory.travel",
+  "Nirav Sopariwala": "nirav.s@tripfactory.com",
+  "Nisarga C R": "nisarga.cr@tripfactory.travel",
+  "Nisarga C S": "nisarga.cs@tripfactory.travel",
+  "Nishanth D Shekar": "nishanth.d@tripfactory.com",
+  "Nithin D": "nithin.d@tripfactory.com",
+  "Nithyananda S C": "nithyananda.sc@nexusdmc.travel",
+  "Noel Joseph": "joseph.n@tripfactory.travel",
+  "Noopur Paresh Mehta": "noopur.mehta@tripfactory.travel",
+  "Nupur Biswas": "nupur.gofly@gmail.com",
+  "Nuthan Kumari L": "nuthan.kl@nexusdmc.travel",
+  "Nutthaphat Udomcharoenmas": "nutthaphat@tripfactory.com",
+  "OM Shandilya": "om.shandilya@tripfactory.travel",
+  "Ornamphai Iampraditpan": "ornamphai.l@tripfactory.com",
+  "P.Sosi Peter Wilson": "sosi.p@tripfactory.travel",
+  "Pakapong Visutising": "pakapong@tripfactory.com",
+  "Pallavi Jain": "pallavi.jain@tripfactory.travel",
+  "Pankaj Silswal": "pankaj.silswal@nexusdmc.travel",
+  "Panushree Thapa": "panushree.goflysmart@gmail.com",
+  "Parthib Kumar Barman": "parthib.kb@tripfactory.travel",
+  "Parvesh Kumari": "parvesh.k@tripfactory.com",
+  "Patricia Denzil": "patricia.d@tripfactory.travel",
+  "Pawanraje Sukumar Ukarde": "pawanraje.su@tripfactory.travel",
+  "Payal Bhansali": "payal.b@tripfactory.com",
+  "Periyaraj Ravichandran": "periyaraj@tripfactory.com",
+  "Poornima Avinash Gunjalkar": "poornima.ag@nexusdmc.travel",
+  "Prabin Nowbagh": "prabin.n@tripfactory.travel",
+  "Pradeep M": "pradeep.m@tripfactory.travel",
+  "Prajwal B M": "prajwal.bm@tripfactory.travel",
+  "Prakash B": "prakash.b@tripfactory.travel",
+  "Prakash M": "prakash.m@tripfactory.com",
+  "Pranshu Chaurasia": "pranshu.chaurasia@tripfactory.travel",
+  "Prashant Kalendra Manchkar": "p.manchkar@nexusdmc.travel",
+  "Pratigya Rai": "pratigya.r@tripfactory.travel",
+  "Pratikhcha Pradhan": "pratikhchagoflysmart@gmail.com",
+  "Pratyush Anand": "pratyush@tripfactory.com",
+  "Praveen Kumar K": "praveen.k@nexusdmc.travel",
+  "Pravir Pathak": "pravin@tripfactory.com",
+  "Prekha Vadhini T": "prekha.v@tripfactory.travel",
+  "Prem Kumar E": "prem@tripfactory.travel",
+  "Prema A": "prema.a@nexusdmc.travel",
+  "Pritam Roy": "pritamroy631@gmail.com",
+  "Pritam Samajdar": "pritam.goflysmart@gmail.com",
+  "Pritisha Parekh": "pritisha.p@tripfactory.travel",
+  "Priyanjana Das": "priyanjana.goflysmart@gmail.com",
+  "Priyanki Roy": "priyanki.roy@tripfactory.travel",
+  "Priyanshu Sharma": "priyanshu.s@tripfactory.travel",
+  "Priyanshu Upadhyay": "priyanshu.upadhyay@tripfactory.travel",
+  "Pruthvi R S": "pruthvi.rs@nexusdmc.travel",
+  "Puja Biswas": "pujabiswas.goflysmart@gmail.com",
+  "Puja Roy": "puja.r@tripfactory.travel",
+  "Pulkit Gupta": "pulkit.gupta@tripfactory.com",
+  "Punith Kumar V": "punith.v@nexusdmc.travel",
+  "Pushpa M": "pushpa.m@tripfactory.com",
+  "R Bhoomika": "bhoomika.r@tripfactory.travel",
+  "Raaj Navgrahe": "raaj.n@tripfactory.travel",
+  "Radha Y": "radha.y@tripfactory.travel",
+  "Raghu N R": "raghu.nr@tripfactory.com",
+  "Raghu S T": "raghu.st@tripfactory.travel",
+  "Rahul Kumar": "rahul.kumar@tripfactory.travel",
+  "Rahul Kumar Ram": "rahul.r@tripfactory.com",
+  "Rahul Kumar Sharma": "rahulkumar.s@tripfactory.travel",
+  "Rahul S V": "rahul.sv@tripfactory.travel",
+  "Raina Hussain": "raina.h@tripfactory.travel",
+  "Raj Kumar": "raj.kumar@tripfactory.com",
+  "Rajdeep Sarkar": "rajdeep.s@tripfactory.travel",
+  "Rajeev Gautam": "rajeev@tripfactory.com",
+  "Rajesh Adhikari": "rajipadhikari448@gmail.com",
+  "Rajesh Kumar": "rajesh.k@tripfactory.travel",
+  "Rajini A R": "rajini.ar@tripfactory.travel",
+  "Raju Sarkar": "raju.s@nexusdmc.travel",
+  "Rakesh Magar V": "rakesh.mv@nexusdmc.travel",
+  "Rakesh N": "rakesh.n@tripfactory.com",
+  "Rakhi Sharma": "rakhi.s@nexusdmc.travel",
+  "Rakshith C R": "rakshith.cr@nexusdmc.travel",
+  "Rakshitha Ganesh": "rakshitha.g@tripfactory.com",
+  "Rakshitha M S": "rakshitha.ms@tripfactory.travel",
+  "Rakshitha R": "r.rakshitha@tripfactory.travel",
+  "Rakshitha V": "rakshitha.v@tripfactory.com",
+  "Ram Krishna Garg": "ram.garg@tripfactory.com",
+  "Ramisha Antony Raj": "ramisha.a@tripfactory.travel",
+  "Ramkrishna Paul": "rampaul.goflysmart@gmail.com",
+  "Ramyashree M": "ramyashree.m@tripfactory.com",
+  "Ranjan Gowda R": "ranjan.gr@tripfactory.travel",
+  "Rashmi A": "rashmi.a@tripfactory.com",
+  "Rashmika G": "rashmika.g@tripfactory.com",
+  "Ravi S": "ravi.s@tripfactory.travel",
+  "Ravitej S M": "ravitej.sm@tripfactory.travel",
+  "Reeba Rehan": "reeba.r@tripfactory.com",
+  "Reena P": "reena.p@tripfactory.travel",
+  "Reginold Simon": "simon@tripfactory.com",
+  "Ria Dhar": "ria.d@tripfactory.travel",
+  "Richie": "richie@tripfactory.com",
+  "Riddhi Dhirendra Waghela": "riddhi@tripfactory.com",
+  "Rikesh Tamang": "rikesh.t@tripfactory.travel",
+  "Rimer Espinosa Batayen": "rimer.batayen@tripfactory.com",
+  "Ritika Gupta": "ritika.g@nexusdmc.travel",
+  "Rohan Apke": "rohan.apke@tripfactory.travel",
+  "Rohit S K": "rohit.s.k@nexusdmc.travel",
+  "Rohit Sharma": "rohit.sharma@tripfactory.com",
+  "Rois Tifaizeh": "roro@tripfactory.com",
+  "Ronak Raju Dhanwani": "ronak@tripfactory.com",
+  "Roshan Sharma": "roshan.goflysmart@gmail.com",
+  "Roshni Suri": "roshni@nexusdmc.travel",
+  "Ruchitha N": "ruchitha.n@tripfactory.travel",
+  "Rupam Kumari": "rupam.k@nexusdmc.travel",
+  "Rutika Rajendra More": "rutika.rm@tripfactory.travel",
+  "Saba Firdose": "saba@tripfactory.com",
+  "Sachin Kushawaha": "sachin.k@tripfactory.com",
+  "Sachin Nene": "sachin.nene@tripfactory.com",
+  "Sachin Ramchandra Kurte": "sachin.kurte@tripfactory.com",
+  "Sadhana P": "sadhana.p@tripfactory.travel",
+  "Sadhana Thapa": "sadhana.gofly@gmail.com",
+  "Sagar B H M": "sagar.bhm@nexusdmc.travel",
+  "Sagar Mukherjee": "sagarmukherjee@tripfactory.com",
+  "Sagar Padmakar Joshi": "sagar@tripfactory.com",
+  "Sagar Prasad": "sagar.p@nexusdmc.travel",
+  "Sagar S P": "sagar.sp@nexusdmc.travel",
+  "Sagarmal Sen": "sagarmal@nexusdmc.travel",
+  "Sahil Nijhawan": "abc122@gmail.com",
+  "Sahil Pradhan": "sahil.pradhan@tripfactory.travel",
+  "Sahran Ahmed": "sahran.a@nexusdmc.com",
+  "Sai Charan M": "sai.c@tripfactory.com",
+  "Saif Ansar Khan": "saif@tripfactory.com",
+  "Sailesh Pradhan": "sailesh.p@tripfactory.travel",
+  "Saleem Elahi": "saleem.e@nexusdmc.travel",
+  "Salman Khan": "salman.k@nexusdmc.travel",
+  "Saloni Tokas": "saloni.t@tripfactory.com",
+  "Saloni U K": "saloni.uk@tripfactory.travel",
+  "Samudwith M S": "samudwith.ms@nexusdmc.travel",
+  "Sanchaita Dutta Chowdhury": "sanchaita.dc@tripfactory.travel",
+  "Sandesh L": "sandesh.l@tripfactory.travel",
+  "Sandhya Kumari": "sandhya.k@tripfactory.travel",
+  "Sandhya Manandhar": "m.sandhya@tripfactory.com",
+  "Sandhya V": "sandhya.v@tripfactory.travel",
+  "Sangita Rai": "sangita.rai@tripfactory.travel",
+  "Sangita Roy": "sangita.r@nexusdmc.travel",
+  "Sanjana Hariprasad": "sanjana.h@tripfactory.travel",
+  "Sanjana K": "sanjana.k@tripfactory.travel",
+  "Sanjana M": "sanjana.m@tripfactory.travel",
+  "Sanjay S": "sanjay.s@nexusdmc.travel",
+  "Sanjeev Kumar Chhikara": "sanjeev.kc@tripfactory.com",
+  "Sanket De": "sanket.dey@tripfactory.com",
+  "Sanskar Tyagi": "sanskar.tyagi@tripfactory.travel",
+  "Santosh Roy": "santosh.roy@goflysmart.com",
+  "Sarah Mae Arante Panes": "sarah.arante@tripfactory.com",
+  "Saran S": "saran.s@tripfactory.travel",
+  "Saranya M": "saranya@tripfactory.travel",
+  "Sarita Devi": "sarita.s@nexusdmc.travel",
+  "Sarjeet Khatri": "sarjeet.k@tripfactory.com",
+  "Satyendra Goswami": "satyendra.g@nexusdmc.travel",
+  "Sayankan Paul": "sayankan.p@tripfactory.travel",
+  "Sayeda Afrin Banu": "afrin.b@nexusdmc.travel",
+  "Shae Tyler": "abc129@gmail.com",
+  "Shahanaz R": "shahanaz@tripfactory.travel",
+  "Shahid Siraj": "shahid@tripfactory.com",
+  "Shaik Abdul Masroor": "masroor@tripfactory.com",
+  "Shaistha N": "shaistha@tripfactory.travel",
+  "Sham Sunder V": "sham.s@tripfactory.com",
+  "Shantanu Aggarwal": "shantanu.a@tripfactory.travel",
+  "Sharath Kumar A": "sharath.kumar@tripfactory.travel",
+  "Shashank Gurung": "shashank.goflysmart@gmail.com",
+  "Shashank H M": "shashank@tripfactory.com",
+  "Shashi Bansal": "shashi@tripfactory.com",
+  "Shaurya Pratap Singh": "shaurya@tripfactory.com",
+  "Sheersh Atrishi": "sheersh.a@tripfactory.com",
+  "Sheetal V": "sheetal.v@nexusdmc.travel",
+  "Shikha Sharma": "shikha.s@tripfactory.com",
+  "Shimron Gershom": "shimron@nexusdmc.travel",
+  "Shivakumar S Y": "s.shivakumar@tripfactory.travel",
+  "Shivamani G": "shivamani@tripfactory.travel",
+  "Shivangi Vishwakarma": "shivangi.v@tripfactory.travel",
+  "Shivaraj S R": "shivaraj.sr@nexusdmc.travel",
+  "Shreyas G": "shreyas.g@nexusdmc.travel",
+  "Shreyas N": "n.shreyas@tripfactory.travel",
+  "Shrinithin F X": "shrinithin.fx@tripfactory.travel",
+  "Shrinivas Ravindra Devarkonda": "sd@tripfactory.com",
+  "Shriya Gupta": "shriya.g@tripfactory.com",
+  "Shubham Kumar Baranwal": "shubham.b@tripfactory.com",
+  "Shubham Raju Wagh": "shubham.rw@tripfactory.travel",
+  "Shveta Sood": "shveta.s@tripfactory.travel",
+  "Siddharth Pagar": "siddharth.pagar@tripfactory.travel",
+  "Siji Sam": "siji.sam@nexusdmc.travel",
+  "Sindhu S": "sindhu.g@tripfactory.com",
+  "Sirajuddin Reniman": "siraj@tripfactory.com",
+  "Siva sanmugavel NU": "siva.s@tripfactory.travel",
+  "Sk Asif Akram": "asif.a@tripfactory.com",
+  "Smitha Shet": "smitha.s@tripfactory.travel",
+  "Sneha Pradhan": "sneha.p@tripfactory.travel",
+  "Sneha Zimolson Paul": "sneha.zp@tripfactory.travel",
+  "Soheb Makandar": "soheb.s@tripfactory.travel",
+  "Sohini Banerjee": "sohini.b@nexusdmc.travel",
+  "Solomon Nikhil D": "nikhil.sd@tripfactory.travel",
+  "Sonu Chauhan": "sonu.c@tripfactory.com",
+  "Sonu Kumar B": "sonu.k@tripfactory.com",
+  "Sonu Kumar Mahto": "sonu.kumarmahto@tripfactory.travel",
+  "Sougata Saha": "sougata.saha@tripfactory.travel",
+  "Sowmya K P": "sowmya.p@tripfactory.com",
+  "Spandhana K V": "spandhana.kv@tripfactory.travel",
+  "Spoorthi P K": "spoorthi.pk@tripfactory.travel",
+  "Spurthi M N": "spurthi.mn@tripfactory.travel",
+  "Sravan Peddakotla": "sravan.p@tripfactory.travel",
+  "Sree Parvathi R": "parvathi.sr@tripfactory.travel",
+  "Srikanth S": "srikanth.s@tripfactory.com",
+  "Srinath H": "srinath.h@nexusdmc.travel",
+  "Sriramana S": "sriramana.s@tripfactory.com",
+  "Stuti Pradhan": "stuti.gofly@gmail.com",
+  "Subhranil Basak": "subhranil.gfs@tripfactory.com",
+  "Sudipta Mondal": "sudipta.m@tripfactory.travel",
+  "Suhail Ahamed S": "suhail.as@nexusdmc.travel",
+  "Suhas G": "suhas.g@tripfactory.travel",
+  "Sujanya N S": "sujanya@tripfactory.com",
+  "Sujata Dambarsingh Budha": "sujata.db@tripfactory.travel",
+  "Suma G": "suma.g@nexusdmc.travel",
+  "Sumi Chanda": "sumi.c@tripfactory.com",
+  "Sumila R": "sumila.r@nexusdmc.travel",
+  "Sumit Jha": "sumit.j@tripfactory.travel",
+  "Sunil M S": "sunil.ms@tripfactory.travel",
+  "Surabhi Barman": "surabhi.b@nexusdmc.travel",
+  "Surabhi Pradhan": "surabhi.pradhan@nexusdmc.travel",
+  "Suraj Patil": "suraj.p@tripfactory.com",
+  "Sushil Kumar": "sushil.m@tripfactory.com",
+  "Sushmita Majumder": "majumdersushmita01@gmail.com",
+  "Sushmita Pradhan": "sushmita.p@tripfactory.travel",
+  "Swastika Rai": "swastika.r@nexusdmc.travel",
+  "Swathi C": "swathi.c@nexusdmc.travel",
+  "Syed Mubarak": "syed.mubarak@tripfactory.com",
+  "Taniya Nandi": "taniya.n@tripfactory.travel",
+  "Tannishtha Ajaykumar Patil": "tannishtha.p@tripfactory.travel",
+  "Tasi Dukpa": "tasi.d@tripfactory.travel",
+  "Thaamarai Bala Naidu": "thaamarai.n@tripfactory.com",
+  "Thageer Ashraf S": "thageer.a@tripfactory.com",
+  "Thanaset Nithichotthanasiri": "thanaset.n@tripfactory.travel",
+  "Thanush Reddy S B": "thanush.sb@tripfactory.com",
+  "Thanushree A": "thanushree.a@nexusdmc.travel",
+  "Tharun J S": "tharun.js@tripfactory.travel",
+  "Tomali Purkayastha": "tomali.p@tripfactory.travel",
+  "Tousif Sait": "tousif.sait@tripfactory.com",
+  "Tripti Bhardwaj": "tripti.b@tripfactory.com",
+  "Tumu Sujay Babu": "sujaybabu@tripfactory.travel",
+  "Ubada Sukri": "ubada.s@tripfactory.com",
+  "Uday Manikanta M": "uday.mm@nexusdmc.travel",
+  "Umar Farooq": "umar.f@tripfactory.travel",
+  "V Laxman Kumar": "laxman.v@tripfactory.com",
+  "Vadde Raju": "raju.v@tripfactory.com",
+  "Vadde Siva Shankar": "sivashankar.v@tripfactory.com",
+  "Vaibhavi Dhakorkar": "vaibhavi.d@tripfactory.com",
+  "Vaisakh P V": "vaisakh.pv@tripfactory.com",
+  "Vandana Mishra": "vandana@tripfactory.com",
+  "Vaneet Rana": "vaneet.r@tripfactory.com",
+  "Varsha C A": "varsha.c.a@tripfactory.travel",
+  "Varsha R": "varsha.r@tripfactory.com",
+  "Varsha Thapa": "varsha.t@nexusdmc.travel",
+  "Varshini N": "varshini.n@tripfactory.travel",
+  "Vasumitha G": "vasumitha.g@nexusdmc.travel",
+  "Vatsal Jalla": "vatsal.j@tripfactory.travel",
+  "Veda K": "veda@tripfactory.com",
+  "Vedansh Srivastava": "vedansh.s@tripfactory.travel",
+  "Veer Khandu Shinde": "veerkhandu.s@nexusdmc.travel",
+  "Venkatesh B": "venkatesh.b@tripfactory.com",
+  "Venkatesh Prasad N H": "venkatesh@tripfactory.com",
+  "Vicky Kumar Rana": "vicky.kr@tripfactory.com",
+  "Vidya Ramananda Bhat": "vidhya.rb@tripfactory.travel",
+  "Vighnesh M S": "vighnesh.ms@tripfactory.travel",
+  "Vigneshwaran K": "vigneshwaran.k@tripfactory.com",
+  "Vijaya Lakshmi karanth": "vijayalakshmi.k@tripfactory.travel",
+  "Vijaya kumar J": "vijaya.k@tripfactory.com",
+  "Vijnesh Jayanandan Poojary": "vijnesh@tripfactory.travel",
+  "Vinay Gupta": "vinay@tripfactory.com",
+  "Vinod Kumar": "vinod.k@nexusdmc.travel",
+  "Vinod More": "vinod.more@nexusdmc.travel",
+  "Vishal Kumar K A": "vishal.ka@tripfactory.com",
+  "Vishal Sinha": "vishal.s@tripfactory.com",
+  "Vishal Vishwakarma": "vishal.v@tripfactory.travel",
+  "Vishnu Priya J": "vishnu.p@tripfactory.travel",
+  "Vishnu Vardhan P R": "vishnu.pr@tripfactory.travel",
+  "Vishwas S": "vishwas.s@tripfactory.travel",
+  "Vivek Gurjar": "vivek.g@nexusdmc.com",
+  "Vivek Mandal": "vivek.m@nexusdmc.travel",
+  "Yassir Ahmed": "yassir@tripfactory.com",
+  "Yerra Venkat Sai Vamsi Vivek": "vamsi.v@nexusdmc.travel",
+  "Ying Liu": "abc1210@gmail.com",
+  "Yogesh B Mehta": "yogesh@tripfactory.com",
+  "Yukti Kumar": "abc1211@gmail.com",
+  "Yuvin Raja": "yuvin.raja@tripfactory.travel",
+  "Yuvraj V B": "yuvraj.acharya@nexusdmc.travel",
+  "Zeenath Begum": "zeenath.b@tripfactory.travel",
+};
+
+function getEmail(name) {
+  return DIR_EMAILS[name] || '';
+}
+
+/* ── State ── */
+let _dirQ='', _dirDept='', _dirLoc='', _dirCol=0, _dirAsc=true, _dirView='table';
+
+/* ── Build location filter ── */
+function dirBuildLocFilter() {
+  const locs = [...new Set(DIR_DATA.map(s=>s.loc))].sort();
+  const sel = document.getElementById('dir-loc');
+  locs.forEach(l => {
+    const o = document.createElement('option'); o.value=l; o.textContent=l; sel.appendChild(o);
+  });
+}
+
+/* ── Avatar initials + colour ── */
+function dirInitials(name) {
+  const parts = name.trim().split(' ').filter(Boolean);
+  if(parts.length>=2) return (parts[0][0]+(parts[parts.length-1][0])).toUpperCase();
+  return (name.substring(0,2)).toUpperCase();
+}
+function dirAvColor(dept) { return DEPT_AV[dept]||'#4b5563'; }
+
+/* ── Filter + sort ── */
+function dirGetRows() {
+  const q = _dirQ.toLowerCase();
+  let rows = DIR_DATA.filter(s => {
+    const mq = !q || [s.name,s.title,s.loc,s.dept,s.mgr].some(v=>v&&v.toLowerCase().includes(q));
+    const md = !_dirDept || s.dept===_dirDept;
+    const ml = !_dirLoc  || s.loc===_dirLoc;
+    return mq && md && ml;
+  });
+  const keys = ['name','title','dept','loc','mgr'];
+  rows.sort((a,b)=>{
+    const av=a[keys[_dirCol]]||'', bv=b[keys[_dirCol]]||'';
+    return _dirAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+  return rows;
+}
+
+/* ── Render table ── */
+function dirRenderTable(rows) {
+  let html='';
+  rows.forEach(s => {
+    const ini = dirInitials(s.name);
+    const ac  = dirAvColor(s.dept);
+    const dc  = DEPT_CLS[s.dept]||'dir-dept-x';
+    const email = getEmail(s.name);
+    const emailHtml = email
+      ? '<a href="mailto:'+email+'" class="dir-email-link">'+email+'</a>'
+      : '<span class="dir-email-dim">not on file</span>';
+    html += '<tr>'
+      +'<td><div class="dir-name-cell">'
+      +'<div class="dir-av" style="background:'+ac+'">'+ini+'</div>'
+      +'<span class="dir-nm">'+s.name+'</span>'
+      +'</div></td>'
+      +'<td class="dir-role">'+s.title+'</td>'
+      +'<td><span class="dir-dept-badge '+dc+'">'+s.dept+'</span></td>'
+      +'<td class="dir-loc">'+s.loc+'</td>'
+      +'<td class="dir-mgr">'+(s.mgr||'<span style="color:var(--t4);font-style:italic">—</span>')+'</td>'
+      +'<td>'+emailHtml+'</td>'
+      +'</tr>';
+  });
+  document.getElementById('dir-tbody').innerHTML = html || '<tr><td colspan="6" class="dir-empty">No staff match your filters.</td></tr>';
+}
+
+/* ── Render cards ── */
+function dirRenderCards(rows) {
+  const wrap = document.getElementById('dir-cards');
+  let html='';
+  rows.forEach(s => {
+    const ini = dirInitials(s.name);
+    const ac  = dirAvColor(s.dept);
+    const dc  = DEPT_CLS[s.dept]||'dir-dept-x';
+    const email = getEmail(s.name);
+    const emailHtml = email
+      ? '<a href="mailto:'+email+'">'+email+'</a>'
+      : '<span class="dir-card-email-dim">email not on file</span>';
+    html += '<div class="dir-card">'
+      +'<div class="dir-card-top">'
+      +'<div class="dir-card-av" style="background:'+ac+'">'+ini+'</div>'
+      +'<div><div class="dir-card-name">'+s.name+'</div>'
+      +'<div class="dir-card-title">'+s.title+'</div></div>'
+      +'</div>'
+      +'<span class="dir-dept-badge '+dc+'">'+s.dept+'</span>'
+      +'<div class="dir-card-row"><svg width="10" height="10" viewBox="0 0 12 12"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M2 11c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>'+s.loc+'</div>'
+      +(s.mgr?'<div class="dir-card-row"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 10V8a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="6" cy="3.5" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>Reports to: '+s.mgr+'</div>':'')
+      +'<div class="dir-card-email">'+emailHtml+'</div>'
+      +'</div>';
+  });
+  wrap.innerHTML = html || '<div class="dir-empty" style="grid-column:1/-1">No staff match your filters.</div>';
+}
+
+/* ── Main render ── */
+function dirRender() {
+  _dirQ    = document.getElementById('dir-search').value;
+  _dirDept = document.getElementById('dir-dept').value;
+  _dirLoc  = document.getElementById('dir-loc').value;
+  const rows = dirGetRows();
+  document.getElementById('dir-count').textContent = rows.length + ' staff';
+  if(_dirView==='table') dirRenderTable(rows); else dirRenderCards(rows);
+}
+
+function dirSort(col) {
+  if(_dirCol===col) _dirAsc=!_dirAsc; else { _dirCol=col; _dirAsc=true; }
+  dirRender();
+}
+
+function dirSetView(v, btn) {
+  _dirView=v;
+  document.querySelectorAll('.dir-vb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('dir-table-wrap').style.display = v==='table'?'':'none';
+  document.getElementById('dir-cards-wrap').style.display = v==='cards'?'':'none';
+  dirRender();
+}
+
+window.addEventListener('load', function() {
+  dirBuildLocFilter();
+  dirRender();
+});
+</script>
+
+</div>
+</div>
 
 </body>
 </html>
