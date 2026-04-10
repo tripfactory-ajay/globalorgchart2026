@@ -5665,6 +5665,62 @@ function ornOpenModal(roleId,roleTitle,color){
     allocBar.appendChild(chip);
   });
 
+  // Filter bar: department + location
+  // Build country list dynamically from OFT_DATA
+  const _ornCountries = typeof OFT_DATA!=='undefined'
+    ? [...new Set(OFT_DATA.map(r=>r[1]))].sort()
+    : [];
+
+  // Row 1: Dept + Country
+  const filterBar=document.createElement('div');
+  filterBar.style.cssText='display:flex;flex-direction:column;gap:0;border-bottom:1px solid #e0e3ea;flex-shrink:0;';
+
+  const filterRow1=document.createElement('div');
+  filterRow1.style.cssText='display:flex;gap:6px;padding:8px 14px 4px;background:#fff;';
+
+  const filterRow2=document.createElement('div');
+  filterRow2.style.cssText='display:flex;gap:6px;padding:4px 14px 8px;background:#fff;';
+
+  const refreshFilter=()=>ornModalSearch(document.getElementById('orn-modal-q')?.value||'');
+
+  // Dept select
+  const deptSel=document.createElement('select');
+  deptSel.id='orn-modal-dept';
+  deptSel.style.cssText='flex:1;padding:5px 8px;border:1px solid #e0e3ea;border-radius:6px;font-size:11px;color:#3d4251;background:#f8f9fa;cursor:pointer;';
+  ['All Departments','Sales','Operations','Product','Technology','Finance','HR & Admin','Global'].forEach(d=>{
+    const o=document.createElement('option'); o.value=d==='All Departments'?'':d; o.textContent=d; deptSel.appendChild(o);
+  });
+  deptSel.onchange=refreshFilter;
+
+  // Country select (global staff only)
+  const countrySel=document.createElement('select');
+  countrySel.id='orn-modal-country';
+  countrySel.style.cssText='flex:1;padding:5px 8px;border:1px solid #e0e3ea;border-radius:6px;font-size:11px;color:#3d4251;background:#f8f9fa;cursor:pointer;';
+  const cAll=document.createElement('option'); cAll.value=''; cAll.textContent='All Countries'; countrySel.appendChild(cAll);
+  // India first
+  const cIndia=document.createElement('option'); cIndia.value='india'; cIndia.textContent='🇮🇳 India'; countrySel.appendChild(cIndia);
+  // then global
+  const flagMap={'United Kingdom':'🇬🇧','Germany':'🇩🇪','France':'🇫🇷','Italy':'🇮🇹','Turkey':'🇹🇷','Czech Republic':'🇨🇿','Poland':'🇵🇱','Slovakia':'🇸🇰','Greece':'🇬🇷','Bulgaria':'🇧🇬','UAE':'🇦🇪','Kuwait':'🇰🇼','Singapore':'🇸🇬','Malaysia':'🇲🇾','Thailand':'🇹🇭','Indonesia':'🇮🇩','Philippines':'🇵🇭','Australia':'🇦🇺','United States':'🇺🇸','Peru':'🇵🇪','Argentina':'🇦🇷'};
+  _ornCountries.forEach(c=>{
+    const o=document.createElement('option'); o.value=c.toLowerCase();
+    o.textContent=(flagMap[c]||'🌐')+' '+c; countrySel.appendChild(o);
+  });
+  countrySel.onchange=refreshFilter;
+
+  // Location select (India cities)
+  const locSel=document.createElement('select');
+  locSel.id='orn-modal-loc';
+  locSel.style.cssText='flex:1;padding:5px 8px;border:1px solid #e0e3ea;border-radius:6px;font-size:11px;color:#3d4251;background:#f8f9fa;cursor:pointer;';
+  const locOpt=document.createElement('option'); locOpt.value=''; locOpt.textContent='All Locations'; locSel.appendChild(locOpt);
+  ['Bengaluru','Gurgaon','Mumbai','Delhi','Noida','Siliguri','Kolkata','Hyderabad','Chennai','Ahmedabad','Pune','Kochi','Bhopal','Jabalpur','Surat'].forEach(l=>{
+    const o=document.createElement('option'); o.value=l.toLowerCase(); o.textContent=l; locSel.appendChild(o);
+  });
+  locSel.onchange=refreshFilter;
+
+  filterRow1.appendChild(deptSel); filterRow1.appendChild(countrySel);
+  filterRow2.appendChild(locSel);
+  filterBar.appendChild(filterRow1); filterBar.appendChild(filterRow2);
+
   const countDiv=document.createElement('div');
   countDiv.className='orn-modal-count'; countDiv.id='orn-modal-count';
 
@@ -5672,7 +5728,8 @@ function ornOpenModal(roleId,roleTitle,color){
   resultsDiv.className='orn-modal-results'; resultsDiv.id='orn-modal-results';
 
   modal.appendChild(hdr); modal.appendChild(inp);
-  modal.appendChild(allocBar); modal.appendChild(countDiv); modal.appendChild(resultsDiv);
+  modal.appendChild(allocBar); modal.appendChild(filterBar);
+  modal.appendChild(countDiv); modal.appendChild(resultsDiv);
   bg.appendChild(modal);
   document.body.appendChild(bg);
   ornModalSearch('');
@@ -5684,8 +5741,19 @@ function ornCloseModal(){ const bg=document.getElementById('orn-modal-bg'); if(b
 function ornModalSearch(q){
   const lower=q.toLowerCase();
   const current=(ORN_ALLOC[_ornCurrentRole]||[]).map(p=>p.name.toLowerCase());
+  const deptF=(document.getElementById('orn-modal-dept')?.value||'').toLowerCase();
+  const locF=(document.getElementById('orn-modal-loc')?.value||'').toLowerCase();
+  const countryF=(document.getElementById('orn-modal-country')?.value||'').toLowerCase();
   const results=ORN_STAFF.filter(s=>{
     if(current.includes(s.name.toLowerCase())) return false;
+    // Dept filter
+    if(deptF==='global'&&(s.dept||'').toLowerCase()!=='global') return false;
+    if(deptF&&deptF!=='global'&&(s.dept||'').toLowerCase()!==deptF) return false;
+    // Country filter — 'india' means non-global; named country means match in loc
+    if(countryF==='india'&&(s.dept||'').toLowerCase()==='global') return false;
+    if(countryF&&countryF!=='india'&&!(s.loc||'').toLowerCase().includes(countryF)) return false;
+    // Location filter (India cities)
+    if(locF&&!(s.loc||'').toLowerCase().includes(locF)) return false;
     if(!lower) return true;
     return [s.name,s.title,s.dept,s.loc].some(v=>v&&v.toLowerCase().includes(lower));
   });
